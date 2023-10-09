@@ -135,7 +135,11 @@ public class Search
     		}
 
     		//Check whether complete field is filled
-    		
+    		for (int i = 0; i < field.length; i++) {
+				for (int j = 0; j < field[i].length; j++) {
+					if(field[i][j] == -1) solutionFound = false;
+				}
+			}
     	
     		
     		

@@ -3,6 +3,9 @@
  * @version 2022.0
  */
 
+ import java.util.Arrays;
+import java.util.Random;
+
 /**
  * This class includes the methods to support the search of a solution.
  */
@@ -162,7 +165,7 @@ public class Search
 								copy[t][u] = field[t][u];
 							}
 						}						
-				
+
 						addPiece(copy, pieceToPlace, pentID, x, y);
 						used1[i] = true;
 						recurse(copy , used1);

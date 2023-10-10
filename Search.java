@@ -113,7 +113,7 @@ public class Search
 		return true;
 	}
 
-	public static void recurse(int[][] field , boolean[] used){
+	public static boolean recurse(int[][] field , boolean[] used){
 		int x=-1;
 		int y=-1;
 		boolean stop=false;
@@ -136,7 +136,7 @@ public class Search
 		// if x and y are -1 means there was no empty index , field is filled 
 		if(x==-1 && y==-1){
 			ui.setState(field);
-			return;
+			return true;
 		}
 
 
@@ -172,12 +172,12 @@ public class Search
 
 						addPiece(copy, pieceToPlace, pentID, x, y);
 						used1[i] = true;
-						recurse(copy , used1);
+						if(recurse(copy , used1)) return true;
 						used1[i] = false;
 				}
 			}
 		}
-		
+		return false;
 		
 	
 	}

@@ -8,8 +8,8 @@
  */
 public class Search
 {
-    public static final int horizontalGridSize = 5;
-    public static final int verticalGridSize = 8;
+    public static final int horizontalGridSize = 12;
+    public static final int verticalGridSize = 5;
     
     public static final char[] input = {'T','I','Z','Y','W','L','P','X','F','U','N','V'};
 	public static boolean[] usedLetters = new boolean[input.length];
@@ -83,6 +83,7 @@ public class Search
     private static void basicSearch(int[][] field){
 
 		recurse(field, usedLetters);
+		System.out.println("done");
 		
     }
 	public static boolean canAdd(int[][] field , int[][] pieceToPlace , int x, int y){
@@ -112,7 +113,7 @@ public class Search
 		return true;
 	}
 
-	public static boolean recurse(int[][] field , boolean[] used){
+	public static void recurse(int[][] field , boolean[] used){
 		int x=-1;
 		int y=-1;
 		boolean stop=false;
@@ -135,7 +136,7 @@ public class Search
 		// if x and y are -1 means there was no empty index , field is filled 
 		if(x==-1 && y==-1){
 			ui.setState(field);
-			return true;
+			return;
 		}
 
 
@@ -167,17 +168,16 @@ public class Search
 							for(int u=0 ; u<field[t].length ; u++){
 								copy[t][u] = field[t][u];
 							}
-						}						
+						}
 
 						addPiece(copy, pieceToPlace, pentID, x, y);
 						used1[i] = true;
-						// System.out.println(input[i] + " " + x + " " + y);
-						if(recurse(copy , used1)) return true;
+						recurse(copy , used1);
 						used1[i] = false;
 				}
 			}
 		}
-		return false;
+		
 		
 	
 	}

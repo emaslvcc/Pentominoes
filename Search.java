@@ -9,9 +9,9 @@
 public class Search
 {
     public static final int horizontalGridSize = 5;
-    public static final int verticalGridSize = 6;
+    public static final int verticalGridSize = 8;
     
-    public static final char[] input = { 'W', 'Y', 'I', 'T', 'Z', 'L','X','U','V','W','P','N'};
+    public static final char[] input = {'T','I','Z','Y','W','L','P','X','F','U','N','V'};
 	public static boolean[] usedLetters = new boolean[input.length];
     
     //Static UI class to display the board
@@ -86,6 +86,7 @@ public class Search
 		
     }
 	public static boolean canAdd(int[][] field , int[][] pieceToPlace , int x, int y){
+		boolean startset = false;
 
 		// is pieceToPlace within boundaries of field?
 		if (verticalGridSize >= pieceToPlace[0].length+y && horizontalGridSize >= pieceToPlace.length+x){ 
@@ -95,8 +96,13 @@ public class Search
 				for(int j=0; j < pieceToPlace[i].length; j++){
 
 					if(pieceToPlace[i][j] == 1){
+						if(!startset){
+							x = x-i;
+							y = y-j;
+							startset = true;
+						}
 
-						if(field[i+x][j+y] != -1) return false;
+						if(i+x < 0 || j+y < 0 || i+x > field.length || j+y > field[i+x].length || field[i+x][j+y] != -1) return false;
 					}
 				}
 			}
@@ -106,7 +112,7 @@ public class Search
 		return true;
 	}
 
-	public static void recurse(int[][] field , boolean[] used){
+	public static boolean recurse(int[][] field , boolean[] used){
 		int x=-1;
 		int y=-1;
 		boolean stop=false;
@@ -129,7 +135,7 @@ public class Search
 		// if x and y are -1 means there was no empty index , field is filled 
 		if(x==-1 && y==-1){
 			ui.setState(field);
-			return;
+			return true;
 		}
 
 
@@ -162,13 +168,15 @@ public class Search
 								copy[t][u] = field[t][u];
 							}
 						}						
-				
+
 						addPiece(copy, pieceToPlace, pentID, x, y);
 						used1[i] = true;
-						recurse(copy , used1);
+						if(recurse(copy , used1)) return true;
+						used1[i] = false;
 				}
 			}
 		}
+		return false;
 		
 	
 	}
@@ -185,6 +193,7 @@ public class Search
 	 */
     public static void addPiece(int[][] field, int[][] piece, int pieceID, int x, int y)
     {
+		boolean startset = false;
         for(int i = 0; i < piece.length; i++) // loop over x position of pentomino
         {
             for (int j = 0; j < piece[i].length; j++) // loop over y position of pentomino
@@ -192,6 +201,11 @@ public class Search
                 if (piece[i][j] == 1)
                 {
                     // Add the ID of the pentomino to the board if the pentomino occupies this square
+					if(!startset){
+						x = x-i;
+						y = y-j;
+						startset = true;
+					}
                     field[x + i][y + j] = pieceID;
                 }
             }

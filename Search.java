@@ -2,6 +2,9 @@
  * @author Department of Data Science and Knowledge Engineering (DKE)
  * @version 2022.0
  */
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 /**
  * This class includes the methods to support the search of a solution.
@@ -12,7 +15,7 @@ public class Search
     public static int verticalGridSize = 5;
     
     public static final char[] possibleinput = {'T','I','Z','Y','W','L','P','X','F','U','N','V'};
-	public static boolean[] usedLetters = new boolean[possibleinput.length];
+	public static List<Integer> inputIDS;
 	public static char[] input = {};
 	public static UI ui;
     
@@ -40,6 +43,13 @@ public class Search
 	
     public static void search()
     {
+		// create the input array in pentIDS
+		inputIDS = new ArrayList<>();
+
+		for(int i=0; i<input.length; i++){
+			inputIDS.add(characterToID(input[i]));
+		}
+
 		ui = new UI(horizontalGridSize, verticalGridSize, 50);
         // Initialize an empty board
         int[][] field = new int[horizontalGridSize][verticalGridSize];
@@ -101,7 +111,8 @@ public class Search
 	 */
     private static void basicSearch(int[][] field){
 
-		recurse(field, usedLetters);
+		
+		if(recurse(field, inputIDS) == false) System.out.println("No possible solution with chosen pentominos");
 		
     }
 	public static boolean canAdd(int[][] field , int[][] pieceToPlace , int x, int y){
@@ -124,14 +135,18 @@ public class Search
 						if(i+x < 0 || j+y < 0 || i+x > field.length || j+y > field[i+x].length || field[i+x][j+y] != -1) return false;
 					}
 				}
-			}
+			} 
 		}
 		else return false;
 
 		return true;
 	}
 
-	public static boolean recurse(int[][] field , boolean[] used){
+	public static boolean recurse(int[][] field, List<Integer> inputIDS){
+
+		Collections.shuffle(inputIDS);
+
+
 		int x=-1;
 		int y=-1;
 		boolean stop=false;
@@ -159,22 +174,22 @@ public class Search
 
 
 		// create a copy of the field
-		int[][] copy = new int[field.length][field[0].length];
-		// create a copy of the used array
-		boolean[] used1 = used.clone();
+		int[][] fieldcopy = new int[field.length][field[0].length];
+		// create a copy of the available id's list
+		List<Integer> inputcopy = new ArrayList<>();
+		inputcopy.addAll(inputIDS);
 		
 
 
-
+		int index = -1;
 		// search for a pentomino
-		for(int i=0; i < input.length ; i++){
-			int pentID = characterToID(input[i]);
+		for(int i : inputIDS){
+			index++;
+			int pentID = i;
 			int mutations = PentominoDatabase.data[pentID].length;
 
 			// search for a mutation of the pentomino
 			for(int j=0; j < mutations; j++){
-				// if the pentomino is already used stop searching for a mutation, try next pentomino
-				if(used[i] == true) break;
 				int mutation = j;
 
 				int[][] pieceToPlace = PentominoDatabase.data[pentID][mutation];
@@ -185,14 +200,15 @@ public class Search
 						// set the copy to original field before adding
 						for(int t=0; t<field.length ; t++){
 							for(int u=0 ; u<field[t].length ; u++){
-								copy[t][u] = field[t][u];
+								fieldcopy[t][u] = field[t][u];
 							}
 						}						
 
-						addPiece(copy, pieceToPlace, pentID, x, y);
-						used1[i] = true;
-						if(recurse(copy , used1)) return true;
-						used1[i] = false;
+						addPiece(fieldcopy, pieceToPlace, pentID, x, y);
+						inputcopy.remove(index);
+						if(recurse(fieldcopy , inputcopy)) return true;
+						inputcopy.clear();
+						inputcopy.addAll(inputIDS);
 				}
 			}
 		}
@@ -248,6 +264,7 @@ public class Search
 	 */
     public static void main(String[] args)
     {
+
 		long startTime = 0;
 		Scanner scanner = new Scanner(System.in);
 
@@ -259,7 +276,7 @@ public class Search
 		verticalGridSize = scanner.nextInt();
 
 		// Check if grid size is valid
-		if (horizontalGridSize == 0) {
+		if (horizontalGridSize == 0 || verticalGridSize==0) {
 			System.out.println("This grid is invalid.");
 		} else {
 			// Get pentominoes from user

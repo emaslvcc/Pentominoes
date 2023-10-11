@@ -255,6 +255,9 @@ public class Search
 		System.out.println("Enter horizontal length of grid: ");
 		horizontalGridSize = scanner.nextInt();
 
+		System.out.println("Enter vertical length of grid: ");
+		verticalGridSize = scanner.nextInt();
+
 		// Check if grid size is valid
 		if (horizontalGridSize == 0) {
 			System.out.println("This grid is invalid.");

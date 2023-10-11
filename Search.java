@@ -15,44 +15,46 @@ public class Search
 	public static boolean[] usedLetters = new boolean[possibleinput.length];
 	public static char[] input = {};
 	public static UI ui;
-    
     //Static UI class to display the board
     
-
 	/**
-	 * Helper function which starts a basic search algorithm
+	 * Checks how much space a pentomino takes up
+	 * @param inputchar a character representing a pentomino
+	 * @return the total space taken by the selected pentomino
 	 */
-
-	public static int checkSpace(char inputchar)
-	{
-
+	public static int checkSpace (char inputchar) {
 		int space = 0;
 		int pentID = characterToID(inputchar);
 		int[][] pentomino = PentominoDatabase.data[pentID][0];
 
-		for(int i=0; i<pentomino.length ;i++){
-			for(int j=0; j<pentomino[i].length ;j++){
-				if(pentomino[i][j]==1) space++;
+		// Iterates over the pentomino
+		for (int i = 0; i < pentomino.length; i++) {
+			for (int j = 0; j < pentomino[i].length; j++) {
+
+				// If the selected space is not empty, add 1 to the total space
+				if (pentomino[i][j] == 1) space++;
 			}
 		}
 		return space;
 	}
 	
-    public static void search()
-    {
+	/**
+	 * Starts a basic search algorithm
+	 */
+    public static void search() {
 		ui = new UI(horizontalGridSize, verticalGridSize, 50);
+
         // Initialize an empty board
         int[][] field = new int[horizontalGridSize][verticalGridSize];
 
-        for(int i = 0; i < field.length; i++)
-        {
-            for(int j = 0; j < field[i].length; j++)
-            {
+        for (int i = 0; i < field.length; i++) {
+            for(int j = 0; j < field[i].length; j++) {
                 // -1 in the state matrix corresponds to empty square
                 // Any positive number identifies the ID of the pentomino
             	field[i][j] = -1;
             }
         }
+
         //Start the basic search
         basicSearch(field);
     }
@@ -93,115 +95,119 @@ public class Search
     }
 	
 	/**
-	 * Basic implementation of a search algorithm. It is not a bruto force algorithms (it does not check all the posssible combinations)
-	 * but randomly takes possible combinations and positions to find a possible solution.
-	 * The solution is not necessarily the most efficient one
-	 * This algorithm can be very time-consuming
+	 * Starts a recursive algorithm
 	 * @param field a matrix representing the board to be fulfilled with pentominoes
 	 */
-    private static void basicSearch(int[][] field){
-
-		recurse(field, usedLetters);
-		
+    private static void basicSearch(int[][] field) {
+		recurse(field, usedLetters);	
     }
-	public static boolean canAdd(int[][] field , int[][] pieceToPlace , int x, int y){
+
+	/**
+	 * Checks if a selected pentomino can be placed
+	 * @param field a matrix representing the board to be fulfilled with pentominoes
+	 * @param pieceToPlace the selected pentomino that can or cannot be placed
+	 * @param x x position of the field
+	 * @param y y position of the field
+	 */
+	public static boolean canAdd(int[][] field, int[][] pieceToPlace, int x, int y) {
 		boolean startset = false;
 
-		// is pieceToPlace within boundaries of field?
-		if (verticalGridSize >= pieceToPlace[0].length+y && horizontalGridSize >= pieceToPlace.length+x){ 
+		// Checks if the pentomino is within boundaries of the field
+		if (verticalGridSize >= pieceToPlace[0].length + y && horizontalGridSize >= pieceToPlace.length + x) { 
 
-			for(int i=0; i < pieceToPlace.length; i++){
+			for (int i = 0; i < pieceToPlace.length; i++) {
+				for (int j=0; j < pieceToPlace[i].length; j++) {
 
-				for(int j=0; j < pieceToPlace[i].length; j++){
-
-					if(pieceToPlace[i][j] == 1){
-						if(!startset){
-							x = x-i;
-							y = y-j;
+					// Shift the top-left corner of the piece to align with the current (x, y) position
+					if (pieceToPlace[i][j] == 1) {
+						if (!startset) {
+							x = x - i;
+							y = y - j;
 							startset = true;
 						}
 
-						if(i+x < 0 || j+y < 0 || i+x > field.length || j+y > field[i+x].length || field[i+x][j+y] != -1) return false;
+						if (i + x < 0 || j + y < 0 || i + x > field.length || j + y > field[i + x].length || field[i + x][j + y] != -1) return false;
 					}
 				}
 			}
-		}
-		else return false;
-
+		} else return false;
 		return true;
 	}
 
-	public static boolean recurse(int[][] field , boolean[] used){
-		int x=-1;
-		int y=-1;
-		boolean stop=false;
-		// search for first empty index
-		for(int i=0; i<field.length; i++){
-			if(stop==true) break;
-			for(int j=0; j<field[i].length; j++){
-				if(field[i][j] == -1){
+	/**
+	 * Recursive method that fills the field, if possible
+	 * @param field a matrix representing the board to be fulfilled with pentominoes
+	 * @param used a boolean array that stores what pentominoes have been placed
+	 */
+	public static boolean recurse(int[][] field, boolean[] used) {
+		int x = -1;
+		int y = -1;
+		boolean stop = false;
+
+		// Iterates over the rectangle's rows
+		for (int i = 0; i < field.length; i++) {
+			if (stop) break;
+
+			// Iterates over rectangle's elements and searches for an empty space
+			for (int j = 0; j < field[i].length; j++) {
+				if (field[i][j] == -1) {
 					x = i;
 					y = j;
 					stop = true;
 					break;
 				}
-				
 			}
 		}
-		
 
-		// if x and y are -1 means there was no empty index , field is filled 
-		if(x==-1 && y==-1){
+		// Checks if the grid is full: if x and y are equal to -1, there are no empty spaces
+		if (x == -1 && y == -1) {
 			ui.setState(field);
-			System.out.println("done");
+			System.out.println("Done!");
 			return true;
 		}
 
+		// Creates a copy of the field
+		int[][] fieldCopy = new int[field.length][field[0].length];
 
-		// create a copy of the field
-		int[][] copy = new int[field.length][field[0].length];
-		// create a copy of the used array
-		boolean[] used1 = used.clone();
+		// Creates a copy of the used array
+		boolean[] usedCopy = used.clone();
 		
-
-
-
-		// search for a pentomino
-		for(int i=0; i < input.length ; i++){
+		// Searches for a pentomino
+		for (int i = 0; i < input.length ; i++) {
 			int pentID = characterToID(input[i]);
 			int mutations = PentominoDatabase.data[pentID].length;
 
-			// search for a mutation of the pentomino
-			for(int j=0; j < mutations; j++){
-				// if the pentomino is already used stop searching for a mutation, try next pentomino
-				if(used[i] == true) break;
+			// Searches for a mutation of the pentomino
+			for (int j = 0; j < mutations; j++) {
+				// Checks if the pentomino has been used. If so, stop searching for a mutation and try the next pentomino
+				if (used[i] == true) break;
 				int mutation = j;
 
+				// Selects the unused pentomino and the selected mutation to be placed
 				int[][] pieceToPlace = PentominoDatabase.data[pentID][mutation];
 				
-				// if a fitting piece is found, check if we can add it, then add it 
-				if (canAdd(field, pieceToPlace, x, y))  {
+				// If a fitting pentomino is found, checks if it can be added, and if so, adds it
+				if (canAdd(field, pieceToPlace, x, y)) {
 
-						// set the copy to original field before adding
-						for(int t=0; t<field.length ; t++){
-							for(int u=0 ; u<field[t].length ; u++){
-								copy[t][u] = field[t][u];
+						// Set the copy of the field to the original field before adding the pentomino
+						for (int t = 0; t < field.length; t++) {
+							for (int u = 0; u < field[t].length; u++) {
+								fieldCopy[t][u] = field[t][u];
 							}
 						}						
 
-						addPiece(copy, pieceToPlace, pentID, x, y);
-						used1[i] = true;
-						if(recurse(copy , used1)) return true;
-						used1[i] = false;
+						// Adds the pentomino
+						addPiece(fieldCopy, pieceToPlace, pentID, x, y);
+						usedCopy[i] = true;
+
+						// Recursive call
+						if (recurse(fieldCopy, usedCopy)) return true;
+						usedCopy[i] = false;
 				}
 			}
 		}
 		return false;
-		
-	
 	}
-    
-
     
 	/**
 	 * Adds a pentomino to the position on the field (overriding current board at that position)
@@ -211,30 +217,36 @@ public class Search
 	 * @param x x position of the pentomino
 	 * @param y y position of the pentomino
 	 */
-    public static void addPiece(int[][] field, int[][] piece, int pieceID, int x, int y)
-    {
+    public static void addPiece(int[][] field, int[][] piece, int pieceID, int x, int y) {
 		boolean startset = false;
-        for(int i = 0; i < piece.length; i++) // loop over x position of pentomino
-        {
-            for (int j = 0; j < piece[i].length; j++) // loop over y position of pentomino
-            {
-                if (piece[i][j] == 1)
-                {
-                    // Add the ID of the pentomino to the board if the pentomino occupies this square
-					if(!startset){
-						x = x-i;
-						y = y-j;
-						startset = true;
+        
+		// loops over x position of the pentomino
+		for(int i = 0; i < piece.length; i++) {
+
+			// loops over y position of the pentomino
+            for (int j = 0; j < piece[i].length; j++) {
+                if (piece[i][j] == 1) {
+                    
+					// Add the ID of the pentomino to the board if the pentomino occupies this square
+					if (!startset) {
+						x = x - i;
+						y = y - j;
+						startset = true; 
 					}
+
                     field[x + i][y + j] = pieceID;
                 }
             }
         }
     }
 
-	// This method checks if a pentomino is valid
+	/**
+	 * Checks if a selected pentomino is valid
+	 * @param pentomino represents the selected pentomino
+	 */
 	public static boolean isPentominoValid(char pentomino) {
 		
+		// Goes over the array of possible pentomino characters
 		for (char validPentomino : possibleinput) {
 			if (validPentomino == pentomino) {
 				return true; // Pentomino is valid
@@ -246,8 +258,7 @@ public class Search
 	/**
 	 * Main function. Needs to be executed to start the basic search algorithm
 	 */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
 		long startTime = 0;
 		Scanner scanner = new Scanner(System.in);
 
@@ -269,43 +280,49 @@ public class Search
 
 			// Check if pentominoes are valid
 			boolean isValid = true;
-			int i=0;
+			int i = 0;
 			for (int pent = 0; pent < pentominoesInput.length(); pent++) {
 				char pentominoChar = pentominoesInput.charAt(pent);
 
+				// Pentomino is not valid
 				if (!isPentominoValid(pentominoChar)) {
 					isValid = false;
 					System.out.println(pentominoChar + " is invalid!");
 					break;
 				}
-				input1[i++] = pentominoChar;
-				
-		}
-		input = input1;
-		int totalspace=0;
 
-		for(char pentID : input){
+				// Create an array of the valid pentomino characters
+				input1[i++] = pentominoChar;
+			}
+		
+		input = input1;
+
+		// Calculates the total space used by the selected pentominoes
+		int totalspace=0;
+		for (char pentID : input){
 			totalspace += checkSpace(pentID);
 		}
 		
+		// Start time counting
+		startTime = System.nanoTime();
 
-		 startTime = System.nanoTime();
+		// Calls the search method if the pentominoes are valid and they can fill the grid
 		if (isValid) {
 
-			if(totalspace >= horizontalGridSize*verticalGridSize)
-			search();
-			else{
-				System.out.println("Not enough pentominos to fill");
-			}
-				
-
+			if (totalspace >= horizontalGridSize*verticalGridSize) {
+				search(); 
 			} else {
-				System.out.println("Please enter valid pentominoes: \n" +
-			                   	   "T, I, Z, Y, W, L, P, X, F, U, N, V");
+				System.out.println("These pentominoes can't fill this grid.");
 			}
+		} else {
+			System.out.println("Please enter valid pentominoes: \n" +
+			                   "T, I, Z, Y, W, L, P, X, F, U, N, V");
+		}
 
 		scanner.close();
 		}
+
+		// Display running time
 		long endTime = System.nanoTime();
 		long duration = (endTime - startTime);
 		System.out.println(duration / 1000000 + "ms");

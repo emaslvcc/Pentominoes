@@ -23,9 +23,19 @@ public class Search
 	 * Helper function which starts a basic search algorithm
 	 */
 
-	public void checkSpace(int pentID)
+	public static int checkSpace(char inputchar)
 	{
-		
+
+		int space = 0;
+		int pentID = characterToID(inputchar);
+		int[][] pentomino = PentominoDatabase.data[pentID][0];
+
+		for(int i=0; i<pentomino.length ;i++){
+			for(int j=0; j<pentomino[i].length ;j++){
+				if(pentomino[i][j]==1) space++;
+			}
+		}
+		return space;
 	}
 	
     public static void search()
@@ -269,16 +279,22 @@ public class Search
 				
 		}
 		input = input1;
+		int totalspace=0;
+
+		for(char pentID : input){
+			totalspace += checkSpace(pentID);
+		}
 		
+
 		 startTime = System.nanoTime();
 		if (isValid) {
-			
-				search();
-				
-				
 
+			if(totalspace >= horizontalGridSize*verticalGridSize)
+			search();
+			else{
+				System.out.println("Not enough pentominos to fill");
+			}
 				
-			
 
 			} else {
 				System.out.println("Please enter valid pentominoes: \n" +

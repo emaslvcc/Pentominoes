@@ -2,26 +2,35 @@
  * @author Department of Data Science and Knowledge Engineering (DKE)
  * @version 2022.0
  */
-
+import java.util.Scanner;
 /**
  * This class includes the methods to support the search of a solution.
  */
 public class Search
 {
-    public static final int horizontalGridSize = 12;
-    public static final int verticalGridSize = 5;
+    public static int horizontalGridSize;
+    public static int verticalGridSize = 5;
     
-    public static final char[] input = {'T','I','Z','Y','W','L','P','X','F','U','N','V'};
-	public static boolean[] usedLetters = new boolean[input.length];
+    public static final char[] possibleinput = {'T','I','Z','Y','W','L','P','X','F','U','N','V'};
+	public static boolean[] usedLetters = new boolean[possibleinput.length];
+	public static char[] input = {};
+	public static UI ui;
     
     //Static UI class to display the board
-    public static UI ui = new UI(horizontalGridSize, verticalGridSize, 50);
+    
 
 	/**
 	 * Helper function which starts a basic search algorithm
 	 */
+
+	public void checkSpace(int pentID)
+	{
+		
+	}
+	
     public static void search()
     {
+		ui = new UI(horizontalGridSize, verticalGridSize, 50);
         // Initialize an empty board
         int[][] field = new int[horizontalGridSize][verticalGridSize];
 
@@ -83,7 +92,6 @@ public class Search
     private static void basicSearch(int[][] field){
 
 		recurse(field, usedLetters);
-		System.out.println("done");
 		
     }
 	public static boolean canAdd(int[][] field , int[][] pieceToPlace , int x, int y){
@@ -117,7 +125,6 @@ public class Search
 		int x=-1;
 		int y=-1;
 		boolean stop=false;
-
 		// search for first empty index
 		for(int i=0; i<field.length; i++){
 			if(stop==true) break;
@@ -136,6 +143,7 @@ public class Search
 		// if x and y are -1 means there was no empty index , field is filled 
 		if(x==-1 && y==-1){
 			ui.setState(field);
+			System.out.println("done");
 			return true;
 		}
 
@@ -145,6 +153,7 @@ public class Search
 		// create a copy of the used array
 		boolean[] used1 = used.clone();
 		
+
 
 
 		// search for a pentomino
@@ -168,7 +177,7 @@ public class Search
 							for(int u=0 ; u<field[t].length ; u++){
 								copy[t][u] = field[t][u];
 							}
-						}
+						}						
 
 						addPiece(copy, pieceToPlace, pentID, x, y);
 						used1[i] = true;
@@ -213,11 +222,73 @@ public class Search
         }
     }
 
+	// This method checks if a pentomino is valid
+	public static boolean isPentominoValid(char pentomino) {
+		
+		for (char validPentomino : possibleinput) {
+			if (validPentomino == pentomino) {
+				return true; // Pentomino is valid
+			}
+		}
+		return false; // Pentomino is not valid
+	}
+
 	/**
 	 * Main function. Needs to be executed to start the basic search algorithm
 	 */
     public static void main(String[] args)
     {
-        search();
+		long startTime = 0;
+		Scanner scanner = new Scanner(System.in);
+
+		// Get grid size from user
+		System.out.println("Enter horizontal length of grid: ");
+		horizontalGridSize = scanner.nextInt();
+
+		// Check if grid size is valid
+		if (horizontalGridSize == 0) {
+			System.out.println("This grid is invalid.");
+		} else {
+			// Get pentominoes from user
+			System.out.println("Enter pentominoes: ");
+			String pentominoesInput = scanner.next();
+			char[] input1 = new char[pentominoesInput.length()];
+
+			// Check if pentominoes are valid
+			boolean isValid = true;
+			int i=0;
+			for (int pent = 0; pent < pentominoesInput.length(); pent++) {
+				char pentominoChar = pentominoesInput.charAt(pent);
+
+				if (!isPentominoValid(pentominoChar)) {
+					isValid = false;
+					System.out.println(pentominoChar + " is invalid!");
+					break;
+				}
+				input1[i++] = pentominoChar;
+				
+		}
+		input = input1;
+		
+		 startTime = System.nanoTime();
+		if (isValid) {
+			
+				search();
+				
+				
+
+				
+			
+
+			} else {
+				System.out.println("Please enter valid pentominoes: \n" +
+			                   	   "T, I, Z, Y, W, L, P, X, F, U, N, V");
+			}
+
+		scanner.close();
+		}
+		long endTime = System.nanoTime();
+		long duration = (endTime - startTime);
+		System.out.println(duration / 1000000 + "ms");
     }
 }

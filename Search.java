@@ -259,7 +259,7 @@ public class Search
 		verticalGridSize = scanner.nextInt();
 
 		// Check if grid size is valid
-		if (horizontalGridSize == 0) {
+		if (horizontalGridSize == 0 || verticalGridSize == 0) {
 			System.out.println("This grid is invalid.");
 		} else {
 			// Get pentominoes from user

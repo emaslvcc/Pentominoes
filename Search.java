@@ -109,12 +109,13 @@ public class Search
 	 * This algorithm can be very time-consuming
 	 * @param field a matrix representing the board to be fulfilled with pentominoes
 	 */
-    private static void basicSearch(int[][] field){
+    private static void basicSearch(int[][] field) {
 
 		
 		if(recurse(field, inputIDS) == false) System.out.println("No possible solution with chosen pentominos");
 		
     }
+
 	public static boolean canAdd(int[][] field , int[][] pieceToPlace , int x, int y){
 		boolean startset = false;
 
@@ -276,11 +277,7 @@ public class Search
 		verticalGridSize = scanner.nextInt();
 
 		// Check if grid size is valid
-<<<<<<< HEAD
-		if (horizontalGridSize == 0 || verticalGridSize==0) {
-=======
 		if (horizontalGridSize == 0 || verticalGridSize == 0) {
->>>>>>> 0969df8472b36bb033bcf4e9efb096e6fba78035
 			System.out.println("This grid is invalid.");
 		} else {
 			// Get pentominoes from user
@@ -300,8 +297,8 @@ public class Search
 					break;
 				}
 				input1[i++] = pentominoChar;
-				
-		}
+			}
+
 		input = input1;
 		int totalspace=0;
 
@@ -329,6 +326,5 @@ public class Search
 		}
 		long endTime = System.nanoTime();
 		long duration = (endTime - startTime);
-		System.out.println(duration / 1000000 + "ms");
-    }
-}
+		System.out.println(duration / 1000000 + "ms"); }
+	}

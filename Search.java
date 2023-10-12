@@ -274,8 +274,8 @@ public class Search
 			
 			System.out.println("This grid is invalid.");
 			scanner.close();
-			return;
-		} 
+		} 		 else{
+
 			// Get pentominoes from user
 			System.out.println("Enter pentominoes: ");
 			String pentominoesInput = scanner.next();

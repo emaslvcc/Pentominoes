@@ -270,9 +270,12 @@ public class Search
 		verticalGridSize = scanner.nextInt();
 
 		// Check if grid size is valid
-		if (horizontalGridSize == 0 || verticalGridSize == 0) {
+		if (horizontalGridSize<= 0 || verticalGridSize <= 0) {
+			
 			System.out.println("This grid is invalid.");
-		} else {
+			scanner.close();
+			return;
+		} 
 			// Get pentominoes from user
 			System.out.println("Enter pentominoes: ");
 			String pentominoesInput = scanner.next();
@@ -294,7 +297,11 @@ public class Search
 				// Create an array of the valid pentomino characters
 				input1[i++] = pentominoChar;
 			}
-		
+			if (!isValid) {
+				System.out.println("Please enter valid pentominoes: T, I, Z, Y, W, L, P, X, F, U, N, V");
+				scanner.close();
+				return; // Exit the program due to invalid input.
+			}
 		input = input1;
 
 		// Calculates the total space used by the selected pentominoes

@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Search
 {
     public static int horizontalGridSize;
-    public static int verticalGridSize = 5;
+    public static int verticalGridSize;
     
     public static final char[] possibleinput = {'T','I','Z','Y','W','L','P','X','F','U','N','V'};
 	public static boolean[] usedLetters = new boolean[possibleinput.length];
@@ -202,6 +202,7 @@ public class Search
 
 						// Recursive call
 						if (recurse(fieldCopy, usedCopy)) return true;
+                        // Backtracking
 						usedCopy[i] = false;
 				}
 			}

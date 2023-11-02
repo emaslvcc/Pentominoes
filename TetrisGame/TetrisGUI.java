@@ -1,28 +1,43 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+
 
 public class TetrisGUI extends JPanel {
 
+    
+
     public TetrisGUI() {
-        setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());
 
         // Menu Panel on the Left
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new GridLayout(4, 1));
 
+        // Main Content Panel
+        Game mainContentPanel = new Game(5,15, 30);
+
         // Start Button
-        JButton startButton = createMenuButton("Start");
+        JButton startButton = this.createMenuButton("Start");
         startButton.addActionListener(e -> {
             // Start game logic goes here
 
-            JOptionPane.showMessageDialog(this, "Game Started: Not implemented yet", "Game Started", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "test", "test", JOptionPane.INFORMATION_MESSAGE);
+            
+
         });
         menuPanel.add(startButton);
 
         // Reset Button
-        JButton resetButton = createMenuButton("Reset");
+        JButton resetButton = this.createMenuButton("Reset");
         resetButton.addActionListener(e -> {
             // Reset game logic goes here
 
@@ -32,7 +47,7 @@ public class TetrisGUI extends JPanel {
         menuPanel.add(resetButton);
 
         // High Score Button
-        JButton highScoreButton = createMenuButton("High Scores");
+        JButton highScoreButton = this.createMenuButton("High Scores");
         highScoreButton.addActionListener(e -> {
             // Display high scores logic goes here
 
@@ -42,33 +57,23 @@ public class TetrisGUI extends JPanel {
         menuPanel.add(highScoreButton);
 
         // Instruction Button
-        JButton instructionButton = createMenuButton("Instructions");
+        JButton instructionButton = this.createMenuButton("Instructions");
         instructionButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, getInstructions(), "Instructions", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, this.getInstructions(), "Instructions", JOptionPane.INFORMATION_MESSAGE);
         });
         menuPanel.add(instructionButton);
 
-        // Add empty space to the left of the menu buttons
-        add(Box.createRigidArea(new Dimension(60 , 0)), BorderLayout.WEST);
-        add(menuPanel, BorderLayout.WEST);
+        this.add(menuPanel, BorderLayout.WEST);
 
-        // Main Content Panel
-        JPanel mainContentPanel = new JPanel();
-        mainContentPanel.setLayout(new BorderLayout());
 
-        // Content Panel (Placeholder for Game)
-        JPanel contentPanel = new JPanel();
-        contentPanel.add(new JLabel("Game Content Goes Here"));
-
-        mainContentPanel.add(contentPanel, BorderLayout.CENTER);
 
         // Add the main content panel to the center
-        add(mainContentPanel, BorderLayout.CENTER);
+        this.add(mainContentPanel, BorderLayout.CENTER);
     }
 
     private JButton createMenuButton(String text) {
         JButton button = new JButton(text);
-        button.setPreferredSize(new Dimension(120, 0));
+        button.setPreferredSize(new Dimension(200, 0));
         return button;
     }
 
@@ -80,8 +85,9 @@ public class TetrisGUI extends JPanel {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Tetris");
-            frame.setSize(700, 600);
+            frame.setSize(700, 500);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setResizable(false);
 
             TetrisGUI tetrisGUI = new TetrisGUI();
             frame.getContentPane().add(tetrisGUI);

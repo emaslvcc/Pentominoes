@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Search
 {
     public static int horizontalGridSize;
-    public static int verticalGridSize = 5;
+    public static int verticalGridSize;
     
     public static final char[] possibleinput = {'T','I','Z','Y','W','L','P','X','F','U','N','V'};
 	public static boolean[] usedLetters = new boolean[possibleinput.length];
@@ -125,7 +125,7 @@ public class Search
 							y = y - j;
 							startset = true;
 						}
-						
+
 						if (i + x < 0 || j + y < 0 || i + x > field.length || j + y > field[i + x].length || field[i + x][j + y] != -1) return false;
 					}
 				}
@@ -143,7 +143,6 @@ public class Search
 		int x = -1;
 		int y = -1;
 		boolean stop = false;
-		boolean copyset = false;
 
 		// Iterates over the rectangle's rows
 		for (int i = 0; i < field.length; i++) {
@@ -191,14 +190,11 @@ public class Search
 				if (canAdd(field, pieceToPlace, x, y)) {
 
 						// Set the copy of the field to the original field before adding the pentomino
-						if(copyset == false){
-							for (int t = 0; t < field.length; t++) {
-								for (int u = 0; u < field[t].length; u++) {
-									fieldCopy[t][u] = field[t][u];
-								}
-							}	
-							copyset = true;
-						}
+						for (int t = 0; t < field.length; t++) {
+							for (int u = 0; u < field[t].length; u++) {
+								fieldCopy[t][u] = field[t][u];
+							}
+						}						
 
 						// Adds the pentomino
 						addPiece(fieldCopy, pieceToPlace, pentID, x, y);
@@ -206,8 +202,8 @@ public class Search
 
 						// Recursive call
 						if (recurse(fieldCopy, usedCopy)) return true;
+                        // Backtracking
 						usedCopy[i] = false;
-						removeLastPent(fieldCopy, pieceToPlace, x, y);
 				}
 			}
 		}
@@ -244,25 +240,6 @@ public class Search
             }
         }
     }
-	public static void removeLastPent(int[][] field, int[][] piece, int x , int y){
-		boolean startset = false;
-
-		for(int i=0;i<piece.length;i++){
-
-			for(int j=0;j<piece[i].length;j++){
-				if(piece[i][j] == 1){
-					if(!startset){
-						x = x - i;
-						y = y - j;
-						startset = true;
-					}
-					field[x+i][y+j] = -1;
-				}
-
-				
-			}
-		}
-	}
 
 	/**
 	 * Checks if a selected pentomino is valid
@@ -294,9 +271,12 @@ public class Search
 		verticalGridSize = scanner.nextInt();
 
 		// Check if grid size is valid
-		if (horizontalGridSize <= 0 || verticalGridSize <= 0) {
+		if (horizontalGridSize<= 0 || verticalGridSize <= 0) {
+			
 			System.out.println("This grid is invalid.");
-		} else {
+			scanner.close();
+		} 		 else{
+
 			// Get pentominoes from user
 			System.out.println("Enter pentominoes: ");
 			String pentominoesInput = scanner.next();
@@ -318,7 +298,11 @@ public class Search
 				// Create an array of the valid pentomino characters
 				input1[i++] = pentominoChar;
 			}
-		
+			if (!isValid) {
+				System.out.println("Please enter valid pentominoes: T, I, Z, Y, W, L, P, X, F, U, N, V");
+				scanner.close();
+				return; // Exit the program due to invalid input.
+			}
 		input = input1;
 
 		// Calculates the total space used by the selected pentominoes

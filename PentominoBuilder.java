@@ -76,7 +76,7 @@ public class PentominoBuilder {
             },
             {
 
-                // pentamino representation P
+                // pentomino representation P
             	{1,1},
                 {1,1},
                 {1,0}

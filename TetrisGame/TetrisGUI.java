@@ -11,26 +11,30 @@ import javax.swing.SwingUtilities;
 
 
 
+
 public class TetrisGUI extends JPanel {
 
     
 
     public TetrisGUI() {
         this.setLayout(new BorderLayout());
+        
 
         // Menu Panel on the Left
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new GridLayout(4, 1));
 
         // Main Content Panel
-        Game mainContentPanel = new Game(5,15, 30);
+        Game mainContentPanel = new Game(5,15, 45);
+        this.addKeyListener(mainContentPanel);
+
 
         // Start Button
         JButton startButton = this.createMenuButton("Start");
         startButton.addActionListener(e -> {
             // Start game logic goes here
-
-            JOptionPane.showMessageDialog(this, "test", "test", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, " Not implemented yet", "start", JOptionPane.INFORMATION_MESSAGE);
+            
             
 
         });
@@ -41,8 +45,10 @@ public class TetrisGUI extends JPanel {
         resetButton.addActionListener(e -> {
             // Reset game logic goes here
 
+            JOptionPane.showMessageDialog(this, "Not implemented yet", "reset", JOptionPane.INFORMATION_MESSAGE);
 
-            JOptionPane.showMessageDialog(this, "Game Reset: Not implemented yet", "Game Reset", JOptionPane.INFORMATION_MESSAGE);
+
+            mainContentPanel.reset();
         });
         menuPanel.add(resetButton);
 
@@ -64,7 +70,8 @@ public class TetrisGUI extends JPanel {
         menuPanel.add(instructionButton);
 
         this.add(menuPanel, BorderLayout.WEST);
-
+;
+        
 
 
         // Add the main content panel to the center
@@ -74,6 +81,7 @@ public class TetrisGUI extends JPanel {
     private JButton createMenuButton(String text) {
         JButton button = new JButton(text);
         button.setPreferredSize(new Dimension(200, 0));
+        button.setFocusable(false);
         return button;
     }
 
@@ -82,18 +90,24 @@ public class TetrisGUI extends JPanel {
                 "Use arrow keys to move and rotate the falling block.\n" +
                 "Have fun!";
     }
+
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Tetris");
-            frame.setSize(700, 500);
+            frame.setSize(440, 710);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setResizable(false);
+            frame.setFocusable(false);
 
+            
+        
             TetrisGUI tetrisGUI = new TetrisGUI();
             frame.getContentPane().add(tetrisGUI);
 
             frame.setVisible(true);
         });
     }
+
 }
 

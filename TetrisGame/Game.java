@@ -6,18 +6,23 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
  
  /**
   * This class takes care of all the graphics to display a certain state.
   * Initially, you do not need to modify (or event understand) this class in Phase 1. You will learn more about GUIs in Period 2, in the Introduction to Computer Science 2 course.
   */
- public class Game extends JPanel 
+ public class Game extends JPanel implements KeyListener
  {
      private int[][] state;
      private int size;
+     private int[][] start;
  
      /**
       * Constructor for the GUI. Sets everything up
@@ -30,17 +35,23 @@ import javax.swing.JPanel;
      {
          this.size = _size;
          this.setPreferredSize(new Dimension(x * this.size, y * this.size));
- 
+         this.setFocusable(true);
+         this.addKeyListener(this);
+
+         
  
          this.state = new int[x][y];
+         this.start = new int[x][y];
          for (int i = 0; i < this.state.length; i++)
          {
              for (int j = 0; j < this.state[i].length; j++)
              {
                  this.state[i][j] = -1;
+                 this.start[i][j] = -1;
              }
          }
      }
+
  
      /**
       * This function is called BY THE SYSTEM if required for a new frame, uses the state stored by the UI class.
@@ -113,5 +124,30 @@ import javax.swing.JPanel;
          //Tells the system a frame update is required
          this.repaint();
      }
+
+     public void reset(){
+        this.setState(this.start);
+     }
+
+     
+
+         @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_SPACE ) {
+            JOptionPane.showMessageDialog(this, "space pressed", "High Scores", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+         //To change body of generated methods, choose Tools | Templates.
+    }
+
+
  }
  

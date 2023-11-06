@@ -6,12 +6,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.geom.Rectangle2D;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
  
  /**
@@ -23,16 +25,21 @@ import javax.swing.JPanel;
      private int[][] state;
      private int size;
      private int[][] start;
- 
-     /**
-      * Constructor for the GUI. Sets everything up
-      * @param x x position of the GUI
-      * @param y y position of the GUI
-      * @param _size size of the GUI
-      */
+     private Timer looper;
+     final Integer x = 0;
+     final Integer y = 0;
+
      
      public Game(int x, int y, int _size)
      {
+        this.looper = new Timer(500, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                y++;
+            }
+
+        });
+        
          this.size = _size;
          this.setPreferredSize(new Dimension(x * this.size, y * this.size));
          this.setFocusable(true);
@@ -50,7 +57,12 @@ import javax.swing.JPanel;
                  this.start[i][j] = -1;
              }
          }
+
+
+
+
      }
+
 
  
      /**
@@ -73,16 +85,19 @@ import javax.swing.JPanel;
          {
              localGraphics2D.drawLine(0, i * this.size, this.state.length * this.size, i * this.size);
          }
- 
-         //draw blocks
-         for (int i = 0; i < this.state.length; i++)
-         {
-             for (int j = 0; j < this.state[0].length; j++)
-             {
-                 localGraphics2D.setColor(this.GetColorOfID(this.state[i][j]));
-                 localGraphics2D.fill(new Rectangle2D.Double(i * this.size + 1, j * this.size + 1, this.size - 1, this.size - 1));
-             }
-         }
+         
+                  //draw blocks
+        int[][] pent = PentominoDatabase.data[0][0];
+
+        for(int i=0 ; i<pent.length; i++){
+            for(int j=0 ; j<pent[0].length; j++){
+                if(pent[i][j] == 1){
+                    g.setColor(Color.BLUE);
+                    g.fillRect(i * this.size + this.x * this.size, j * this.size + this.y * this.size , this.size, this.size);
+                }
+            }
+
+        }
      }
  
      /**
@@ -147,6 +162,7 @@ import javax.swing.JPanel;
     public void keyReleased(KeyEvent e) {
          //To change body of generated methods, choose Tools | Templates.
     }
+
 
 
  }

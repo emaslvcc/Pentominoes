@@ -1,7 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.io.FileNotFoundException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,7 +30,7 @@ public class TetrisGUI extends JPanel {
         startButton.addActionListener(e -> {
 
             // Start game logic goes here
-            JOptionPane.showMessageDialog(this, "Not implemented yet", "start", JOptionPane.INFORMATION_MESSAGE);
+            
         });
         menuPanel.add(startButton);
 

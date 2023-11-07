@@ -16,7 +16,6 @@ import javax.swing.Timer;
 
 /**
 * This class takes care of all the graphics to display a certain state.
-* Initially, you do not need to modify (or event understand) this class in Phase 1. You will learn more about GUIs in Period 2, in the Introduction to Computer Science 2 course.
 */
 public class Game extends JPanel implements KeyListener {
     private int[][] state;
@@ -25,14 +24,20 @@ public class Game extends JPanel implements KeyListener {
     private Timer looper;
     private int startx;
     private int starty;
-    private int[][] currpent;
+    private int[][] current;
+    private int currentPentominoIndex;
      
     public Game(int x, int y, int _size) {
-        this.looper = new Timer(300, new ActionListener(){
+        currentPentominoIndex = 0;
+        this.looper = new Timer(300, new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
-                if(Game.this.starty + Game.this.currpent[0].length==15) return;
-                Game.this.starty++;
+            public void actionPerformed(ActionEvent e) {
+                if (Game.this.starty + PentominoDatabase.data[currentPentominoIndex][1].length == 15) {
+                    Game.this.starty = 0;
+                    advanceToNextPentomino();
+                } else {
+                    Game.this.starty++;
+                }
                 Game.this.repaint();
             }
         });
@@ -55,6 +60,8 @@ public class Game extends JPanel implements KeyListener {
 
     /**
     * This function is called BY THE SYSTEM if required for a new frame, uses the state stored by the UI class.
+    * @param g 
+    * @return void
     */
     public void paintComponent(Graphics g) {
         Graphics2D localGraphics2D = (Graphics2D) g;
@@ -70,19 +77,32 @@ public class Game extends JPanel implements KeyListener {
         for (int i = 0; i <= this.state[0].length; i++) {
             localGraphics2D.drawLine(0, i * this.size, this.state.length * this.size, i * this.size);
         }
-         
-        //draw blocks
-        this.currpent = PentominoDatabase.data[0][0];
-
-        for (int i = 0; i < this.currpent.length; i++) {
-            for (int j = 0 ; j < this.currpent[0].length; j++) {
-                if (this.currpent[i][j] == 1){
-                    g.setColor(this.GetColorOfID(this.currpent[i][j]));
+        
+        int[][] currentPentomino = PentominoDatabase.data[currentPentominoIndex][0];
+        for (int i = 0; i < currentPentomino.length; i++) {
+            for (int j = 0; j < currentPentomino[0].length; j++) {
+                if (currentPentomino[i][j] == 1) {
+                    g.setColor(this.GetColorOfID(currentPentomino[i][j]));
                     g.fillRect(i * this.size + this.startx * this.size, j * this.size + this.starty * this.size , this.size, this.size);
                 }
             }
         }
         g.dispose();
+    }
+
+    /**
+     * Advances to the following pentomino in the database
+     * @return void
+     */
+    public void advanceToNextPentomino() {
+        currentPentominoIndex++; // Move to the next pentomino in your PentominoDatabase
+        // Optionally, you can check if you have reached the end of the pentominoes and reset the index to 0.
+        if (currentPentominoIndex >= PentominoDatabase.data.length) {
+            currentPentominoIndex = 0;
+        }
+        // Reset the starting position for the new pentomino
+        startx = 0; // You may want to adjust this based on your game logic
+        starty = 0; // You may want to adjust this based on your game logic
     }
  
     /**
@@ -141,7 +161,7 @@ public class Game extends JPanel implements KeyListener {
             this.startx--;
         }
         if (e.getKeyCode() == 68 ) {
-            if (this.startx + this.currpent.length <= 4)
+            if (this.startx + this.current.length <= 4)
             this.startx++;
         }
     }

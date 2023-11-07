@@ -30,6 +30,7 @@ public class Game extends JPanel implements KeyListener {
     private int currentPentominoIndex;
     private int[][] currentPentomino;
 
+
     private List<LandedPentomino> landedPentominoes = new ArrayList();
 
     private class LandedPentomino {
@@ -45,20 +46,44 @@ public class Game extends JPanel implements KeyListener {
     }
      
     public Game(int x, int y, int _size) {
-
         this.currentPentominoIndex = 0; // Starts with the first pentomino in the database
+
+ 
 
         // Performs the action specified every 300 milliseconds
         this.looper = new Timer(300, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+
                 // Checks if the pentomino has reached the end of the grid
-                if (Game.this.starty + Game.this.currentPentomino[0].length == 15) {
+                if (Game.this.starty + Game.this.currentPentomino[0].length == 15 ) {
+
                     Game.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
 
                 } else {
+                    // Check if pentomino is going to collide with any other pentomino
+                    boolean collide = false;
+
+                    for(int i=Game.this.startx; i<Game.this.currentPentomino.length + Game.this.startx; i++){
+                        for(int j=Game.this.starty; j<Game.this.currentPentomino[0].length + Game.this.starty; j++){
+                            if(Game.this.currentPentomino[i-Game.this.startx][j-Game.this.starty] == 1){
+                                if(Game.this.state[i][j+1] != -1){
+                                    if(Game.this.startx==0 && Game.this.starty==0) return;
+                                    collide = true;
+                                    break;
+                                }
+                            }
+                            
+
+                        }
+                    }
+
+                    if(!collide)
                     Game.this.starty++; // Pentomino descends one line
+                    else{
+                    Game.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
+                    }
                 }
                 Game.this.repaint();
             }
@@ -77,6 +102,7 @@ public class Game extends JPanel implements KeyListener {
                 this.start[i][j] = -1;
             }
         }
+  
     }
 
     /**
@@ -137,6 +163,17 @@ public class Game extends JPanel implements KeyListener {
         // Add the landed pentomino to the list keeping track of them
         LandedPentomino landed = new LandedPentomino(this.currentPentominoIndex, Game.this.startx, Game.this.starty);
         this.landedPentominoes.add(landed);
+
+        // add pentomino to state
+        for(int i=this.startx; i<this.currentPentomino.length+this.startx; i++){
+            for(int j=this.starty; j<this.currentPentomino[0].length+this.starty; j++){
+                if(this.currentPentomino[i-this.startx][j-this.starty] == 1){
+                    this.state[i][j] = 0;
+                }
+                
+                
+            }
+        }
 
         this.currentPentominoIndex++; // Move to the next pentomino in your PentominoDatabase
 

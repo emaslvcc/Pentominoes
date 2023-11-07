@@ -112,6 +112,7 @@ import javax.swing.Timer;
             }
 
         }
+        g.dispose();
      }
  
      /**

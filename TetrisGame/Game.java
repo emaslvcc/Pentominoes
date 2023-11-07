@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -26,19 +25,34 @@ import javax.swing.Timer;
      private int size;
      private int[][] start;
      private Timer looper;
-     final Integer x = 0;
-     final Integer y = 0;
+     private int startx;
+     private int starty;
+     private int[][] currpent;
+     
+
+
 
      
      public Game(int x, int y, int _size)
      {
-        this.looper = new Timer(500, new ActionListener(){
+        this.looper = new Timer(300, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                y++;
+
+
+                if(Game.this.starty + Game.this.currpent[0].length==15) return;
+
+                Game.this.starty++;
+
+
+                Game.this.repaint();
+                
+                
+                
             }
 
         });
+        //this.looper.start();
         
          this.size = _size;
          this.setPreferredSize(new Dimension(x * this.size, y * this.size));
@@ -72,7 +86,7 @@ import javax.swing.Timer;
      {
          Graphics2D localGraphics2D = (Graphics2D) g;
  
-         localGraphics2D.setColor(Color.lightGray);
+         //localGraphics2D.setColor(Color.lightGray);
          localGraphics2D.fill(this.getVisibleRect());
  
          //draw lines
@@ -87,13 +101,13 @@ import javax.swing.Timer;
          }
          
                   //draw blocks
-        int[][] pent = PentominoDatabase.data[0][0];
+        this.currpent = PentominoDatabase.data[0][0];
 
-        for(int i=0 ; i<pent.length; i++){
-            for(int j=0 ; j<pent[0].length; j++){
-                if(pent[i][j] == 1){
-                    g.setColor(Color.BLUE);
-                    g.fillRect(i * this.size + this.x * this.size, j * this.size + this.y * this.size , this.size, this.size);
+        for(int i=0 ; i<this.currpent.length; i++){
+            for(int j=0 ; j<this.currpent[0].length; j++){
+                if(this.currpent[i][j] == 1){
+                    g.setColor(this.GetColorOfID(this.currpent[i][j]));
+                    g.fillRect(i * this.size + this.startx * this.size, j * this.size + this.starty * this.size , this.size, this.size);
                 }
             }
 
@@ -141,7 +155,12 @@ import javax.swing.Timer;
      }
 
      public void reset(){
-        this.setState(this.start);
+        // not implemented yet
+        this.repaint();
+     }
+
+     public void start(){
+        this.looper.start();
      }
 
      
@@ -149,7 +168,15 @@ import javax.swing.Timer;
          @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_SPACE ) {
-            JOptionPane.showMessageDialog(this, "space pressed", "High Scores", JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+        if(e.getKeyCode() == 65 ) {
+            if(this.startx >= 1)
+            this.startx--;
+        }
+        if(e.getKeyCode() == 68 ) {
+            if(this.startx + this.currpent.length  <= 4)
+            this.startx++;
         }
     }
 

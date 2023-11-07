@@ -30,7 +30,7 @@ public class TetrisGUI extends JPanel {
         startButton.addActionListener(e -> {
 
             // Start game logic goes here
-            
+            mainContentPanel.start();
         });
         menuPanel.add(startButton);
 
@@ -39,7 +39,6 @@ public class TetrisGUI extends JPanel {
         resetButton.addActionListener(e -> {
 
             // Reset game logic goes here
-            JOptionPane.showMessageDialog(this, "Not implemented yet", "reset", JOptionPane.INFORMATION_MESSAGE);
             mainContentPanel.reset();
         });
         menuPanel.add(resetButton);

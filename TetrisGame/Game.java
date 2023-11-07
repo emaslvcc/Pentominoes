@@ -28,6 +28,7 @@ public class Game extends JPanel implements KeyListener {
     private int starty;
     private int[][] current;
     private int currentPentominoIndex;
+    private int[][] currentPentomino;
 
     private List<LandedPentomino> landedPentominoes = new ArrayList();
 
@@ -45,7 +46,7 @@ public class Game extends JPanel implements KeyListener {
      
     public Game(int x, int y, int _size) {
 
-        currentPentominoIndex = 0; // Starts with the first pentomino in the database
+        this.currentPentominoIndex = 0; // Starts with the first pentomino in the database
 
         // Performs the action specified every 300 milliseconds
         this.looper = new Timer(300, new ActionListener() {
@@ -53,8 +54,8 @@ public class Game extends JPanel implements KeyListener {
             public void actionPerformed(ActionEvent e) {
 
                 // Checks if the pentomino has reached the end of the grid
-                if (Game.this.starty + PentominoDatabase.data[currentPentominoIndex][1].length == 15) {
-                    advanceToNextPentomino(); // Advances to the next pentomino in the database
+                if (Game.this.starty + Game.this.currentPentomino[0].length == 15) {
+                    Game.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
 
                 } else {
                     Game.this.starty++; // Pentomino descends one line
@@ -99,7 +100,7 @@ public class Game extends JPanel implements KeyListener {
         }
 
         // Paints the landed pentominos at their last known position
-        for (LandedPentomino landed : landedPentominoes) {
+        for (LandedPentomino landed : this.landedPentominoes) {
             int startX = landed.startX;
             int startY = landed.startY;
 
@@ -107,19 +108,19 @@ public class Game extends JPanel implements KeyListener {
             for (int i = 0; i < landedPentomino.length; i++) {
                 for (int j = 0; j < landedPentomino[0].length; j++) {
                     if (landedPentomino[i][j] == 1) {
-                        g.setColor(GetColorOfID(landed.pentominoIndex));
-                        g.fillRect(i * size + startX * size, j * size + startY * size, size, size);
+                        g.setColor(this.GetColorOfID(landed.pentominoIndex));
+                        g.fillRect(i * this.size + startX * this.size, j * this.size + startY * this.size, this.size, this.size);
                     }
                 }
             }
         }
         
         // Prints the current pentomino at the positions they go through
-        int[][] currentPentomino = PentominoDatabase.data[currentPentominoIndex][0];
-        for (int i = 0; i < currentPentomino.length; i++) {
-            for (int j = 0; j < currentPentomino[0].length; j++) {
-                if (currentPentomino[i][j] == 1) {
-                    g.setColor(this.GetColorOfID(currentPentominoIndex));
+        this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][0];
+        for (int i = 0; i < this.currentPentomino.length; i++) {
+            for (int j = 0; j < this.currentPentomino[0].length; j++) {
+                if (this.currentPentomino[i][j] == 1) {
+                    g.setColor(this.GetColorOfID(this.currentPentominoIndex));
                     g.fillRect(i * this.size + this.startx * this.size, j * this.size + this.starty * this.size , this.size, this.size);
                 }
             }
@@ -134,18 +135,18 @@ public class Game extends JPanel implements KeyListener {
     public void advanceToNextPentomino() {
 
         // Add the landed pentomino to the list keeping track of them
-        LandedPentomino landed = new LandedPentomino(currentPentominoIndex, Game.this.startx, Game.this.starty);
-        landedPentominoes.add(landed);
+        LandedPentomino landed = new LandedPentomino(this.currentPentominoIndex, Game.this.startx, Game.this.starty);
+        this.landedPentominoes.add(landed);
 
-        currentPentominoIndex++; // Move to the next pentomino in your PentominoDatabase
+        this.currentPentominoIndex++; // Move to the next pentomino in your PentominoDatabase
 
         // Reposition next pentomino at the beginning of the grid
         Game.this.startx = 0;
         Game.this.starty = 0;
 
         // Check if all the pentominos have been reached to go back to the beginning
-        if (currentPentominoIndex >= PentominoDatabase.data.length) {
-            currentPentominoIndex = 0;
+        if (this.currentPentominoIndex >= PentominoDatabase.data.length) {
+            this.currentPentominoIndex = 0;
         }
     }
  
@@ -205,7 +206,7 @@ public class Game extends JPanel implements KeyListener {
             this.startx--;
         }
         if (e.getKeyCode() == 68 ) {
-            if (this.startx + this.current.length <= 4)
+            if (this.startx + this.currentPentomino.length <= 4)
             this.startx++;
         }
     }

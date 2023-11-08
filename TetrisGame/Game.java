@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,8 +69,9 @@ public class Game extends JPanel implements KeyListener {
                     for(int i=Game.this.startx; i<Game.this.currentPentomino.length + Game.this.startx; i++){
                         for(int j=Game.this.starty; j<Game.this.currentPentomino[0].length + Game.this.starty; j++){
                             if(Game.this.currentPentomino[i-Game.this.startx][j-Game.this.starty] == 1){
-                                if(Game.this.state[i][j+1] != -1){
-                                    if(Game.this.startx==0 && Game.this.starty==0) return;
+                                if(Game.this.state[i][j+1] != -1 && Game.this.state[i][j+1] != 0){
+                                    if((Game.this.startx==0 && Game.this.starty==0)) return;
+                                    
                                     collide = true;
                                     break;
                                 }
@@ -125,6 +127,9 @@ public class Game extends JPanel implements KeyListener {
             localGraphics2D.drawLine(0, i * this.size, this.state.length * this.size, i * this.size);
         }
 
+
+        
+
         // Paints the landed pentominos at their last known position
         for (LandedPentomino landed : this.landedPentominoes) {
             int startX = landed.startX;
@@ -133,26 +138,57 @@ public class Game extends JPanel implements KeyListener {
             int[][] landedPentomino = PentominoDatabase.data[landed.pentominoIndex][0];
             for (int i = 0; i < landedPentomino.length; i++) {
                 for (int j = 0; j < landedPentomino[0].length; j++) {
-                    if (landedPentomino[i][j] == 1) {
+                    if (landedPentomino[i][j] == 1 && this.state[i][j] != 0) {
                         g.setColor(this.GetColorOfID(landed.pentominoIndex));
-                        g.fillRect(i * this.size + startX * this.size, j * this.size + startY * this.size, this.size, this.size);
+                        localGraphics2D.fill(new Rectangle2D.Double(i * this.size + startX * this.size + 1, j * this.size + startY * this.size + 1, this.size - 1, this.size - 1));
+                        //System.out.println((i + startX) + " " + (j + startY));
                     }
                 }
             }
         }
-        
+
+            
+
+
+
         // Prints the current pentomino at the positions they go through
         this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][0];
         for (int i = 0; i < this.currentPentomino.length; i++) {
             for (int j = 0; j < this.currentPentomino[0].length; j++) {
                 if (this.currentPentomino[i][j] == 1) {
                     g.setColor(this.GetColorOfID(this.currentPentominoIndex));
-                    g.fillRect(i * this.size + this.startx * this.size, j * this.size + this.starty * this.size , this.size, this.size);
+                    localGraphics2D.fill(new Rectangle2D.Double(i * this.size + this.startx * this.size + 1, j * this.size + this.starty * this.size + 1, this.size - 1, this.size - 1));
                 }
             }
         }
-        g.dispose();
+
+        // check if horizontal lines should be removed (doesnt work yet)
+        for(int i=0; i<this.state[0].length; i++){
+                boolean filledline = true;
+                for(int j=0; j<this.state.length; j++){
+                    if(this.state[j][i] == -1){
+                        filledline = false;
+                        break;
+                    }
+                }
+                if(filledline){
+                    for(int t=0; t<5; t++){
+                        this.state[t][i] = 0;
+                        g.setColor(Color.lightGray);
+                        localGraphics2D.fill(new Rectangle2D.Double(t * this.size + 1, i * this.size + 1, this.size - 1, this.size - 1));
+                       // g.fillRect(i * this.size + startX * this.size, j * this.size + startY * this.size, this.size, this.size);
+                        
+
+                    }
+                  
+                    
+                    
+                    
+                }
+                
+            }
     }
+    
 
     /**
      * Advances to the following pentomino in the database
@@ -168,12 +204,16 @@ public class Game extends JPanel implements KeyListener {
         for(int i=this.startx; i<this.currentPentomino.length+this.startx; i++){
             for(int j=this.starty; j<this.currentPentomino[0].length+this.starty; j++){
                 if(this.currentPentomino[i-this.startx][j-this.starty] == 1){
-                    this.state[i][j] = 0;
+                    this.state[i][j] = 1;
                 }
                 
                 
             }
         }
+
+
+        
+        
 
         this.currentPentominoIndex++; // Move to the next pentomino in your PentominoDatabase
 

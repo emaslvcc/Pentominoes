@@ -249,8 +249,9 @@ public class Game extends JPanel implements KeyListener {
                 this.pause = true;
 
             }
-            else if(this.started){
+            else if(this.pause){
                 this.looper.start();
+                this.pause = false;
             }
         }
         if (e.getKeyCode() == 65 && this.started) {

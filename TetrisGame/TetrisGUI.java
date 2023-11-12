@@ -87,8 +87,7 @@ public class TetrisGUI extends JPanel {
      */
     private String getInstructions() {
         return "Tetris Instructions:\n" +
-                "Use arrow keys to move and rotate the falling block.\n" +
-                "Have fun!";
+                "A = left, D = right, S = down, Space = pause";
     }
 
     public static void main(String[] args) {

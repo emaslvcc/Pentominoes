@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
+import java.util.Random;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -24,13 +25,17 @@ public class Game extends JPanel implements KeyListener {
     private Timer looper;
     private boolean started = false;
     private int startx;
+    private boolean pause = false;
     private int starty;
     private int currentPentominoIndex;
     private int[][] currentPentomino;
+    private Random random;
+    private int score=0;
 
      
     public Game(int x, int y, int _size) {
-        this.currentPentominoIndex = 0; // Starts with the first pentomino in the database
+        this.random = new Random();
+        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length); // Starts with the first pentomino in the database
  
 
         // Performs the action specified every 300 milliseconds
@@ -50,16 +55,26 @@ public class Game extends JPanel implements KeyListener {
                     for(int i=Game.this.startx; i<Game.this.currentPentomino.length + Game.this.startx; i++){
                         for(int j=Game.this.starty; j<Game.this.currentPentomino[0].length + Game.this.starty; j++){
                             if(Game.this.currentPentomino[i-Game.this.startx][j-Game.this.starty] == 1){
-                                if(Game.this.state[i][j+1] != -1){
-                                    if((Game.this.startx==0 && Game.this.starty==0)) return;
+                                if(j<14 && Game.this.state[i][j+1] != -1){
+                                    // check if game over
+                                    if((Game.this.startx==0 && Game.this.starty==0)){
+                                        Game.this.looper.stop();
+                                        Game.this.started = false;
+                                        System.out.println("Game Over");
+                                        return;
+
+                                    } 
                                     collide = true;
                                     break;
                                 }
                             }
                         }
                     }
-                    if(!collide)
-                    Game.this.starty++; // Pentomino descends one line
+                    if(!collide){
+                        if(Game.this.starty < 14 && Game.this.state[Game.this.startx][Game.this.starty+1] == -1)
+                        Game.this.starty++; // Pentomino descends one line
+                    }
+                    
                     else{
                     Game.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
                     }
@@ -113,12 +128,14 @@ public class Game extends JPanel implements KeyListener {
         for (int i = 0; i < this.currentPentomino.length; i++) {
             for (int j = 0; j < this.currentPentomino[0].length; j++) {
                 if (this.currentPentomino[i][j] == 1) {
+                    if(this.started){
                     g.setColor(this.GetColorOfID(this.currentPentominoIndex));
                     localGraphics2D.fill(new Rectangle2D.Double(i * this.size + this.startx * this.size + 1, j * this.size + this.starty * this.size + 1, this.size - 1, this.size - 1));
+                    }
                 }
             }
         }
-        // check if horizontal lines should be removed (doesnt work yet)
+        // check if horizontal lines should be removed 
                for(int i=0; i<this.state[0].length; i++){
                 boolean filledline = true;
                 for(int j=0; j<this.state.length; j++){
@@ -128,21 +145,40 @@ public class Game extends JPanel implements KeyListener {
                     }
                 }
                 if(filledline){
+                    this.score++;
+                    System.out.println("+1 " + "score : " + this.score);
                     for(int t=0; t<5; t++){
                         this.state[t][i] = -1;
                         g.setColor(Color.lightGray);
                         localGraphics2D.fill(new Rectangle2D.Double(t * this.size + 1, i * this.size + 1, this.size - 1, this.size - 1));
                     }
+                    // drop pentominos if lines where removed
+                    for(int t=i; t>0; t--){
+                        for(int u=0; u<5 ; u++){
+                            if(this.state[u][t-1] != -1){
+                                this.state[u][t] = this.state[u][t-1];
+                                this.state[u][t-1] = -1;
+                            } 
+                        }
+                    }
                 }
                 
+                
+                
             }
+
+            
+
+        
+
+           
     }
     /**
      * Advances to the following pentomino in the database
      * @return void
      */
     public void advanceToNextPentomino() {
-
+        
         // add pentomino to state
         for(int i=this.startx; i<this.currentPentomino.length+this.startx; i++){
             for(int j=this.starty; j<this.currentPentomino[0].length+this.starty; j++){
@@ -193,8 +229,9 @@ public class Game extends JPanel implements KeyListener {
         }
         this.startx = 0;
         this.starty = 0;
-        this.currentPentominoIndex = 0;
+        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
         this.started = false;
+        this.score = 0;
 
         this.repaint();
     }
@@ -207,15 +244,26 @@ public class Game extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE && this.started) {
-            
+            if(!this.pause){
+                this.looper.stop();
+                this.pause = true;
+
+            }
+            else if(this.started){
+                this.looper.start();
+            }
         }
         if (e.getKeyCode() == 65 && this.started) {
-            if (this.startx >= 1)
+            if (this.startx >= 1 && this.state[this.startx-1][this.starty] == -1)
             this.startx--;
         }
         if (e.getKeyCode() == 68 && this.started) {
-            if (this.startx + this.currentPentomino.length <= 4)
+            if ((this.startx + this.currentPentomino.length-1) < 4 && this.state[this.startx+this.currentPentomino.length][this.starty] == -1)
             this.startx++;
+        }
+        if (e.getKeyCode() == 83  && this.started) {
+            if ((this.starty + this.currentPentomino[0].length-1) < 14 && this.state[this.startx][this.starty+this.currentPentomino[0].length] == -1)
+            this.starty++;
         }
     }
 
@@ -228,5 +276,23 @@ public class Game extends JPanel implements KeyListener {
     public void keyReleased(KeyEvent e) {
          //To change body of generated methods, choose Tools | Templates.
     }
-}
+
+    public boolean moveRight(){
+        for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
+            for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
+                if(i + 1 == 15) return false;
+                else{
+                    if(this.state[i + 1][j] == 1) return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean moveLeft(){
+        return true;
+    }
+    public boolean moveDown(){
+        return true;
+   }
+}   
  

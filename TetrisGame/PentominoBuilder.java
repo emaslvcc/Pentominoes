@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class PentominoBuilder {
 
     //All basic pentominoes that will be rotated and flipped
-    private static int[][][] basicDatabase = {
+    public static int[][][] basicDatabase = {
             {
             	// pentomino representation X
                     {0,1,0},
@@ -24,11 +24,11 @@ public class PentominoBuilder {
             },
             {
             	// pentomino representation I
-                    {1},
-                    {1},
-                    {1},
-                    {1},
-                    {1}
+                    {1,0,0,0,0},
+                    {1,0,0,0,0},
+                    {1,0,0,0,0},
+                    {1,0,0,0,0},
+                    {1,0,0,0,0}
             },
             {
             	// pentomino representation Z
@@ -44,9 +44,9 @@ public class PentominoBuilder {
             },
             {
             	// pentomino representation U
-                    {1,1},
-                    {1,0},
-                    {1,1}
+                    {1,1,0},
+                    {1,0,0},
+                    {1,1,0}
             },
             {
             	// pentomino representation V
@@ -62,29 +62,31 @@ public class PentominoBuilder {
             },
             {
             	// pentomino representation Y
-                    {1,0},
-                    {1,1},
-                    {1,0},
-                    {1,0}
+                    {1,0,0,0},
+                    {1,1,0,0},
+                    {1,0,0,0},
+                    {1,0,0,0}
             },
             {
             	// pentomino representation L
-                    {1,0},
-                    {1,0},
-                    {1,0},
-                    {1,1}
+                    {1,0,0,0},
+                    {1,0,0,0},
+                    {1,0,0,0},
+                    {1,1,0,0}
             },
             {
 
                 // pentamino representation P
-            	{1,1},
-                {1,1},
-                {1,0}
+            	{1,1,0},
+                {1,1,0},
+                {1,0,0}
             },
             {
             	// pentomino representation N
         		{1,1,0,0},
-                {0,1,1,1}
+                {0,1,1,1},
+                {0,0,0,0},
+                {0,0,0,0}
         		
             },
             {

@@ -195,7 +195,7 @@ public class Game extends JPanel implements KeyListener {
         Game.this.starty = 0;
 
         // Check if all the pentominos have been reached to go back to the beginning
-        if (this.currentPentominoIndex >= PentominoDatabase.data.length) {
+        if (this.currentPentominoIndex >= PentominoBuilder.basicDatabase.length) {
             this.currentPentominoIndex = 0;
         }
     }
@@ -267,6 +267,9 @@ public class Game extends JPanel implements KeyListener {
             if (this.moveDown())
             this.starty++;
         }
+        if (e.getKeyCode() == 16  && this.started) {
+            this.rotate();
+        }
     }
 
     @Override
@@ -313,7 +316,7 @@ public class Game extends JPanel implements KeyListener {
         return true;
    }
    public void rotate(){
-
+        
    }
 }   
  

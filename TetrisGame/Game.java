@@ -13,6 +13,8 @@ import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -30,8 +32,9 @@ public class Game extends JPanel implements KeyListener {
     private int currentPentominoIndex;
     private int mutation = 0;
     private int[][] currentPentomino;
+    private int currentPentominoMutation;
     private Random random;
-    private int score=0;
+    private int score = 0;
 
      
     public Game(int x, int y, int _size) {
@@ -61,8 +64,35 @@ public class Game extends JPanel implements KeyListener {
                                     if((Game.this.startx==0 && Game.this.starty==0)){
                                         Game.this.looper.stop();
                                         Game.this.started = false;
-                                        System.out.println("Game Over");
-                                        Game.this.reset();
+                                        
+                                         String gameOverMessage = 
+                                        "  /$$$$$$                                                                   /$$$$$$                                                  \n" +
+                                        " /$$__  $$                                                                 /$$__  $$                                                 \n" +
+                                        "| $$  \\__/        /$$$$$$        /$$$$$$/$$$$         /$$$$$$             | $$  \\ $$       /$$    /$$        /$$$$$$         /$$$$$$ \n" +
+                                        "| $$ /$$$$       |____  $$      | $$_  $$_  $$       /$$__  $$            | $$  | $$      |  $$  /$$/       /$$__  $$       /$$__  $$\n" +
+                                        "| $$|_  $$        /$$$$$$$      | $$ \\ $$ \\ $$      | $$$$$$$$            | $$  | $$       \\  $$/$$/       | $$$$$$$$      | $$  \\__/\n" +
+                                        "| $$  \\ $$       /$$__  $$      | $$ | $$ | $$      | $$_____/            | $$  | $$        \\  $$$/        | $$_____/      | $$     \n" +
+                                        "|  $$$$$$/      |  $$$$$$$      | $$ | $$ | $$      |  $$$$$$$            |  $$$$$$/         \\  $/         |  $$$$$$$      | $$     \n" +
+                                        " \\______/        \\_______/      |__/ |__/ |__/       \\_______/             \\______/           \\_/           \\_______/      |__/     \n" 
+                                                                                                                                                                              
+                                                                                                                                                                          
+                                                                                                                                                                             
+                                        ;
+                                    
+                                                                                                                                                
+                                                                                                                                                                           
+                                      
+ 
+                                                                                                                                      
+                                                                                                                                      
+ 
+                                    
+                                         
+                                         JOptionPane optionPane = new JOptionPane(gameOverMessage, JOptionPane.PLAIN_MESSAGE);
+                                         optionPane.setPreferredSize(new Dimension(1000, 880)); // Set your preferred size here
+
+                                         JDialog dialog = optionPane.createDialog("Game Over");
+                                         dialog.setVisible(true);
                                         return;
 
                                     } 
@@ -163,17 +193,8 @@ public class Game extends JPanel implements KeyListener {
                             } 
                         }
                     }
-                }
-                
-                
-                
+                }   
             }
-
-            
-
-        
-
-           
     }
     /**
      * Advances to the following pentomino in the database
@@ -341,7 +362,7 @@ public class Game extends JPanel implements KeyListener {
             }
         
         }
-        System.out.println(this.mutation + " " + PentominoDatabase.data[this.currentPentominoIndex].length);
+        //System.out.println(this.mutation + " " + PentominoDatabase.data[this.currentPentominoIndex].length);
    }
 }   
  

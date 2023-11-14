@@ -29,8 +29,9 @@ public class Game extends JPanel implements KeyListener {
     private int starty;
     private int currentPentominoIndex;
     private int[][] currentPentomino;
+    private int currentPentominoMutation;
     private Random random;
-    private int score=0;
+    private int score = 0;
 
      
     public Game(int x, int y, int _size) {
@@ -94,6 +95,22 @@ public class Game extends JPanel implements KeyListener {
                 this.state[i][j] = -1;
             }
         }
+    }
+
+    public void rotatePentomino(int currentPentominoIndex, int currentPentominoMutation) {
+        int rotation = 1;
+        boolean inBounds = false;
+        int[][] rotatingPentomino = PentominoDatabase.data[this.currentPentominoIndex][currentPentominoMutation + rotation];
+        // Check if following mutation is in bounds
+
+        for (int i = 0; i < rotatingPentomino.length; i++) {
+            for (int j = 0; j < rotatingPentomino[i].length; j++) {
+                if (rotatingPentomino[i][j] == 1) {
+                    inBounds = true;
+                }
+            }
+        }
+        if (inBounds) rotation++;
     }
     /**
     * This function is called BY THE SYSTEM if required for a new frame, uses the state stored by the UI class.
@@ -162,17 +179,8 @@ public class Game extends JPanel implements KeyListener {
                             } 
                         }
                     }
-                }
-                
-                
-                
+                }   
             }
-
-            
-
-        
-
-           
     }
     /**
      * Advances to the following pentomino in the database
@@ -268,7 +276,7 @@ public class Game extends JPanel implements KeyListener {
             this.starty++;
         }
         if (e.getKeyCode() == 16  && this.started) {
-            this.rotate();
+            this.rotatePentomino(this.currentPentominoIndex, this.currentPentominoMutation);
         }
     }
 
@@ -314,9 +322,6 @@ public class Game extends JPanel implements KeyListener {
             }
         }
         return true;
-   }
-   public void rotate(){
-        
    }
 }   
  

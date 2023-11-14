@@ -255,15 +255,15 @@ public class Game extends JPanel implements KeyListener {
             }
         }
         if (e.getKeyCode() == 65 && this.started) {
-            if (this.startx >= 1 && this.state[this.startx-1][this.starty] == -1)
+            if (this.moveLeft())
             this.startx--;
         }
         if (e.getKeyCode() == 68 && this.started) {
-            if ((this.startx + this.currentPentomino.length-1) < 4 && this.state[this.startx+this.currentPentomino.length][this.starty] == -1)
+            if (this.moveRight())
             this.startx++;
         }
         if (e.getKeyCode() == 83  && this.started) {
-            if ((this.starty + this.currentPentomino[0].length-1) < 14 && this.state[this.startx][this.starty+this.currentPentomino[0].length] == -1)
+            if (this.moveDown())
             this.starty++;
         }
     }
@@ -281,18 +281,34 @@ public class Game extends JPanel implements KeyListener {
     public boolean moveRight(){
         for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
             for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
-                if(i + 1 == 15) return false;
+                if(i + 1 == 5) return false;
                 else{
-                    if(this.state[i + 1][j] == 1) return false;
+                    if(this.state[i + 1][j] != -1) return false;
                 }
             }
         }
         return true;
     }
     public boolean moveLeft(){
+        for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
+            for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
+                if(i - 1 == -1) return false;
+                else{
+                    if(this.state[i - 1][j] != -1) return false;
+                }
+            }
+        }
         return true;
     }
     public boolean moveDown(){
+        for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
+            for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
+                if(j + 1 == 15) return false;
+                else{
+                    if(this.state[i][j+1] != -1) return false;
+                }
+            }
+        }
         return true;
    }
 }   

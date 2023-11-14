@@ -211,6 +211,7 @@ public class Game extends JPanel implements KeyListener {
             }
         }
         this.currentPentominoIndex++; // Move to the next pentomino in your PentominoDatabase
+        this.mutation = 0;
 
         // Reposition next pentomino at the beginning of the grid
         Game.this.startx = 0;

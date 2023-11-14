@@ -132,10 +132,22 @@ public class Game extends JPanel implements KeyListener {
     * @return void
     */
     public void paintComponent(Graphics g) {
+
         Graphics2D localGraphics2D = (Graphics2D) g;
- 
-        localGraphics2D.setColor(Color.lightGray);
-        localGraphics2D.fill(this.getVisibleRect());
+
+        if(!this.started){
+
+            
+            localGraphics2D.setColor(Color.lightGray);
+            localGraphics2D.fill(this.getVisibleRect());
+
+            localGraphics2D.setColor(Color.red);
+            localGraphics2D.drawString("START SCREEN", 100, 250);
+        }
+        else{
+        
+            localGraphics2D.setColor(Color.lightGray);
+            localGraphics2D.fill(this.getVisibleRect());
  
         // Paints the Tetris grid
         localGraphics2D.setColor(Color.BLACK);
@@ -195,6 +207,7 @@ public class Game extends JPanel implements KeyListener {
                     }
                 }   
             }
+        }
     }
     /**
      * Advances to the following pentomino in the database
@@ -263,6 +276,7 @@ public class Game extends JPanel implements KeyListener {
     public void start() {
         this.started = true;
         this.looper.start();
+        this.repaint();
     }
 
     @Override

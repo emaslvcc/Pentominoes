@@ -48,7 +48,7 @@ public class TetrisGUI extends JPanel {
         highScoreButton.addActionListener(e -> {
 
             // Display high scores logic goes here
-            JOptionPane.showMessageDialog(this, "High Scores: Not implemented yet", "High Scores", JOptionPane.INFORMATION_MESSAGE);
+            Game.highScores();
         });
         menuPanel.add(highScoreButton);
 
@@ -82,7 +82,6 @@ public class TetrisGUI extends JPanel {
 
     /** 
      * Displays the game's instructions
-     * @param void
      * @return the instructions for the game to be played
      */
     private String getInstructions() {

@@ -2,6 +2,8 @@
  * @author Department of Data Science and Knowledge Engineering (DKE)
  * @version 2022.0
  */
+
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -11,6 +13,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JDialog;
@@ -35,6 +40,7 @@ public class Game extends JPanel implements KeyListener {
     private int currentPentominoMutation;
     private Random random;
     private int score = 0;
+    private static ArrayList<Integer> scoreList = new ArrayList<>();
 
      
     public Game(int x, int y, int _size) {
@@ -44,6 +50,7 @@ public class Game extends JPanel implements KeyListener {
 
         // Performs the action specified every 300 milliseconds
         this.looper = new Timer(300, new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -64,6 +71,9 @@ public class Game extends JPanel implements KeyListener {
                                     if((Game.this.startx==0 && Game.this.starty==0)){
                                         Game.this.looper.stop();
                                         Game.this.started = false;
+                                        scoreList.add(score);
+                                        Collections.sort(scoreList);
+                                        Collections.reverse(scoreList);
                                         
                                          String gameOverMessage = 
                                         "  /$$$$$$                                                                                         /$$$$$$                                                  \n" +
@@ -379,5 +389,15 @@ public class Game extends JPanel implements KeyListener {
         }
         //System.out.println(this.mutation + " " + PentominoDatabase.data[this.currentPentominoIndex].length);
    }
+
+   public static void highScores(){
+       String mess = "High Scores: \n";
+       for(int i = 0; i < scoreList.size(); i++) mess += ((i+1) + ". " + scoreList.get(i) + "\n");
+       JOptionPane optionPane = new JOptionPane(mess, JOptionPane.PLAIN_MESSAGE);
+       optionPane.setPreferredSize(new Dimension(700, 380)); // Set your preferred size here
+       JDialog dialog = optionPane.createDialog("High scores");
+       dialog.setVisible(true);
+    }
+
 }   
  

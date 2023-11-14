@@ -28,6 +28,7 @@ public class Game extends JPanel implements KeyListener {
     private boolean pause = false;
     private int starty;
     private int currentPentominoIndex;
+    private int mutation = 0;
     private int[][] currentPentomino;
     private Random random;
     private int score=0;
@@ -125,7 +126,7 @@ public class Game extends JPanel implements KeyListener {
         }
 
         // Prints the current pentomino at the positions they go through
-        this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][0];
+        this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
         for (int i = 0; i < this.currentPentomino.length; i++) {
             for (int j = 0; j < this.currentPentomino[0].length; j++) {
                 if (this.currentPentomino[i][j] == 1) {
@@ -316,7 +317,31 @@ public class Game extends JPanel implements KeyListener {
         return true;
    }
    public void rotate(){
+
+        int lastmutation = this.mutation;
+
+        this.mutation++;
+        if(this.mutation >= PentominoDatabase.data[this.currentPentominoIndex].length) this.mutation = 0;
+        int[][] curr = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
+
+
+            for(int i=this.startx; i<this.startx+curr.length ; i++){
+                for(int j=this.starty; j<this.starty+curr[0].length; j++){
+                    if( j == 15 || i==5 ){
+                        if(this.mutation>0)
+                            this.mutation = lastmutation ;
+                        System.out.println("rotate failed");
+                        return;
+                    } 
+                    else if(this.state[i][j] != -1){
+                            this.mutation = lastmutation;
+                        System.out.println("rotate failed");
+                        return;
+                    }
+            }
         
+        }
+        System.out.println(this.mutation + " " + PentominoDatabase.data[this.currentPentominoIndex].length);
    }
 }   
  

@@ -66,14 +66,14 @@ public class Game extends JPanel implements KeyListener {
                                         Game.this.started = false;
                                         
                                          String gameOverMessage = 
-                                        "  /$$$$$$                                                                   /$$$$$$                                                  \n" +
-                                        " /$$__  $$                                                                 /$$__  $$                                                 \n" +
-                                        "| $$  \\__/        /$$$$$$        /$$$$$$/$$$$         /$$$$$$             | $$  \\ $$       /$$    /$$        /$$$$$$         /$$$$$$ \n" +
-                                        "| $$ /$$$$       |____  $$      | $$_  $$_  $$       /$$__  $$            | $$  | $$      |  $$  /$$/       /$$__  $$       /$$__  $$\n" +
-                                        "| $$|_  $$        /$$$$$$$      | $$ \\ $$ \\ $$      | $$$$$$$$            | $$  | $$       \\  $$/$$/       | $$$$$$$$      | $$  \\__/\n" +
-                                        "| $$  \\ $$       /$$__  $$      | $$ | $$ | $$      | $$_____/            | $$  | $$        \\  $$$/        | $$_____/      | $$     \n" +
-                                        "|  $$$$$$/      |  $$$$$$$      | $$ | $$ | $$      |  $$$$$$$            |  $$$$$$/         \\  $/         |  $$$$$$$      | $$     \n" +
-                                        " \\______/        \\_______/      |__/ |__/ |__/       \\_______/             \\______/           \\_/           \\_______/      |__/     \n" 
+                                        "  /$$$$$$                                                                                         /$$$$$$                                                  \n" +
+                                        " /$$__  $$                                                                                      /$$__   $$                                                 \n" +
+                                        "|  $$  \\__/         /$$$$$$        /$$$$$$/$$$$         /$$$$$$             | $$     \\ $$     /$$    /$$         /$$$$$$           /$$$$$$ \n" +
+                                        "|  $$  /$$$$       |____  $$     | $$_    $$_   $$     /$$__  $$            | $$      | $$    |  $$  /$$/       /$$__  $$        /$$__    $$\n" +
+                                        "|  $$|_   $$        /$$$$$$$     | $$  \\ $$ \\     $$    | $$$$$$$$          | $$      | $$    \\  $$/$$/       | $$$$$$$$       | $$      \\__/\n" +
+                                        "|  $$  \\  $$        /$$__   $$     | $$   |  $$ |   $$    | $$_____/           | $$      | $$      \\  $$$/        | $$_____/        | $$     \n" +
+                                        "|   $$$$$$/     |   $$$$$$$     | $$   |  $$  |  $$    |    $$$$$$$          |  $$$$$$/         \\  $/          |  $$$$$$$        | $$     \n" +
+                                        " \\______/        \\_______/      |__/   |__/  |__/       \\_______/            \\______/            \\_/            \\_______/       |__/     \n" 
                                                                                                                                                                               
                                                                                                                                                                           
                                                                                                                                                                              
@@ -89,7 +89,7 @@ public class Game extends JPanel implements KeyListener {
                                     
                                          
                                          JOptionPane optionPane = new JOptionPane(gameOverMessage, JOptionPane.PLAIN_MESSAGE);
-                                         optionPane.setPreferredSize(new Dimension(1000, 880)); // Set your preferred size here
+                                         optionPane.setPreferredSize(new Dimension(700, 380)); // Set your preferred size here
 
                                          JDialog dialog = optionPane.createDialog("Game Over");
                                          dialog.setVisible(true);

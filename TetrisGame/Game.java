@@ -61,6 +61,7 @@ public class Game extends JPanel implements KeyListener {
                                         Game.this.looper.stop();
                                         Game.this.started = false;
                                         System.out.println("Game Over");
+                                        Game.this.reset();
                                         return;
 
                                     } 
@@ -310,6 +311,9 @@ public class Game extends JPanel implements KeyListener {
             }
         }
         return true;
+   }
+   public void rotate(){
+
    }
 }   
  

@@ -37,6 +37,8 @@ public class Game extends JPanel implements KeyListener {
     private int mutation = 0;
     private int[][] currentPentomino;
     private int currentPentominoMutation;
+    private int[][] nextPentomino;
+    private int nextIndex;
     private Random random;
     private int score = 0;
     private static ArrayList<Integer> scoreList = new ArrayList<>();
@@ -48,7 +50,7 @@ public class Game extends JPanel implements KeyListener {
  
 
         // Performs the action specified every 300 milliseconds
-        this.looper = new Timer(300, new ActionListener() {
+        this.looper = new Timer(400, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -121,7 +123,7 @@ public class Game extends JPanel implements KeyListener {
                     Game.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
                     }
                 }
-                Game.this.repaint();
+                if(Game.this.started) Game.this.repaint();
             }
         });
         this.size = _size;
@@ -158,6 +160,8 @@ public class Game extends JPanel implements KeyListener {
         
             localGraphics2D.setColor(Color.lightGray);
             localGraphics2D.fill(this.getVisibleRect());
+
+            
  
         // Paints the Tetris grid
         localGraphics2D.setColor(Color.BLACK);
@@ -166,7 +170,13 @@ public class Game extends JPanel implements KeyListener {
         }
         for (int i = 0; i <= this.state[0].length; i++) {
             localGraphics2D.drawLine(0, i * this.size, this.state.length * this.size, i * this.size);
-        }  
+        } 
+        
+
+        localGraphics2D.drawString("NEXT PENTOMINO", 250, 200);
+        localGraphics2D.drawString("Current score :  " + this.score, 250, 500);
+        
+        
 
         for(int i=0 ; i<this.state.length; i++){
             for(int j=0 ; j<this.state[0].length; j++){
@@ -185,10 +195,42 @@ public class Game extends JPanel implements KeyListener {
                     if(this.started){
                     g.setColor(this.GetColorOfID(this.currentPentominoIndex));
                     localGraphics2D.fill(new Rectangle2D.Double(i * this.size + this.startx * this.size + 1, j * this.size + this.starty * this.size + 1, this.size - 1, this.size - 1));
-                    }
+                    }                                     
                 }
             }
         }
+
+        this.nextIndex = this.currentPentominoIndex+1;
+        if(this.nextIndex == PentominoDatabase.data.length) this.nextIndex = 0;
+        this.nextPentomino = PentominoDatabase.data[this.nextIndex][0];
+
+
+
+        // Paint next grid
+            localGraphics2D.setColor(Color.BLACK);
+        for (int i = 0; i <= this.nextPentomino.length; i++) {
+            localGraphics2D.drawLine((i * this.size) + 250 , 220, (i * this.size) + 250, (this.nextPentomino[0].length * this.size) + 220);
+            
+        }
+        for (int i = 0; i <= this.nextPentomino[0].length; i++) {
+            localGraphics2D.drawLine(250, (i * this.size)+220, (this.nextPentomino.length * this.size) + 250, (i * this.size) + 220);
+        } 
+
+
+        // paint next pentomino
+        for (int i = 0; i < this.nextPentomino.length; i++) {
+            for (int j = 0; j < this.nextPentomino[0].length; j++) {
+                if (this.nextPentomino[i][j] == 1) {
+                    if(this.started){
+                    g.setColor(this.GetColorOfID(this.nextIndex));
+                    localGraphics2D.fill(new Rectangle2D.Double(i * this.size + 1 + 250, j * this.size + 1 + 220, this.size - 1, this.size - 1));
+                    }                                
+                }
+            }
+        }
+
+
+
         // check if horizontal lines should be removed 
                for(int i=0; i<this.state[0].length; i++){
                 boolean filledline = true;
@@ -200,7 +242,6 @@ public class Game extends JPanel implements KeyListener {
                 }
                 if(filledline){
                     this.score++;
-                    System.out.println("+1 " + "score : " + this.score);
                     for(int t=0; t<5; t++){
                         this.state[t][i] = -1;
                         g.setColor(Color.lightGray);
@@ -352,6 +393,7 @@ public class Game extends JPanel implements KeyListener {
         return true;
     }
     public boolean moveDown(){
+
         for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
             for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
                 if(j + 1 == 15) return false;

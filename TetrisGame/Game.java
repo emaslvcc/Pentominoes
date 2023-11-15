@@ -15,7 +15,6 @@ import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 import javax.swing.JDialog;
@@ -71,7 +70,7 @@ public class Game extends JPanel implements KeyListener {
                                     if((Game.this.startx==0 && Game.this.starty==0)){
                                         Game.this.looper.stop();
                                         Game.this.started = false;
-                                        scoreList.add(score);
+                                        scoreList.add(Game.this.score);
                                         Collections.sort(scoreList);
                                         Collections.reverse(scoreList);
                                         
@@ -103,6 +102,7 @@ public class Game extends JPanel implements KeyListener {
 
                                          JDialog dialog = optionPane.createDialog("Game Over");
                                          dialog.setVisible(true);
+                                         Game.this.reset();
                                         return;
 
                                     } 

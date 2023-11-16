@@ -18,9 +18,12 @@ import java.util.Collections;
 import java.util.Random;
 
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.UIManager;
+
 import java.awt.Font;
 
 /**
@@ -78,18 +81,15 @@ public class Game extends JPanel implements KeyListener {
                                         Collections.reverse(scoreList);
                                         
                                          String gameOverMessage = 
-                                        "  /$$$$$$                                                                                         /$$$$$$                                                  \n" +
-                                        " /$$__  $$                                                                                      /$$__   $$                                                 \n" +
-                                        "|  $$  \\__/         /$$$$$$        /$$$$$$/$$$$         /$$$$$$             | $$     \\ $$     /$$    /$$         /$$$$$$           /$$$$$$ \n" +
-                                        "|  $$  /$$$$       |____  $$     | $$_    $$_   $$     /$$__  $$            | $$      | $$    |  $$  /$$/       /$$__  $$        /$$__    $$\n" +
-                                        "|  $$|_   $$        /$$$$$$$     | $$  \\ $$ \\     $$    | $$$$$$$$          | $$      | $$    \\  $$/$$/       | $$$$$$$$       | $$      \\__/\n" +
-                                        "|  $$  \\  $$        /$$__   $$     | $$   |  $$ |   $$    | $$_____/           | $$      | $$      \\  $$$/        | $$_____/        | $$     \n" +
-                                        "|   $$$$$$/     |   $$$$$$$     | $$   |  $$  |  $$    |    $$$$$$$          |  $$$$$$/         \\  $/          |  $$$$$$$        | $$     \n" +
-                                        " \\______/        \\_______/      |__/   |__/  |__/       \\_______/            \\______/            \\_/            \\_______/       |__/     \n" 
-                                                                                                                                                                              
-                                                                                                                                                                          
-                                                                                                                                                                             
-                                        ;
+                                                                                                                                                                      
+                                                      
+                                         
+                                         " _____ ____  _      _____   ____  _     _____ ____ \n" +
+                                         "/  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\\n" +
+                                         "| |  _| / \\|| |\\/|||  \\    | / \\|| | //|  \\  |  \\/|\n" +
+                                         "| |_//| |-||| |  |||  /_   | \\_/|| \\// |  /_ |    /\n" +
+                                         "\\____\\_/ \\|\\_/  \\|\\____\\  \\____/\\__/  \\____\\/_/\\_\\";
+                                     
                                     
                                                                                                                                                 
                                                                                                                                                                            
@@ -99,14 +99,23 @@ public class Game extends JPanel implements KeyListener {
                                                                                                                                       
  
                                     
-                                         
-                                         JOptionPane optionPane = new JOptionPane(gameOverMessage, JOptionPane.PLAIN_MESSAGE);
-                                         optionPane.setPreferredSize(new Dimension(700, 380)); // Set your preferred size here
+                                         // Create a JLabel with HTML formatting
+                            JLabel label = new JLabel("<html><pre>" + gameOverMessage + "</pre></html>");
+                            label.setForeground(Color.WHITE); // Set text color to white
 
-                                         JDialog dialog = optionPane.createDialog("Game Over");
-                                         dialog.setVisible(true);
-                                         Game.this.reset();
-                                        return;
+                            // Customize JOptionPane with a green background
+                            UIManager.put("OptionPane.background", new Color(145, 0, 12)); // Green background
+                            UIManager.put("Panel.background", new Color(145, 0, 12)); // Green background
+
+                            // Create and show JOptionPane
+                            JOptionPane optionPane = new JOptionPane(label, JOptionPane.PLAIN_MESSAGE);
+                            optionPane.setPreferredSize(new Dimension(400, 180));
+
+                            JDialog dialog = optionPane.createDialog("Game Over");
+                            dialog.setVisible(true);
+
+                            // Reset the game or perform other actions as needed
+                            return;
 
                                     } 
                                     collide = true;
@@ -151,7 +160,7 @@ public class Game extends JPanel implements KeyListener {
         if(!this.started){
 
             
-            localGraphics2D.setColor(Color.lightGray);
+            localGraphics2D.setColor(Color.black);
             localGraphics2D.fill(this.getVisibleRect());
 
              // ASCII art for "START SCREEN"
@@ -172,7 +181,7 @@ public class Game extends JPanel implements KeyListener {
         "      '               '    )/         '               '     '      '       '    '      ";
     
 
-    localGraphics2D.setColor(Color.blue);
+    localGraphics2D.setColor(Color.white);
     Font font = new Font("Monospaced", Font.PLAIN, 12);
     localGraphics2D.setFont(font);
 

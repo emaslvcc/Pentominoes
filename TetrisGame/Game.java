@@ -181,13 +181,18 @@ public class Game extends JPanel implements KeyListener {
         "      '               '    )/         '               '     '      '       '    '      ";
     
 
-    localGraphics2D.setColor(Color.white);
-    Font font = new Font("Monospaced", Font.PLAIN, 12);
-    localGraphics2D.setFont(font);
-
-    // Draw the ASCII art on the screen
-    int startX = 50; // Adjust the X-coordinate based on your preference
-    int startY = 150; // Adjust the Y-coordinate based on your preference
+        localGraphics2D.setColor(Color.white);
+        Font font = new Font("Monospaced", Font.PLAIN, 12);
+        localGraphics2D.setFont(font);
+    
+        // Calculate the starting position to center the ASCII art
+        int artWidth = 70; // Adjust the width based on the actual width of ASCII art
+        int artHeight = 15; // Adjust the height based on the actual height of ASCII art
+        int windowWidth = getWidth(); // Adjust this based on the width of the window
+        int windowHeight = getHeight(); // Adjust this based on the height of the window
+    
+        int startX = (windowWidth - artWidth * 9) / 2; // Adjust 9 based on the character width in your font
+        int startY = (windowHeight - artHeight * 15) / 2; // Adjust 15 based on the character height in your font
     String[] lines = startScreenArt.split("\n");
     for (int i = 0; i < lines.length; i++) {
         localGraphics2D.drawString(lines[i], startX, startY + i * 15);

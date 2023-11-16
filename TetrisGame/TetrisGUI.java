@@ -93,7 +93,7 @@ public class TetrisGUI extends JPanel {
         SwingUtilities.invokeLater(() -> {
 
             JFrame frame = new JFrame("Tetris"); // A JFrame named frame is created
-            frame.setSize(710, 710); // Size is set to 440 width and 710 height
+            frame.setSize(1110, 710); // Size is set to 440 width and 710 height
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // When the user closes the window, the application is terminated
             frame.setResizable(false); // It cannot be resized by the user
             frame.setFocusable(false); // The ability to focus the frame is disabled

@@ -21,6 +21,7 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.awt.Font;
 
 /**
 * This class takes care of all the graphics to display a certain state.
@@ -153,8 +154,29 @@ public class Game extends JPanel implements KeyListener {
             localGraphics2D.setColor(Color.lightGray);
             localGraphics2D.fill(this.getVisibleRect());
 
-            localGraphics2D.setColor(Color.red);
-            localGraphics2D.drawString("START SCREEN", 100, 250);
+             // ASCII art for "START SCREEN"
+        String startScreenArt = 
+        " _______  _______  _______  ______    _______       _______  _______  ______    _______  _______  __    _ \n" +
+        "|       ||       ||   _   ||    _ |  |       |     |       ||       ||    _ |  |       ||       ||  |  | |\n" +
+        "|  _____||_     _||  |_|  ||   | ||  |_     _|     |  _____||       ||   | ||  |    ___||    ___||   |_| |\n" +
+        "| |_____   |   |  |       ||   |_||_   |   |       | |_____ |       ||   |_||_ |   |___ |   |___ |       |\n" +
+        " _____| |  |   |  |       ||    __  |  |   |       |_____  ||      _||    __  ||    ___||    ___||  _    |\n" +
+        "|_______|  |___|  |__| |__||___|  |_|  |___|       |_______||_______||___|  |_||_______||_______||_|  |__|\n";
+    
+    
+    // Set the color and font for the ASCII art
+    localGraphics2D.setColor(Color.blue);
+    Font font = new Font("Monospaced", Font.PLAIN, 12);
+    localGraphics2D.setFont(font);
+
+    // Draw the ASCII art on the screen
+    int startX = 50; // Adjust the X-coordinate based on your preference
+    int startY = 150; // Adjust the Y-coordinate based on your preference
+    String[] lines = startScreenArt.split("\n");
+    for (int i = 0; i < lines.length; i++) {
+        localGraphics2D.drawString(lines[i], startX, startY + i * 15);
+    }
+
         }
         else{
         

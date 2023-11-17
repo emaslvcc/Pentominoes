@@ -4,6 +4,7 @@
  */
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -21,8 +22,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.UIManager;
-
-import java.awt.Font;
 
 /**
 * This class takes care of all the graphics to display a certain state.
@@ -70,7 +69,7 @@ public class Game extends JPanel implements KeyListener {
                             if(Game.this.currentPentomino[i-Game.this.startx][j-Game.this.starty] == 1){
                                 if(j<14 && Game.this.state[i][j+1] != -1){
                                     // check if game over
-                                    if((Game.this.startx==0 && Game.this.starty==0)){
+                                    if((Game.this.startx<=0 && Game.this.starty<=0)){
                                         Game.this.looper.stop();
                                         Game.this.started = false;
                                         scoreList.add(Game.this.score);
@@ -112,6 +111,7 @@ public class Game extends JPanel implements KeyListener {
                             dialog.setVisible(true);
 
                             // Reset the game or perform other actions as needed
+                            Game.this.reset();
                             return;
 
                                     } 
@@ -185,8 +185,8 @@ public class Game extends JPanel implements KeyListener {
         // Calculate the starting position to center the ASCII art
         int artWidth = 70; // Adjust the width based on the actual width of ASCII art
         int artHeight = 15; // Adjust the height based on the actual height of ASCII art
-        int windowWidth = getWidth(); // Adjust this based on the width of the window
-        int windowHeight = getHeight(); // Adjust this based on the height of the window
+        int windowWidth = this.getWidth(); // Adjust this based on the width of the window
+        int windowHeight = this.getHeight(); // Adjust this based on the height of the window
     
         int startX = (windowWidth - artWidth * 9) / 2; // Adjust 9 based on the character width in your font
         int startY = (windowHeight - artHeight * 15) / 2; // Adjust 15 based on the character height in your font
@@ -229,6 +229,25 @@ public class Game extends JPanel implements KeyListener {
 
         // Prints the current pentomino at the positions they go through
         this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
+
+        for (int i = 0; i < this.currentPentomino.length; i++) {
+            for (int j = 0; j < this.currentPentomino[0].length; j++) {
+                if (this.currentPentomino[i][j] == 1) {
+                    if(this.state[i+this.startx][j+this.starty] != -1){
+                        this.starty--;
+                        i=100;
+                        j=100;
+                        break;
+                    }                                     
+                }
+            }
+        }
+
+
+
+
+
+        
         for (int i = 0; i < this.currentPentomino.length; i++) {
             for (int j = 0; j < this.currentPentomino[0].length; j++) {
                 if (this.currentPentomino[i][j] == 1) {
@@ -372,6 +391,7 @@ public class Game extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if(this.startx < 0 || this.starty<0) return;
         if (e.getKeyCode() == 80) {
             if(!this.pause){
                 this.looper.stop();

@@ -2,8 +2,6 @@
  * @author Department of Data Science and Knowledge Engineering (DKE)
  * @version 2022.0
  */
-
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -51,7 +49,6 @@ public class Game extends JPanel implements KeyListener {
     public Game(int x, int y, int _size) {
         this.random = new Random();
         this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length); // Starts with the first pentomino in the database
- 
 
         // Performs the action specified every 300 milliseconds
         this.looper = new Timer(400, new ActionListener() {
@@ -82,7 +79,7 @@ public class Game extends JPanel implements KeyListener {
                                         
                                          String gameOverMessage = 
                                                                                                                                                                       
-                                                      
+                                                     
                                          
                                          " _____ ____  _      _____   ____  _     _____ ____ \n" +
                                          "/  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\\n" +
@@ -375,7 +372,7 @@ public class Game extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE && this.started) {
+        if (e.getKeyCode() == 80) {
             if(!this.pause){
                 this.looper.stop();
                 this.pause = true;
@@ -394,7 +391,7 @@ public class Game extends JPanel implements KeyListener {
             if (this.moveRight())
             this.startx++;
         }
-        if (e.getKeyCode() == 83  && this.started) {
+        if (e.getKeyCode() == 32  && this.started) {
             if (this.moveDown())
             this.starty++;
         }

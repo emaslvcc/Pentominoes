@@ -1,12 +1,5 @@
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import java.awt.*;
 
 // This class extends "JPanel", which is a swing component used for creating panels in the GUI
 public class TetrisGUI extends JPanel {
@@ -56,8 +49,7 @@ public class TetrisGUI extends JPanel {
         JButton instructionButton = this.createMenuButton("Instructions");
         instructionButton.addActionListener(e -> {
 
-            // Instructions logic goes here
-            JOptionPane.showMessageDialog(this, this.getInstructions(), "Instructions", JOptionPane.INFORMATION_MESSAGE);
+            getInstructions();
         });
         menuPanel.add(instructionButton);
 
@@ -80,14 +72,29 @@ public class TetrisGUI extends JPanel {
         return button;
     }
 
-    /** 
+     /** 
      * Displays the game's instructions
      * @return the instructions for the game to be played
      */
-    private String getInstructions() {
-        return "Tetris Instructions:\n" +
-                "A = left, D = right, S = down, Space = pause";
+    public void getInstructions() {
+        
+        // Set background color of the option pane and panel
+        UIManager.put("OptionPane.background", new Color(145, 0, 12));
+        UIManager.put("Panel.background", new Color(145, 0, 12));
+
+        String instructions = "<html><font color='white'>Tetris Instructions: A = left, D = right, S = down, Space = fast-forward, SHIFT= rotate</font></html>";
+
+        JLabel label = new JLabel(instructions);
+        label.setFont(new Font("SansSerif", Font.PLAIN, 20)); // You can adjust the font if needed
+        label.setForeground(Color.WHITE);
+
+        JOptionPane.showMessageDialog(this, label, "Tetris Instructions", JOptionPane.INFORMATION_MESSAGE);
+
+        // Reset UIManager settings after the dialog is closed
+        UIManager.put("OptionPane.background", UIManager.get("OptionPane.background"));
+        UIManager.put("Panel.background", UIManager.get("Panel.background"));
     }
+    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

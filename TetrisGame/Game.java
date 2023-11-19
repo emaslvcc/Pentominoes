@@ -20,6 +20,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
@@ -100,8 +102,9 @@ public class Game extends JPanel implements KeyListener {
                             label.setForeground(Color.WHITE); // Set text color to white
 
                             // Customize JOptionPane with a green background
-                            UIManager.put("OptionPane.background", new Color(145, 0, 12)); // Green background
-                            UIManager.put("Panel.background", new Color(145, 0, 12)); // Green background
+                            UIManager.put("OptionPane.background", new Color(145, 0, 12)); // red background
+                            UIManager.put("Panel.background", new Color(145, 0, 12)); 
+                            
 
                             // Create and show JOptionPane
                             JOptionPane optionPane = new JOptionPane(label, JOptionPane.PLAIN_MESSAGE);
@@ -179,7 +182,7 @@ public class Game extends JPanel implements KeyListener {
     
 
         localGraphics2D.setColor(Color.white);
-        Font font = new Font("Monospaced", Font.PLAIN, 12);
+        Font font = new Font("Monospaced", Font.BOLD, 12);
         localGraphics2D.setFont(font);
     
         // Calculate the starting position to center the ASCII art
@@ -492,14 +495,35 @@ public class Game extends JPanel implements KeyListener {
         //System.out.println(this.mutation + " " + PentominoDatabase.data[this.currentPentominoIndex].length);
    }
 
-   public static void highScores(){
-       String mess = "High Scores: \n";
-       for(int i = 0; i < scoreList.size(); i++) mess += ((i+1) + ". " + scoreList.get(i) + "\n");
-       JOptionPane optionPane = new JOptionPane(mess, JOptionPane.PLAIN_MESSAGE);
-       optionPane.setPreferredSize(new Dimension(700, 380)); // Set your preferred size here
-       JDialog dialog = optionPane.createDialog("High scores");
-       dialog.setVisible(true);
+   
+    public static void highScores() {
+        StringBuilder mess = new StringBuilder("High Scores:\n");
+        for (int i = 0; i < scoreList.size(); i++) {
+            mess.append((i + 1)).append(". ").append(scoreList.get(i)).append("\n");
+        }
+
+        JTextArea textArea = new JTextArea(mess.toString());
+        textArea.setBackground(new Color(145, 0, 12)); // Set background color to red
+        textArea.setForeground(Color.WHITE); // Set text color to white
+        textArea.setFont(new Font("Serif", Font.PLAIN, 20)); // 
+        textArea.setEditable(false);
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        UIManager.put("OptionPane.background", new Color(145, 0, 12)); // Set background color of the option pane
+        UIManager.put("Panel.background", new Color(145, 0, 12)); // Set background color of the panel
+
+        JOptionPane optionPane = new JOptionPane(scrollPane, JOptionPane.PLAIN_MESSAGE);
+        JDialog dialog = optionPane.createDialog("High scores");
+        dialog.setVisible(true);
     }
 
-}   
+
+
+   
+    
+   
+ }
+
+   
  

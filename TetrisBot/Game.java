@@ -55,6 +55,7 @@ public class Game extends JPanel implements KeyListener {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                if(Game.this.startx == 0 && Game.this.starty == 0) Game.this.CheckBestOption();
                 // Checks if the pentomino has reached the end of the grid
                 if (Game.this.starty + Game.this.currentPentomino[0].length == 15 ) {
 
@@ -127,7 +128,7 @@ public class Game extends JPanel implements KeyListener {
                     }
                     
                     else{
-                    Game.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
+                        Game.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
                     }
                 }
                 if(Game.this.started) Game.this.repaint();
@@ -151,7 +152,6 @@ public class Game extends JPanel implements KeyListener {
     * @return void
     */
     public void paintComponent(Graphics g) {
-
         Graphics2D localGraphics2D = (Graphics2D) g;
 
         if(!this.started){
@@ -243,12 +243,7 @@ public class Game extends JPanel implements KeyListener {
             }
         }
 
-
-
-
-
-        
-        for (int i = 0; i < this.currentPentomino.length; i++) {
+     for (int i = 0; i < this.currentPentomino.length; i++) {
             for (int j = 0; j < this.currentPentomino[0].length; j++) {
                 if (this.currentPentomino[i][j] == 1) {
                     if(this.started){
@@ -258,6 +253,11 @@ public class Game extends JPanel implements KeyListener {
                 }
             }
         }
+
+
+
+        
+
 
         this.nextIndex = this.currentPentominoIndex+1;
         if(this.nextIndex == PentominoDatabase.data.length) this.nextIndex = 0;
@@ -324,7 +324,6 @@ public class Game extends JPanel implements KeyListener {
      * @return void
      */
     public void advanceToNextPentomino() {
-        
         // add pentomino to state
         for(int i=this.startx; i<this.currentPentomino.length+this.startx; i++){
             for(int j=this.starty; j<this.currentPentomino[0].length+this.starty; j++){
@@ -401,22 +400,8 @@ public class Game extends JPanel implements KeyListener {
             else if(this.pause){
                 this.looper.start();
                 this.pause = false;
+            
             }
-        }
-        if (e.getKeyCode() == 65 && this.started) {
-            if (this.moveLeft())
-            this.startx--;
-        }
-        if (e.getKeyCode() == 68 && this.started) {
-            if (this.moveRight())
-            this.startx++;
-        }
-        if (e.getKeyCode() == 32  && this.started) {
-            if (this.moveDown())
-            this.starty++;
-        }
-        if (e.getKeyCode() == 16  && this.started) {
-            this.rotate();
         }
     }
 
@@ -458,7 +443,9 @@ public class Game extends JPanel implements KeyListener {
             for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
                 if(j + 1 == 15) return false;
                 else{
-                    if(this.state[i][j+1] != -1) return false;
+                    if(this.state[i][j+1] != -1 && this.currentPentomino[i-this.startx][j-this.starty] == 1){ 
+                        return false;
+                    } 
                 }
             }
         }
@@ -489,7 +476,6 @@ public class Game extends JPanel implements KeyListener {
             }
         
         }
-        //System.out.println(this.mutation + " " + PentominoDatabase.data[this.currentPentominoIndex].length);
    }
 
    public static void highScores(){
@@ -499,6 +485,89 @@ public class Game extends JPanel implements KeyListener {
        optionPane.setPreferredSize(new Dimension(700, 380)); // Set your preferred size here
        JDialog dialog = optionPane.createDialog("High scores");
        dialog.setVisible(true);
+    }
+
+    public void CheckBestOption(){
+
+        double max = 0;
+        double curr = 0;
+
+        int mut = 0;
+        int x = 0;
+        int y = 0;
+
+
+        int[][] teststate = new int[5][15];
+
+    
+
+        while(true){
+             this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
+        System.out.println("\n");
+             
+            for(int i=0;i<this.state.length;i++){
+                for(int j=0;j<this.state[0].length;j++){
+                    teststate[i][j] = this.state[i][j];
+                }
+            }
+
+
+            while(this.moveDown()){
+                
+                    this.starty++;
+            }
+            
+            // places a possible option in teststate
+            for(int i=this.starty; i<this.starty + this.currentPentomino[0].length; i++){
+                for(int j=this.startx; j<this.startx + this.currentPentomino.length; j++){
+                    if(this.currentPentomino[j-this.startx][i-this.starty] == 1){
+                        teststate[j][i] = this.currentPentominoIndex;
+                    }
+                }
+
+            }
+            // counts the value of this state
+            for(int i=0; i<teststate[0].length; i++){
+                int rowval=0;
+                for(int j=0; j<teststate.length; j++){
+                    if(teststate[j][i] != -1) rowval++;
+                }
+                rowval *= rowval;
+                curr += rowval;
+            }
+            // if the value is higher than max, safe the mutation and update max
+            if(curr > max){
+                max = curr;
+                mut = this.mutation;
+                x = this.startx;
+                y = this.starty;
+            }
+            
+            curr = 0;
+            this.starty = 0;
+            if(!this.moveRight()){
+           
+                this.startx = 0;
+                this.mutation++;
+                if(this.mutation >= PentominoDatabase.data[this.currentPentominoIndex].length){
+                    this.mutation = 0;
+                    break;
+                }
+                
+
+            }
+            else{
+                this.startx++;
+                this.starty=0;
+            }
+            
+        }
+        this.startx = x;
+        this.starty = y;
+        this.mutation = mut;
+
+        this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
+
     }
 
 }   

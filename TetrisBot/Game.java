@@ -47,7 +47,9 @@ public class Game extends JPanel implements KeyListener {
      
     public Game(int x, int y, int _size) {
         this.random = new Random();
+        this.shuffleOrder(); // shuffle order of database
         this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length); // Starts with the first pentomino in the database
+        
 
         // Performs the action specified every 300 milliseconds
         this.looper = new Timer(400, new ActionListener() {
@@ -487,6 +489,17 @@ public class Game extends JPanel implements KeyListener {
        dialog.setVisible(true);
     }
 
+    public void shuffleOrder(){
+        int[][][][] data = PentominoDatabase.data;
+
+        for (int i = 0; i < data.length; i++) {
+            int randomPosition = this.random.nextInt(data.length);
+            int[][][] temp = data[i];
+            data[i] = data[randomPosition];
+            data[randomPosition] = temp;
+        } 
+    }
+
     public void CheckBestOption(){
 
         double max = 0;
@@ -503,7 +516,6 @@ public class Game extends JPanel implements KeyListener {
 
         while(true){
              this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
-        System.out.println("\n");
              
             for(int i=0;i<this.state.length;i++){
                 for(int j=0;j<this.state[0].length;j++){
@@ -565,6 +577,7 @@ public class Game extends JPanel implements KeyListener {
         this.startx = x;
         this.starty = y;
         this.mutation = mut;
+
 
         this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
 

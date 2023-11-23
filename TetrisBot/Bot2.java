@@ -46,9 +46,11 @@ public class Bot2 extends JPanel implements KeyListener {
 
      
     public Bot2(int x, int y, int _size) {
-        this.random = new Random();
-        this.shuffleOrder(); // Shuffles database order
-        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
+
+        int[] pentominoOrder = {8, 2, 4, 0, 11, 5, 6, 3, 9, 1, 7, 10};
+        for (int i = 0; i < 12; i++) {
+            this.currentPentominoIndex = pentominoOrder[i];
+        }
         
         // Performs the action specified every 300 milliseconds
         this.looper = new Timer(400, new ActionListener() {
@@ -521,6 +523,7 @@ public class Bot2 extends JPanel implements KeyListener {
             currentProperties[1] = averageHeight(testState);
             currentProperties[2] = columnHeightDifference(testState);
             currentProperties[3] = consecutiveHeightDifference(testState);
+            //currentProperties[4] = removableRow(testState);
 
             score = calculateScore(currentProperties);
             if (score < bestScore) {
@@ -624,8 +627,23 @@ public class Bot2 extends JPanel implements KeyListener {
         return max;
     }
 
+    public int removableRow(int[][] testState) {
+
+        int rows = 15;
+        for (int row = 0; row < testState.length; row++) {
+            
+            boolean fullRow = true;
+            for (int col = 0; col < testState[0].length; col++) {
+                if (testState[row][col] == 0) fullRow = false;
+            }
+
+            if (fullRow) rows--;
+        }
+        return rows;
+    }
+
     public double calculateScore(double[] array) {
-        double score = array[0] * 0.15 + array[1] * 0.25 + array[2] * 0.45 + array[3] * 0.15;
+        double score = array[0] * 0.35 + array[1] * 0.10 + array[2] * 0.40 + array[3] * 0.15;
         return score;
     }
 }

@@ -43,14 +43,11 @@ public class Bot2 extends JPanel implements KeyListener {
     private Random random;
     private int score = 0;
     private static ArrayList<Integer> scoreList = new ArrayList<>();
-
      
     public Bot2(int x, int y, int _size) {
-
-        int[] pentominoOrder = {8, 2, 4, 0, 11, 5, 6, 3, 9, 1, 7, 10};
-        for (int i = 0; i < 12; i++) {
-            this.currentPentominoIndex = pentominoOrder[i];
-        }
+        this.random = new Random();
+        this.shuffleOrder(); // shuffle order of database
+        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
         
         // Performs the action specified every 300 milliseconds
         this.looper = new Timer(400, new ActionListener() {
@@ -62,7 +59,6 @@ public class Bot2 extends JPanel implements KeyListener {
 
                 // Checks if the pentomino has reached the end of the grid
                 if (Bot2.this.starty + Bot2.this.currentPentomino[0].length == 15 ) {
-
                     Bot2.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
 
                 } else {
@@ -135,7 +131,12 @@ public class Bot2 extends JPanel implements KeyListener {
                         Bot2.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
                     }
                 }
-                if(Bot2.this.started) Bot2.this.repaint();
+                if(Bot2.this.started) {
+                    Bot2.this.repaint();
+                    if (Bot2.this.starty + Bot2.this.currentPentomino[0].length == 15) {
+                        Bot2.this.advanceToNextPentomino();
+                    }
+                }
             }
         });
         this.size = _size;
@@ -490,7 +491,7 @@ public class Bot2 extends JPanel implements KeyListener {
     public void bestScore() {
 
         int[][] testState = new int[5][15];
-        double[] currentProperties = new double[4];
+        double[] currentProperties = new double[5];
         double score = 0;
         double bestScore = 100000;
         int mutation = 0;
@@ -523,7 +524,9 @@ public class Bot2 extends JPanel implements KeyListener {
             currentProperties[1] = averageHeight(testState);
             currentProperties[2] = columnHeightDifference(testState);
             currentProperties[3] = consecutiveHeightDifference(testState);
-            //currentProperties[4] = removableRow(testState);
+            currentProperties[4] = removableRow(testState);
+
+            System.out.println(columnHeightDifference(testState));
 
             score = calculateScore(currentProperties);
             if (score < bestScore) {
@@ -546,8 +549,7 @@ public class Bot2 extends JPanel implements KeyListener {
             else{
                 this.startx++;
                 this.starty = 0;
-            }
-            
+            }           
         }
         this.startx = x;
         this.starty = y;
@@ -559,38 +561,40 @@ public class Bot2 extends JPanel implements KeyListener {
         
         // Iterate over columns
         int gapCount = 0;
-        for (int col = 0; col < testState[0].length; col++) {
+        for (int row = 0; row < testState.length; row++) {
             
             boolean foundNonEmptyCell = false;
-            for (int row = 0; row < testState.length; row++) {
-                if (testState[row][col] == 1) foundNonEmptyCell = true;
+            for (int col = 0; col < testState[0].length; col++) {
+                if (testState[row][col] != -1) foundNonEmptyCell = true;
                 else if (testState[row][col] == 0 && foundNonEmptyCell) gapCount++;
             }
+            if (!foundNonEmptyCell) gapCount += 15;
         }
         return gapCount;
     }
 
     public double averageHeight(int[][] testState) {
 
-        int totalHeight = 0;
-        for (int col = 0; col < testState[0].length; col++) {
-            for (int row = 0; row < testState.length; row++) {
-                if (testState[row][col] == 1) totalHeight += (15 - row);
+        double totalHeight = 0;
+        for (int row = 0; row < testState.length; row++) {
+            for (int col = 0; col < testState[0].length; col++) {
+                if (testState[row][col] != -1) totalHeight += (15 - row);
             }
         }
-        return totalHeight / 5;
+        return totalHeight / 5.0;
     }
 
     public int columnHeightDifference(int[][] testState) {
         
         int maxHeight = 0;
-        int minHeight = 0;
+        int minHeight = 16;
 
-        for (int col = 0; col < testState[0].length; col++) {
-            for (int row = 0; row < testState.length; row++) {
-                if (testState[row][col] == 1) {
-                    if (15 - row > maxHeight) maxHeight = 15 - row;
-                    else if (15 - row < minHeight) minHeight = 15 - row;
+        for (int row = 0; row < testState.length; row++) {
+            for (int col = 0; col < testState[0].length; col++) {
+                if (testState[row][col] != -1) {
+                    if (15 - col > maxHeight) maxHeight = 15 - col;
+                    if (15 - col < minHeight) minHeight = 15 - col;
+                    break;
                 }
             }
         }
@@ -606,11 +610,14 @@ public class Bot2 extends JPanel implements KeyListener {
         int height5 = 0;
 
         for (int row = 0; row < testState.length; row++) {
-            if (testState[row][0] == 1) height1 = 15 - row;
-            else if (testState[row][1] == 1) height2 = 15 - row;
-            else if (testState[row][2] == 1) height3 = 15 - row;
-            else if (testState[row][3] == 1) height4 = 15 - row;
-            else if (testState[row][4] == 1) height5 = 15 - row;
+            for (int col = 0; col < testState[0].length; col++) {
+                if (testState[row][col] != -1) height1 = 15 - row;
+            }
+            if (testState[row][0] != -1) height1 = 15 - row;
+            if (testState[row][1] != -1) height2 = 15 - row;
+            if (testState[row][2] != -1) height3 = 15 - row;
+            if (testState[row][3] != -1) height4 = 15 - row;
+            if (testState[row][4] != -1) height5 = 15 - row;
         }
 
         int heightDiff1 = Math.abs(height2 - height1);
@@ -643,7 +650,7 @@ public class Bot2 extends JPanel implements KeyListener {
     }
 
     public double calculateScore(double[] array) {
-        double score = array[0] * 0.35 + array[1] * 0.10 + array[2] * 0.40 + array[3] * 0.15;
+        double score = array[0] * 1 + array[1] * 0.15 + array[2] * 0.65 + array[3] * 0 + array[4] * 0.8;
         return score;
     }
 }

@@ -21,7 +21,7 @@ public class TetrisGUI extends JPanel {
         JPanel menuPanel = new JPanel();
         menuPanel.setLayout(new GridLayout(4, 1));
 
-        // An instance of the Game class is created. This is where the game is played
+        // An instance of the Bot2 class is created. This is where the game is played
         Game mainContentPanel = new Game(5,15, 45);
         this.addKeyListener(mainContentPanel); // This handles keyboard input for game control
 
@@ -48,7 +48,7 @@ public class TetrisGUI extends JPanel {
         highScoreButton.addActionListener(e -> {
 
             // Display high scores logic goes here
-            Game.highScores();
+            Bot2.highScores();
         });
         menuPanel.add(highScoreButton);
 

@@ -15,7 +15,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.lang.Math;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -520,15 +519,15 @@ public class Bot2 extends JPanel implements KeyListener {
                 }
             }
             
-            currentProperties[0] = gapCount(testState);
-            currentProperties[1] = averageHeight(testState);
-            currentProperties[2] = columnHeightDifference(testState);
-            currentProperties[3] = consecutiveHeightDifference(testState);
-            currentProperties[4] = removableRow(testState);
+            currentProperties[0] = this.gapCount(testState);
+            currentProperties[1] = this.averageHeight(testState);
+            currentProperties[2] = this.columnHeightDifference(testState);
+            currentProperties[3] = this.consecutiveHeightDifference(testState);
+            currentProperties[4] = this.removableRow(testState);
 
-            System.out.println(columnHeightDifference(testState));
+            //System.out.println(this.columnHeightDifference(testState));
 
-            score = calculateScore(currentProperties);
+            score = this.calculateScore(currentProperties);
             if (score < bestScore) {
                 bestScore = score;
                 mutation = this.mutation;
@@ -600,36 +599,24 @@ public class Bot2 extends JPanel implements KeyListener {
         }
         return maxHeight - minHeight;
     }
-
     public int consecutiveHeightDifference(int [][] testState) {
         
-        int height1 = 0;
-        int height2 = 0;
-        int height3 = 0;
-        int height4 = 0;
-        int height5 = 0;
+        int max=0;
+        int[] heights = new int[testState.length];
 
-        for (int row = 0; row < testState.length; row++) {
-            for (int col = 0; col < testState[0].length; col++) {
-                if (testState[row][col] != -1) height1 = 15 - row;
+        for(int row=0; row<testState.length; row++){
+            for(int col=0; col<testState[0].length; col++){
+                if(testState[row][col] != -1){
+                    heights[row] = col;
+                    break;
+                } 
             }
-            if (testState[row][0] != -1) height1 = 15 - row;
-            if (testState[row][1] != -1) height2 = 15 - row;
-            if (testState[row][2] != -1) height3 = 15 - row;
-            if (testState[row][3] != -1) height4 = 15 - row;
-            if (testState[row][4] != -1) height5 = 15 - row;
         }
 
-        int heightDiff1 = Math.abs(height2 - height1);
-        int heightDiff2 = Math.abs(height3 - height2);
-        int heightDiff3 = Math.abs(height4 - height3);
-        int heightDiff4 = Math.abs(height5 - height4);
-
-        int max = 0;
-        if (heightDiff1 > max) max = heightDiff1;
-        if (heightDiff2 > max) max = heightDiff2;
-        if (heightDiff3 > max) max = heightDiff3;
-        if (heightDiff4 > max) max = heightDiff4;
+        for(int i=0; i<heights.length-1; i++){
+            max = Math.max(max, Math.abs(heights[i]-heights[i+1]));
+        }
+        
 
         return max;
     }

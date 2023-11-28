@@ -40,6 +40,7 @@ public class Game extends JPanel implements KeyListener {
     private int mutation = 0;
     private int[][] currentPentomino;
     private int currentPentominoMutation;
+    private int[] pentominoOrder = {5, 2, 10, 11, 1, 9, 6, 3, 7, 8, 0, 4};
     private int[][] nextPentomino;
     private int nextIndex;
     private Random random;
@@ -48,17 +49,16 @@ public class Game extends JPanel implements KeyListener {
 
      
     public Game(int x, int y, int _size) {
-        this.random = new Random();
-        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length); // Starts with the first pentomino in the database
+        this.currentPentominoIndex = pentominoOrder[0];
 
         // Performs the action specified every 300 milliseconds
-        this.looper = new Timer(400, new ActionListener() {
+        this.looper = new Timer(600, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 // Checks if the pentomino has reached the end of the grid
-                if (Game.this.starty + Game.this.currentPentomino[0].length == 15 ) {
+                if (Game.this.starty + Game.this.currentPentomino[0].length == 15) {
 
                     Game.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
 
@@ -262,9 +262,9 @@ public class Game extends JPanel implements KeyListener {
             }
         }
 
-        this.nextIndex = this.currentPentominoIndex+1;
+        this.nextIndex = pentominoOrder[currentPentominoIndex+1];
         if(this.nextIndex == PentominoDatabase.data.length) this.nextIndex = 0;
-        this.nextPentomino = PentominoDatabase.data[this.nextIndex][0];
+        this.nextPentomino = PentominoDatabase.data[pentominoOrder[currentPentominoIndex + 1]][0];
 
 
 
@@ -336,7 +336,7 @@ public class Game extends JPanel implements KeyListener {
                 } 
             }
         }
-        this.currentPentominoIndex++; // Move to the next pentomino in your PentominoDatabase
+        this.currentPentominoIndex = pentominoOrder[currentPentominoIndex+1];
         this.mutation = 0;
 
         // Reposition next pentomino at the beginning of the grid
@@ -379,7 +379,7 @@ public class Game extends JPanel implements KeyListener {
         }
         this.startx = 0;
         this.starty = 0;
-        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
+        this.currentPentominoIndex = pentominoOrder[0];
         this.started = false;
         this.score = 0;
 

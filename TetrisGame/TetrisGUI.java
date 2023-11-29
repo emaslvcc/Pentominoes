@@ -49,7 +49,7 @@ public class TetrisGUI extends JPanel {
         JButton instructionButton = this.createMenuButton("Instructions");
         instructionButton.addActionListener(e -> {
 
-            getInstructions();
+            this.getInstructions();
         });
         menuPanel.add(instructionButton);
 

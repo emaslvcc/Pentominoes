@@ -42,6 +42,9 @@ public class Game extends JPanel implements KeyListener {
     private int nextIndex;
     private Random random;
     private int score = 0;
+    private int destx=0;
+    private int desty=0;
+    private int destmut=0;
     private static ArrayList<Integer> scoreList = new ArrayList<>();
 
      
@@ -125,8 +128,15 @@ public class Game extends JPanel implements KeyListener {
                         }
                     }
                     if(!collide){
+                        if(Game.this.startx != Game.this.destx) Game.this.startx++;
+                        if(Game.this.mutation != Game.this.destmut) Game.this.mutation++;
+                        if(Game.this.starty != Game.this.desty) Game.this.starty++;
+
+
                         if(Game.this.starty < 14 && Game.this.state[Game.this.startx][Game.this.starty+1] == -1)
                         Game.this.starty++; // Pentomino descends one line
+
+
                     }
                     
                     else{
@@ -574,12 +584,12 @@ public class Game extends JPanel implements KeyListener {
             }
             
         }
-        this.startx = x;
-        this.starty = y;
-        this.mutation = mut;
+        this.destx = x;
+        this.desty = y;
+        this.destmut = mut;
 
 
-        this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
+        
 
     }
 

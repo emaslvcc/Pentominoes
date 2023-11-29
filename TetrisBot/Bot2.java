@@ -41,6 +41,9 @@ public class Bot2 extends JPanel implements KeyListener {
     private int nextIndex;
     private Random random;
     private int score = 0;
+    private int destx = 0;
+    private int desty = 0;
+    private int destmut = 0;
     private static ArrayList<Integer> scoreList = new ArrayList<>();
      
     public Bot2(int x, int y, int _size) {
@@ -122,6 +125,11 @@ public class Bot2 extends JPanel implements KeyListener {
                         }
                     }
                     if(!collide){
+
+                        if(Bot2.this.startx != Bot2.this.destx) Bot2.this.startx++;
+                        if(Bot2.this.mutation != Bot2.this.destmut) Bot2.this.mutation++;
+                        if(Bot2.this.starty != Bot2.this.desty) Bot2.this.starty++;
+
                         if(Bot2.this.starty < 14 && Bot2.this.state[Bot2.this.startx][Bot2.this.starty+1] == -1)
                         Bot2.this.starty++; // Pentomino descends one line
                     }
@@ -550,10 +558,9 @@ public class Bot2 extends JPanel implements KeyListener {
                 this.starty = 0;
             }           
         }
-        this.startx = x;
-        this.starty = y;
-        this.mutation = mutation;
-        this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
+        this.destx = x;
+        this.desty = y;
+        this.destmut = mutation;
     }
 
     public int gapCount(int[][] testState) {

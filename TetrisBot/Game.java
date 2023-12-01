@@ -130,7 +130,7 @@ public class Game extends JPanel implements KeyListener {
                     if(!collide){
                         if(Game.this.startx != Game.this.destx) Game.this.startx++;
                         if(Game.this.mutation != Game.this.destmut) Game.this.mutation++;
-                        if(Game.this.starty != Game.this.desty) Game.this.starty++;
+                        if(Game.this.starty != Game.this.desty && Game.this.mutation==Game.this.destmut && Game.this.startx==Game.this.destx) Game.this.starty++;
 
 
                         if(Game.this.starty < 14 && Game.this.state[Game.this.startx][Game.this.starty+1] == -1)

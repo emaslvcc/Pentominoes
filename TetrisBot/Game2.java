@@ -611,28 +611,28 @@ public class Game2 extends JPanel implements KeyListener {
                     y++;
             }
             // erase possible full row!
-            for(int i=0; i<nextteststate[0].length; i++){
+            for(int i=0; i<nextteststate[0].length; i++) {
                 boolean filledline = true;
-                for(int j=0; j<nextteststate.length; j++){
-                    if(nextteststate[j][i] == -1){
+                for (int j = 0; j < nextteststate.length; j++) {
+                    if (nextteststate[j][i] == -1) {
                         filledline = false;
                         break;
                     }
                 }
-                if(filledline){
-                    for(int t=0; t<5; t++){
+                if (filledline) {
+                    for (int t = 0; t < 5; t++) {
                         nextteststate[t][i] = -1;
                     }
                     // drop pentominos if lines where removed
-                    for(int t=i; t>0; t--){
-                        for(int u=0; u<5 ; u++){
-                            if(nextteststate[u][t-1] != -1){
-                                nextteststate[u][t] = nextteststate[u][t-1];
-                                nextteststate[u][t-1] = -1;
-                            } 
+                    for (int t = i; t > 0; t--) {
+                        for (int u = 0; u < 5; u++) {
+                            if (nextteststate[u][t - 1] != -1) {
+                                nextteststate[u][t] = nextteststate[u][t - 1];
+                                nextteststate[u][t - 1] = -1;
+                            }
                         }
                     }
-                }   
+                }
             }
         
 

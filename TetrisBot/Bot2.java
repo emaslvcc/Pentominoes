@@ -548,10 +548,7 @@ public class Bot2 extends JPanel implements KeyListener {
             if (!this.moveRight()) {
                 this.startx = 0;
                 this.mutation++;
-                if (this.mutation >= PentominoDatabase.data[this.currentPentominoIndex].length) {
-                    this.mutation = 0;
-                    break;
-                }
+                if (this.mutation >= PentominoDatabase.data[this.currentPentominoIndex].length) break;
             }
             else{
                 this.startx++;

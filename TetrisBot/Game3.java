@@ -42,6 +42,9 @@ public class Game3 extends JPanel implements KeyListener {
     private int nextIndex;
     private Random random;
     private int score = 0;
+    private int destx=0;
+    private int desty=0;
+    private int destmut=0;
     private static ArrayList<Integer> scoreList = new ArrayList<>();
 
 
@@ -125,8 +128,14 @@ public class Game3 extends JPanel implements KeyListener {
                         }
                     }
                     if(!collide){
+                        if(Game3.this.startx != Game3.this.destx) Game3.this.startx++;
+                        if(Game3.this.mutation != Game3.this.destmut) Game3.this.rotate();
+
+
                         if(Game3.this.starty < 14 && Game3.this.state[Game3.this.startx][Game3.this.starty+1] == -1)
                             Game3.this.starty++; // Pentomino descends one line
+
+                        if(Game3.this.starty < Game3.this.desty && Game3.this.mutation==Game3.this.destmut && Game3.this.startx==Game3.this.destx) Game3.this.starty++;
                     }
 
                     else{
@@ -558,7 +567,7 @@ public class Game3 extends JPanel implements KeyListener {
                 }
             }
             // counts the value of this state
-            curr = EvaluateNextThreePentominoes(teststate);
+            curr = this.EvaluateNextThreePentominoes(teststate);
 
             // if the value is higher than max, safe the mutation and update max
             if(curr > max){
@@ -582,11 +591,11 @@ public class Game3 extends JPanel implements KeyListener {
                 this.starty=0;
             }
         }
-        this.startx = x;
-        this.starty = y;
-        this.mutation = mut;
+        this.destx = x;
+        this.desty = y;
+        this.destmut = mut;
 
-        this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
+        
     }
 
     public double EvaluateNextThreePentominoes(int[][] teststate) {

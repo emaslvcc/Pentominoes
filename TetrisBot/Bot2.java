@@ -128,10 +128,12 @@ public class Bot2 extends JPanel implements KeyListener {
 
                         if(Bot2.this.startx != Bot2.this.destx) Bot2.this.startx++;
                         if(Bot2.this.mutation != Bot2.this.destmut) Bot2.this.mutation++;
-                        if(Bot2.this.starty != Bot2.this.desty) Bot2.this.starty++;
+                        
 
                         if(Bot2.this.starty < 14 && Bot2.this.state[Bot2.this.startx][Bot2.this.starty+1] == -1)
                         Bot2.this.starty++; // Pentomino descends one line
+
+                        if(Bot2.this.starty < Bot2.this.desty && Bot2.this.mutation==Bot2.this.destmut && Bot2.this.startx==Bot2.this.destx) Bot2.this.starty++;
                     }
                     
                     else{
@@ -236,18 +238,18 @@ public class Bot2 extends JPanel implements KeyListener {
             // Prints the current pentomino at the positions they go through
             this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
 
-            for (int i = 0; i < this.currentPentomino.length; i++) {
-                for (int j = 0; j < this.currentPentomino[0].length; j++) {
-                    if (this.currentPentomino[i][j] == 1) {
-                        if(this.state[i+this.startx][j+this.starty] != -1){
-                            this.starty--;
-                            i=100;
-                            j=100;
-                            break;
-                        }                                     
-                    }
-                }
-            }
+            //for (int i = 0; i < this.currentPentomino.length; i++) {
+             //   for (int j = 0; j < this.currentPentomino[0].length; j++) {
+                 //   if (this.currentPentomino[i][j] == 1) {
+                    //    if(this.state[i+this.startx][j+this.starty] != -1){
+                     //       this.starty--;
+                     //       i=100;
+                      //      j=100;
+                      //      break;
+                     //   }                                     
+                   // }
+               // }
+           // }
 
             for (int i = 0; i < this.currentPentomino.length; i++) {
                 for (int j = 0; j < this.currentPentomino[0].length; j++) {

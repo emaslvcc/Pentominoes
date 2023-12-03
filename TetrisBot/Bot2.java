@@ -127,11 +127,13 @@ public class Bot2 extends JPanel implements KeyListener {
                     if(!collide){
 
                         if(Bot2.this.startx != Bot2.this.destx) Bot2.this.startx++;
-                        if(Bot2.this.mutation != Bot2.this.destmut) Bot2.this.mutation++;
-                        if(Bot2.this.starty != Bot2.this.desty) Bot2.this.starty++;
+                        if(Bot2.this.mutation != Bot2.this.destmut) Bot2.this.rotate();
+                        
 
                         if(Bot2.this.starty < 14 && Bot2.this.state[Bot2.this.startx][Bot2.this.starty+1] == -1)
                         Bot2.this.starty++; // Pentomino descends one line
+
+                        if(Bot2.this.starty < Bot2.this.desty && Bot2.this.mutation==Bot2.this.destmut && Bot2.this.startx==Bot2.this.destx) Bot2.this.starty++;
                     }
                     
                     else{

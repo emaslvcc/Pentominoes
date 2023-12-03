@@ -129,7 +129,7 @@ public class Game extends JPanel implements KeyListener {
                     }
                     if(!collide){
                         if(Game.this.startx != Game.this.destx) Game.this.startx++;
-                        if(Game.this.mutation != Game.this.destmut) Game.this.mutation++;
+                        if(Game.this.mutation != Game.this.destmut) Game.this.rotate();
                         
 
 

@@ -26,8 +26,8 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 
 /**
-* This class takes care of all the graphics to display a certain state.
-*/
+ * This class takes care of all the graphics to display a certain state.
+ */
 public class Game extends JPanel implements KeyListener {
     private int[][] state;
     private int size;
@@ -48,11 +48,11 @@ public class Game extends JPanel implements KeyListener {
     private static ArrayList<Integer> scoreList = new ArrayList<>();
 
     /**
-    * This is the Game constructor that handles the general Tetris logic
-    * @param x width of the Tetris board
-    * @param y height of the Tetris board
-    * @param _size size of the Tetris board
-    */
+     * This is the Game constructor that handles the general Tetris logic
+     * @param x width of the Tetris board
+     * @param y height of the Tetris board
+     * @param _size size of the Tetris board
+     */
     public Game(int x, int y, int _size) {
 
         // Starts at the first index of the Pentomino Order array
@@ -155,10 +155,10 @@ public class Game extends JPanel implements KeyListener {
     }
 
     /**
-    * This function is called by the system if required for a new frame, and uses the state stored by the UI class
-    * @param g 
-    * @return void
-    */
+     * This function is called by the system if required for a new frame, and uses the state stored by the UI class
+     * @param g 
+     * @return void
+     */
     public void paintComponent(Graphics g) {
 
         Graphics2D localGraphics2D = (Graphics2D) g;
@@ -338,10 +338,10 @@ public class Game extends JPanel implements KeyListener {
     }
  
     /**
-    * Decodes the ID of a pentomino into a color
-    * @param i ID of the pentomino to be colored
-    * @return the color to represent the pentomino. It uses the class Color (more in ICS2 course in Period 2)
-    */
+     * Decodes the ID of a pentomino into a color
+     * @param i ID of the pentomino to be colored
+     * @return the color to represent the pentomino. It uses the class Color (more in ICS2 course in Period 2)
+     */
     private Color GetColorOfID(int i) {
         if (i == 0) {return Color.BLUE;}
         else if (i == 1) {return Color.ORANGE;}
@@ -359,9 +359,9 @@ public class Game extends JPanel implements KeyListener {
     }
 
     /**
-    * Resets the game to its initial state
-    * @return void
-    */
+     * Resets the game to its initial state
+     * @return void
+     */
     public void reset() {
 
         for (int i = 0; i < this.state.length; i++) {
@@ -380,9 +380,9 @@ public class Game extends JPanel implements KeyListener {
     }
 
     /**
-    * Starts the game
-    * @return void
-    */
+     * Starts the game
+     * @return void
+     */
     public void start() {
         this.started = true;
         this.looper.start();
@@ -390,9 +390,9 @@ public class Game extends JPanel implements KeyListener {
     }
 
     /**
-    * Handles keyboard input from the user
-    * @return void
-    */
+     * Handles keyboard input from the user
+     * @return void
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if (this.startx < 0 || this.starty < 0) return;
@@ -444,9 +444,9 @@ public class Game extends JPanel implements KeyListener {
     }
 
     /**
-    * Checks if the pentomino piece can move to the right
-    * @return boolean
-    */
+     * Checks if the pentomino piece can move to the right
+     * @return boolean
+     */
     public boolean moveRight() {
         for (int i = this.startx; i < this.startx + this.currentPentomino.length; i++) {
             for (int j = this.starty; j < this.starty + this.currentPentomino[0].length; j++) {
@@ -460,9 +460,9 @@ public class Game extends JPanel implements KeyListener {
     }
 
     /**
-    * Checks if the pentomino piece can move to the left
-    * @return boolean
-    */
+     * Checks if the pentomino piece can move to the left
+     * @return boolean
+     */
     public boolean moveLeft(){
         for (int i = this.startx; i < this.startx + this.currentPentomino.length; i++) {
             for (int j = this.starty; j < this.starty + this.currentPentomino[0].length; j++) {
@@ -476,9 +476,9 @@ public class Game extends JPanel implements KeyListener {
     }
 
     /**
-    * Checks if the pentomino piece can move downwards
-    * @return boolean
-    */
+     * Checks if the pentomino piece can move downwards
+     * @return boolean
+     */
     public boolean moveDown(){
         for (int i = this.startx; i < this.startx + this.currentPentomino.length; i++) {
             for (int j = this.starty; j < this.starty + this.currentPentomino[0].length; j++) {
@@ -492,9 +492,9 @@ public class Game extends JPanel implements KeyListener {
     }
 
     /**
-    * Rotates pentomino
-    * @return void
-    */
+     * Rotates pentomino
+     * @return void
+     */
     public void rotate() {
 
         int lastmutation = this.mutation;
@@ -521,9 +521,9 @@ public class Game extends JPanel implements KeyListener {
     }
 
     /**
-    * Display High Scores
-    * @return void
-    */
+     * Display High Scores
+     * @return void
+     */
     public static void highScores() {
         StringBuilder mess = new StringBuilder("High Scores:\n");
         for (int i = 0; i < scoreList.size(); i++) {

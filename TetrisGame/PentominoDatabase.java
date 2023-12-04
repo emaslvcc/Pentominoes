@@ -33,37 +33,34 @@ import java.util.Scanner;
  * X X X
  * 0 0 X
  */
-public class PentominoDatabase
-{
-    //Stores and loads the data on program initialization
+public class PentominoDatabase {
+    
+    // Stores and loads the data on program initialization
     public static int[][][][] data = loadData("pentominos.csv");
 
-    
     /** 
      * Loads and decodes the CSV file
      * @param fileName name of the CVS file to be used
      * @return list of pieces. Dimensions: 1-Piece ID; 2-Mutation; 3-X representation; 4-Y representation
      * @exception FileNotFoundException if the file is not found (probably, wrong location of the file and/or typo in the fileName parameter)
      */
-    private static int[][][][] loadData(String fileName)
-    {
-        //Create a temporary dynamic object to store the data, later to be converted to a static 4D array
-        ArrayList<ArrayList<int[][]>> dynamicList =  new ArrayList<>();
+    private static int[][][][] loadData(String fileName) {
+        
+        // Create a temporary dynamic object to store the data, later to be converted to a static 4D array
+        ArrayList<ArrayList<int[][]>> dynamicList = new ArrayList<>();
 
-        //Open the CSV file
+        // Open the CSV file
         File file = new File(fileName);
 
-        try
-        {
+        try {
             Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) // For each line in the CSV file
-            {
+            while (scanner.hasNextLine()) { // For each line in the CSV file
+                
                 // Read the line, and convert the string to a list of numbers
                 String[] values = scanner.nextLine().split(",");
 
                 // If this piece has a new ID, increase the list
-                if(Integer.valueOf(values[0]) > dynamicList.size() - 1)
-                {
+                if (Integer.valueOf(values[0]) > dynamicList.size() - 1) {
                     dynamicList.add(new ArrayList<>());
                 }
 
@@ -72,8 +69,7 @@ public class PentominoDatabase
                 int[][] piece = new int[xSize][ySize];
 
                 // Convert 1D list to 2D list
-                for(int i = 0; i < xSize * ySize; i++)
-                {
+                for (int i = 0; i < xSize * ySize; i++) {
                     piece[i / ySize][i % ySize] = Integer.valueOf(values[4 + i]);
                 }
 
@@ -81,16 +77,14 @@ public class PentominoDatabase
                 dynamicList.get(dynamicList.size() - 1).add(piece);
             }
         }
-        catch (FileNotFoundException e)
-        {
+        catch (FileNotFoundException e) {
             e.printStackTrace();
             System.exit(0);
         }
 
-        //Arrays index easier than ArrayLists, so convert dynamic list to static list
+        // Arrays index easier than ArrayLists, so convert dynamic list to static list
         int[][][][] staticList = new int[dynamicList.size()][][][];
-        for(int i = 0; i < dynamicList.size(); i++)
-        {
+        for (int i = 0; i < dynamicList.size(); i++) {
             staticList[i] = dynamicList.get(i).toArray(new int[0][0][0]);
         }
         return staticList;
@@ -100,22 +94,16 @@ public class PentominoDatabase
      * Main function used for visualizing and debugging reading the csv file with pieces
      * Should not be called while searching for a solution
      */
-    public static void main(String[] args)
-    {
-        for(int i = 0; i < data.length; i++)
-        {
-            for(int j = 0; j<data[i].length; j++)
-            {
+    public static void main(String[] args) {
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j<data[i].length; j++) {
                 System.out.print(i + "," + j + "," + data[i][j].length + "," + data[i][j][0].length);
 
-                for(int k = 0; k < data[i][j].length; k++)
-                {
-                    for(int l = 0; l < data[i][j][k].length; l++)
-                    {
+                for (int k = 0; k < data[i][j].length; k++) {
+                    for (int l = 0; l < data[i][j][k].length; l++) {
                         System.out.print("," + data[i][j][k][l]);
                     }
                 }
-
                 System.out.println();
             }
         }

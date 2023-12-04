@@ -48,7 +48,7 @@ public class Bot2 extends JPanel implements KeyListener {
     private static ArrayList<Integer> scoreList = new ArrayList<>();
      
     public Bot2(int x, int y, int _size) {
-        this.currentPentominoIndex = pentominoOrder[0];
+        this.currentPentominoIndex = this.pentominoOrder[0];
 
         // Performs the action specified every 300 milliseconds
         this.looper = new Timer(400, new ActionListener() {
@@ -125,8 +125,9 @@ public class Bot2 extends JPanel implements KeyListener {
                     }
                     if(!collide){
 
+                        if(Bot2.this.mutation != Bot2.this.destmut) Bot2.this.mutation = Bot2.this.destmut;
                         if(Bot2.this.startx != Bot2.this.destx) Bot2.this.startx++;
-                        if(Bot2.this.mutation != Bot2.this.destmut) Bot2.this.rotate();
+                        
                         
 
                         if(Bot2.this.starty < 14 && Bot2.this.state[Bot2.this.startx][Bot2.this.starty+1] == -1)
@@ -261,9 +262,9 @@ public class Bot2 extends JPanel implements KeyListener {
                 }
             }
 
-            this.nextIndex = pentominoOrder[currentPentominoIndex+1];
+            this.nextIndex = this.currentPentominoIndex+1;
             if(this.nextIndex == PentominoDatabase.data.length) this.nextIndex = 0;
-            this.nextPentomino = PentominoDatabase.data[pentominoOrder[currentPentominoIndex + 1]][0];
+            this.nextPentomino = PentominoDatabase.data[this.pentominoOrder[this.nextIndex]][0];
 
             // Paint next grid
             localGraphics2D.setColor(Color.BLACK);
@@ -331,7 +332,7 @@ public class Bot2 extends JPanel implements KeyListener {
                 } 
             }
         }
-        this.currentPentominoIndex = pentominoOrder[currentPentominoIndex+1];
+        this.currentPentominoIndex = this.pentominoOrder[this.nextIndex];
         this.mutation = 0;
 
         // Reposition next pentomino at the beginning of the grid
@@ -374,7 +375,9 @@ public class Bot2 extends JPanel implements KeyListener {
         }
         this.startx = 0;
         this.starty = 0;
-        this.currentPentominoIndex = pentominoOrder[0];
+        this.currentPentominoIndex = this.pentominoOrder[0];
+        this.nextIndex = this.pentominoOrder[1];
+        this.mutation = 0;
         this.started = false;
         this.score = 0;
 

@@ -45,13 +45,12 @@ public class Game3 extends JPanel implements KeyListener {
     private int destx=0;
     private int desty=0;
     private int destmut=0;
+    private int[] pentominoOrder = {5, 2, 10, 11, 1, 9, 6, 3, 7, 8, 0, 4};
     private static ArrayList<Integer> scoreList = new ArrayList<>();
 
 
     public Game3(int x, int y, int _size) {
-        this.random = new Random();
-        this.shuffleOrder(); // shuffle order of database
-        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length); // Starts with the first pentomino in the database
+        this.currentPentominoIndex = pentominoOrder[0];
 
 
         // Performs the action specified every 300 milliseconds
@@ -270,9 +269,9 @@ public class Game3 extends JPanel implements KeyListener {
 
 
 
-            this.nextIndex = this.currentPentominoIndex+1;
+            this.nextIndex = pentominoOrder[currentPentominoIndex+1];
             if(this.nextIndex == PentominoDatabase.data.length) this.nextIndex = 0;
-            this.nextPentomino = PentominoDatabase.data[this.nextIndex][0];
+            this.nextPentomino = PentominoDatabase.data[pentominoOrder[currentPentominoIndex + 1]][0];
 
             // this.pen2 = PentominoDatabase.data[(nextIndex + 1) % PentominoDatabase.data.length][0];
             // this.pen3 = PentominoDatabase.data[(nextIndex + 2) % PentominoDatabase.data.length][0];
@@ -347,7 +346,7 @@ public class Game3 extends JPanel implements KeyListener {
                 }
             }
         }
-        this.currentPentominoIndex++; // Move to the next pentomino in your PentominoDatabase
+        this.currentPentominoIndex = pentominoOrder[currentPentominoIndex+1];
         this.mutation = 0;
         this.nextMutation = 0;
 
@@ -391,7 +390,7 @@ public class Game3 extends JPanel implements KeyListener {
         }
         this.startx = 0;
         this.starty = 0;
-        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
+        this.currentPentominoIndex = pentominoOrder[0];
         this.started = false;
         this.score = 0;
 

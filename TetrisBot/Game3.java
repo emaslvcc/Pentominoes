@@ -40,7 +40,7 @@ public class Game3 extends JPanel implements KeyListener {
     private int[][] currentPentomino;
     private int[][] nextPentomino;
     private int nextIndex;
-    private Random random;
+    private Random random = new Random();
     private int score = 0;
     private int destx=0;
     private int desty=0;
@@ -128,10 +128,9 @@ public class Game3 extends JPanel implements KeyListener {
                         }
                     }
                     if(!collide){
+                        if(Game3.this.mutation != Game3.this.destmut) Game3.this.mutation = Game3.this.destmut;
                         if(Game3.this.startx != Game3.this.destx) Game3.this.startx++;
-                        if(Game3.this.mutation != Game3.this.destmut) Game3.this.rotate();
-
-
+                        
                         if(Game3.this.starty < 14 && Game3.this.state[Game3.this.startx][Game3.this.starty+1] == -1)
                             Game3.this.starty++; // Pentomino descends one line
 
@@ -239,7 +238,6 @@ public class Game3 extends JPanel implements KeyListener {
             }
 
             // Prints the current pentomino at the positions they go through
-            System.out.println(this.currentPentominoIndex + " " +this.mutation) ;
             this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
 
             for (int i = 0; i < this.currentPentomino.length; i++) {

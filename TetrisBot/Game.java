@@ -50,7 +50,7 @@ public class Game extends JPanel implements KeyListener {
 
      
     public Game(int x, int y, int _size) {
-        this.currentPentominoIndex = pentominoOrder[0];
+        this.currentPentominoIndex = this.pentominoOrder[0];
         
         this.looper = new Timer(400, new ActionListener() {
 
@@ -125,8 +125,8 @@ public class Game extends JPanel implements KeyListener {
                         }
                     }
                     if(!collide){
+                        if(Game.this.mutation != Game.this.destmut) Game.this.mutation = Game.this.destmut;
                         if(Game.this.startx != Game.this.destx) Game.this.startx++;
-                        if(Game.this.mutation != Game.this.destmut) Game.this.rotate();
                         
 
 
@@ -270,9 +270,9 @@ public class Game extends JPanel implements KeyListener {
         
 
 
-        this.nextIndex = pentominoOrder[currentPentominoIndex+1];
+        this.nextIndex = this.currentPentominoIndex+1;
         if(this.nextIndex == PentominoDatabase.data.length) this.nextIndex = 0;
-        this.nextPentomino = PentominoDatabase.data[pentominoOrder[currentPentominoIndex + 1]][0];
+        this.nextPentomino = PentominoDatabase.data[this.pentominoOrder[this.nextIndex]][0];
 
 
         // Paint next grid
@@ -342,7 +342,8 @@ public class Game extends JPanel implements KeyListener {
                 } 
             }
         }
-        this.currentPentominoIndex = pentominoOrder[currentPentominoIndex+1];
+        //this.
+        this.currentPentominoIndex = this.pentominoOrder[this.nextIndex];
         this.mutation = 0;
 
         // Reposition next pentomino at the beginning of the grid
@@ -385,7 +386,7 @@ public class Game extends JPanel implements KeyListener {
         }
         this.startx = 0;
         this.starty = 0;
-        this.currentPentominoIndex = pentominoOrder[0];
+        this.currentPentominoIndex = this.pentominoOrder[0];
         this.started = false;
         this.score = 0;
 
@@ -589,6 +590,24 @@ public class Game extends JPanel implements KeyListener {
 
         
 
+    }
+
+    public void dropLine(int y){
+        int left=0;
+        int right=5;
+        while(true){
+            int left2=left;
+            int right2=right;
+            for(int i=left; i<right-1; i++){
+                if(this.state[i][y] == 1){
+                    left = i;
+                    break;
+                }
+
+            }
+
+            // drop line until collision
+        }
     }
 
 }   

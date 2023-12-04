@@ -392,6 +392,7 @@ public class Game3 extends JPanel implements KeyListener {
         this.startx = 0;
         this.starty = 0;
         this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
+        this.nextIndex = this.currentPentominoIndex+1;
         this.started = false;
         this.score = 0;
 

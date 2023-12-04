@@ -275,17 +275,22 @@ public class Bot2 extends JPanel implements KeyListener {
                 localGraphics2D.drawLine(450, (i * this.size)+220, (this.nextPentomino.length * this.size) + 450, (i * this.size) + 220);
             } 
 
-            // Paint next pentomino
-            for (int i = 0; i < this.nextPentomino.length; i++) {
-                for (int j = 0; j < this.nextPentomino[0].length; j++) {
-                    if (this.nextPentomino[i][j] == 1) {
-                        if(this.started){
-                        g.setColor(this.GetColorOfID(this.nextIndex));
-                        localGraphics2D.fill(new Rectangle2D.Double(i * this.size + 1 + 450, j * this.size + 1 + 220, this.size - 1, this.size - 1));
-                        }                                
-                    }
-                }
+            // Calculate nextIndex properly
+this.nextIndex = (this.currentPentominoIndex + 1) % PentominoDatabase.data.length;
+
+// Paint next pentomino
+for (int i = 0; i < this.nextPentomino.length; i++) {
+    for (int j = 0; j < this.nextPentomino[0].length; j++) {
+        if (this.nextPentomino[i][j] == 1) {
+            if (this.started) {
+                // Use nextIndex directly
+                g.setColor(this.GetColorOfID(this.pentominoOrder[this.nextIndex]));
+                localGraphics2D.fill(new Rectangle2D.Double(i * this.size + 1 + 450, j * this.size + 1 + 220, this.size - 1, this.size - 1));
             }
+        }
+    }
+}
+
 
             // Check if horizontal lines should be removed 
             for (int i = 0; i < this.state[0].length; i++) {

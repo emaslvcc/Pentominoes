@@ -67,7 +67,7 @@ public class TetrisGUI extends JPanel {
         highScoreButton.addActionListener(e -> {
 
             // Display high scores logic goes here
-            displayHighScores();
+            Game.highScores();
         });
         menuPanel.add(highScoreButton);
 
@@ -81,37 +81,6 @@ public class TetrisGUI extends JPanel {
 
         // Adds the main content panel to the center of the GUI
         this.add(mainContentPanel, BorderLayout.CENTER);
-    }
-
-    private void displayHighScores() {
-        JDialog dialog = new JDialog();
-        dialog.setTitle("Scores:");
-
-        // Getting high scores by game modes
-        String highScores = Game.highScores();
-
-        JTextArea textArea = new JTextArea(6, 20);
-        textArea.setText("High Scores:\n" + highScores);
-        textArea.setEditable(false);
-        textArea.setWrapStyleWord(true);
-        textArea.setLineWrap(true);
-        textArea.setForeground(new Color(0, 255, 0)); // Matrix green text
-        textArea.setBackground(Color.BLACK); // Black background
-        textArea.setFont(new Font("Monospaced", Font.BOLD, 12)); // Monospaced font
-
-        // Wrap the text area in a scroll pane
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setPreferredSize(new Dimension(350, 150));
-        scrollPane.setOpaque(false);
-        scrollPane.getViewport().setOpaque(false);
-    
-        // Add the scroll pane to the dialog
-        dialog.add(scrollPane);
-    
-        // Set dialog properties
-        dialog.pack();
-        dialog.setLocationRelativeTo(null); // Center the dialog
-        dialog.setVisible(true);
     }
 
     /** 

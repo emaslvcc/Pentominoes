@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -203,11 +204,11 @@ public class Game extends JPanel implements KeyListener {
                 localGraphics2D.drawString(lines[i], startX, startY + i * 15);
             }
         } else {
-            localGraphics2D.setColor(Color.lightGray);
+            localGraphics2D.setColor(Color.BLACK);
             localGraphics2D.fill(this.getVisibleRect());
 
             // Paints the Tetris grid
-            localGraphics2D.setColor(Color.BLACK);
+            localGraphics2D.setColor(Color.GREEN);
             for (int i = 0; i <= this.state.length; i++) {
                 localGraphics2D.drawLine(i * this.size, 0, i * this.size, this.state[0].length * this.size);
             }
@@ -293,7 +294,7 @@ public class Game extends JPanel implements KeyListener {
                     this.score++;
                     for (int t = 0; t < 5; t++) {
                         this.state[t][i] = -1;
-                        g.setColor(Color.lightGray);
+                        g.setColor(Color.BLACK);
                         localGraphics2D.fill(new Rectangle2D.Double(t * this.size + 1, i * this.size + 1, this.size - 1, this.size - 1));
                     }
                     // Drop pentominos if lines where removed
@@ -531,15 +532,16 @@ public class Game extends JPanel implements KeyListener {
         }
 
         JTextArea textArea = new JTextArea(mess.toString());
-        textArea.setBackground(new Color(145, 0, 12)); // Set background color to red
-        textArea.setForeground(Color.WHITE); // Set text color to white
-        textArea.setFont(new Font("Serif", Font.PLAIN, 20)); // 
+        textArea.setBackground(new Color(0, 0, 0)); // Set background color to black
+        textArea.setForeground(Color.GREEN); // Set text color to green
+        textArea.setFont(new Font("Monospaced", Font.BOLD, 12)); // 
         textArea.setEditable(false);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
 
-        UIManager.put("OptionPane.background", new Color(145, 0, 12)); // Set background color of the option pane to red
-        UIManager.put("Panel.background", new Color(145, 0, 12)); // Set background color of the panel to red
+        UIManager.put("OptionPane.background", new Color(0, 0, 0)); // Set background color of the option pane to red
+        UIManager.put("Panel.background", new Color(0, 0, 0)); // Set background color of the panel to red
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
         JOptionPane optionPane = new JOptionPane(scrollPane, JOptionPane.PLAIN_MESSAGE);
         JDialog dialog = optionPane.createDialog("High scores");

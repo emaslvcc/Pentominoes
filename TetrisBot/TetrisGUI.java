@@ -123,18 +123,36 @@ public class TetrisGUI extends JPanel {
     }
 
     private void displayCombinedHighScores() {
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Scores:");
+
         // Getting high scores by game modes
         String highScoresBot1 = Game.highScores();
         String highScoresBot2 = Bot2.highScores();
         String highScoresBot3 = Game3.highScores();
+
+        JTextArea textArea = new JTextArea(6, 20);
+        textArea.setText("Game 1 High Scores:\n" + highScoresBot1 + "\nGame 2 High Scores:\n" + highScoresBot2 + "\nGame 3 High Scores:\n" + highScoresBot3);
+        textArea.setEditable(false);
+        textArea.setWrapStyleWord(true);
+        textArea.setLineWrap(true);
+        textArea.setForeground(new Color(0, 255, 0)); // Matrix green text
+        textArea.setBackground(Color.BLACK); // Black background
+        textArea.setFont(new Font("Monospaced", Font.BOLD, 12)); // Monospaced font
+
+        // Wrap the text area in a scroll pane
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setPreferredSize(new Dimension(350, 150));
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
     
-        // Where high scores merges into 1 page
-        String combinedMessage = 
-          "Game 1 High Scores:\n" + highScoresBot1
-        + "\nGame 2 High Scores:\n" + highScoresBot2
-        + "\nGame 3 High Scores:\n" + highScoresBot3;
+        // Add the scroll pane to the dialog
+        dialog.add(scrollPane);
     
-        JOptionPane.showMessageDialog(null, combinedMessage, "High Scores", JOptionPane.INFORMATION_MESSAGE);
+        // Set dialog properties
+        dialog.pack();
+        dialog.setLocationRelativeTo(null); // Center the dialog
+        dialog.setVisible(true);
     }
 
     private void showNewInstructions() {

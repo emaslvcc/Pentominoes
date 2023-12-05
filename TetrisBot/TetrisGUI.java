@@ -111,7 +111,7 @@ public class TetrisGUI extends JPanel {
         menuPanel.add(highScoreButton);
 
         // Instruction button implementation
-        JButton instructionButton = createMenuButtonWithImage("???", "/Users/emachagas/Desktop/kisspng-morpheus-the-matrix-neo-red-pill-and-blue-pill-you-good-pills-will-play-5adf94a99c4d73.4062390915246020256402.png");
+        JButton instructionButton = createMenuButtonWithImage("Instructions", "/Users/emachagas/Desktop/kisspng-morpheus-the-matrix-neo-red-pill-and-blue-pill-you-good-pills-will-play-5adf94a99c4d73.4062390915246020256402.png");
         instructionButton.addActionListener(e -> showNewInstructions());
         menuPanel.add(instructionButton);
 
@@ -161,7 +161,10 @@ public class TetrisGUI extends JPanel {
     
         // Create a text area for the instructions
         JTextArea textArea = new JTextArea(6, 20);
-        textArea.setText("Welcome to Tetris, you are the chosen one! This is a game of Tetris in matrix world. You can move the pentominos with W,A,S,D keys and you can rotate it with \"shift\" key. Good Luck!");
+        textArea.setText("Welcome to Tetris, you are the chosen one!\n"
+        + "This is a game of Tetris in matrix world.\n"
+        + "You are on the Bot version where you can choose from Bot 1, Bot2 or Bot 3.\n"
+        + "Press\"P\" key for pause. Good Luck!");
         textArea.setEditable(false);
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
@@ -232,7 +235,7 @@ public class TetrisGUI extends JPanel {
         UIManager.put("OptionPane.background", new Color(145, 0, 12));
         UIManager.put("Panel.background", new Color(145, 0, 12));
 
-        String instructions = "<html><font color='white'>Tetris Instructions: A = left, D = right, S = down, Space = fast-forward, SHIFT= rotate</font></html>";
+        String instructions = "<html><font color='white'>Tetris Instructions: A = left, D = right, Space = fast-forward, SHIFT= rotate, P = pause</font></html>";
 
         JLabel label = new JLabel(instructions);
         label.setFont(new Font("SansSerif", Font.PLAIN, 20)); // You can adjust the font if needed

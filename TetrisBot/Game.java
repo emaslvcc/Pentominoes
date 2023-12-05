@@ -283,19 +283,24 @@ public class Game extends JPanel implements KeyListener {
             localGraphics2D.drawLine(450, (i * this.size)+220, (this.nextPentomino.length * this.size) + 450, (i * this.size) + 220);
         } 
 
+// Calculate next index
+this.nextIndex = this.currentPentominoIndex + 1;
+if (this.nextIndex == PentominoDatabase.data.length) {
+    this.nextIndex = 0;
+}
+this.nextPentomino = PentominoDatabase.data[this.pentominoOrder[this.nextIndex]][0];
 
-        // paint next pentomino
-        for (int i = 0; i < this.nextPentomino.length; i++) {
-            for (int j = 0; j < this.nextPentomino[0].length; j++) {
-                if (this.nextPentomino[i][j] == 1) {
-                    if(this.started){
-                    g.setColor(this.GetColorOfID(this.nextIndex));
-                    localGraphics2D.fill(new Rectangle2D.Double(i * this.size + 1 + 450, j * this.size + 1 + 220, this.size - 1, this.size - 1));
-                    }                                
-                }
+// Paint next pentomino
+for (int i = 0; i < this.nextPentomino.length; i++) {
+    for (int j = 0; j < this.nextPentomino[0].length; j++) {
+        if (this.nextPentomino[i][j] == 1) {
+            if (this.started) {
+                g.setColor(this.GetColorOfID(this.pentominoOrder[this.nextIndex])); // Use pentominoOrder[this.nextIndex]
+                localGraphics2D.fill(new Rectangle2D.Double(i * this.size + 1 + 450, j * this.size + 1 + 220, this.size - 1, this.size - 1));
             }
         }
-
+    }
+}
 
 
         // check if horizontal lines should be removed 

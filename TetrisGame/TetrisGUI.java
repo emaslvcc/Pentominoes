@@ -114,6 +114,52 @@ public class TetrisGUI extends JPanel {
         dialog.setVisible(true);
     }
 
+    /** 
+     * Creates a button
+     * @param text is the message to be displayed in the button
+     * @return the button
+     */
+    private JButton createMenuButton(String text) {
+        JButton button = new JButton(text);
+        button.setPreferredSize(new Dimension(200, 0));
+        button.setFocusable(false);
+        button.setMargin(new Insets(0, 0, 0, 0));
+
+        // Set the button colors
+        button.setBackground(Color.BLACK);
+        button.setForeground(Color.green);
+
+        // Change the UI for the button
+        button.setUI(new MetalButtonUI() {
+        protected Color getSelectColor() {
+            return Color.black; // This color is used when the button is clicked
+        }});
+        return button;
+    }
+
+    /** 
+     * Displays the game's instructions
+     * @return the instructions for the game to be played
+     */
+    public void getInstructions() {
+        
+        // Set background color of the option pane and panel
+        UIManager.put("OptionPane.background", new Color(145, 0, 12));
+        UIManager.put("Panel.background", new Color(145, 0, 12));
+
+        String instructions = "<html><font color='white'>Tetris Instructions: A = left, D = right, S = down, Space = fast-forward, SHIFT= rotate</font></html>";
+
+        JLabel label = new JLabel(instructions);
+        label.setFont(new Font("SansSerif", Font.PLAIN, 20)); // You can adjust the font if needed
+        label.setForeground(Color.WHITE);
+
+        JOptionPane.showMessageDialog(this, label, "Tetris Instructions", JOptionPane.INFORMATION_MESSAGE);
+
+        // Reset UIManager settings after the dialog is closed
+        UIManager.put("OptionPane.background", UIManager.get("OptionPane.background"));
+        UIManager.put("Panel.background", UIManager.get("Panel.background"));
+    }
+
     private void showNewInstructions() {
         JDialog dialog = new JDialog();
         dialog.setTitle("Instructions");
@@ -143,29 +189,6 @@ public class TetrisGUI extends JPanel {
         dialog.setVisible(true);
     }
 
-    /** 
-     * Creates a button
-     * @param text is the message to be displayed in the button
-     * @return the button
-     */
-    private JButton createMenuButton(String text) {
-        JButton button = new JButton(text);
-        button.setPreferredSize(new Dimension(200, 0));
-        button.setFocusable(false);
-        button.setMargin(new Insets(0, 0, 0, 0));
-
-        // Set the button colors
-        button.setBackground(Color.BLACK);
-        button.setForeground(Color.green);
-
-        // Change the UI for the button
-        button.setUI(new MetalButtonUI() {
-        protected Color getSelectColor() {
-            return Color.black; // This color is used when the button is clicked
-        }});
-        return button;
-    }
-
     private JButton createMenuButtonWithImage(String text, String imagePath) {
         ImageIcon icon = new ImageIcon(imagePath); // Replace with your image path
         JButton button = new JButton(text, icon);
@@ -179,29 +202,6 @@ public class TetrisGUI extends JPanel {
             button.setUI(new BasicButtonUI());
     
         return button;
-    }
-
-    /** 
-     * Displays the game's instructions
-     * @return the instructions for the game to be played
-     */
-    public void getInstructions() {
-        
-        // Set background color of the option pane and panel
-        UIManager.put("OptionPane.background", new Color(145, 0, 12));
-        UIManager.put("Panel.background", new Color(145, 0, 12));
-
-        String instructions = "<html><font color='white'>Tetris Instructions: A = left, D = right, S = down, Space = fast-forward, SHIFT= rotate</font></html>";
-
-        JLabel label = new JLabel(instructions);
-        label.setFont(new Font("SansSerif", Font.PLAIN, 20)); // You can adjust the font if needed
-        label.setForeground(Color.WHITE);
-
-        JOptionPane.showMessageDialog(this, label, "Tetris Instructions", JOptionPane.INFORMATION_MESSAGE);
-
-        // Reset UIManager settings after the dialog is closed
-        UIManager.put("OptionPane.background", UIManager.get("OptionPane.background"));
-        UIManager.put("Panel.background", UIManager.get("Panel.background"));
     }
 
     public static void main(String[] args) {

@@ -211,11 +211,11 @@ public class Bot2 extends JPanel implements KeyListener {
         }
 
         else {
-            localGraphics2D.setColor(Color.lightGray);
+            localGraphics2D.setColor(Color.BLACK);
             localGraphics2D.fill(this.getVisibleRect());
 
             // Paints the Tetris grid
-            localGraphics2D.setColor(Color.BLACK);
+            localGraphics2D.setColor(Color.GREEN);
             for (int i = 0; i <= this.state.length; i++) {
                 localGraphics2D.drawLine(i * this.size, 0, i * this.size, this.state[0].length * this.size);
             }
@@ -307,7 +307,7 @@ for (int i = 0; i < this.nextPentomino.length; i++) {
                     this.score++;
                     for(int t = 0; t < 5; t++) {
                         this.state[t][i] = -1;
-                        g.setColor(Color.lightGray);
+                        g.setColor(Color.BLACK);
                         localGraphics2D.fill(new Rectangle2D.Double(t * this.size + 1, i * this.size + 1, this.size - 1, this.size - 1));
                     }
                     // Drop pentominos if lines where removed
@@ -484,13 +484,12 @@ for (int i = 0; i < this.nextPentomino.length; i++) {
             }
     }
 
-   public static void highScores(){
-       String mess = "High Scores: \n";
-       for(int i = 0; i < scoreList.size(); i++) mess += ((i+1) + ". " + scoreList.get(i) + "\n");
-       JOptionPane optionPane = new JOptionPane(mess, JOptionPane.PLAIN_MESSAGE);
-       optionPane.setPreferredSize(new Dimension(700, 380)); // Set your preferred size here
-       JDialog dialog = optionPane.createDialog("High scores");
-       dialog.setVisible(true);
+    public static String highScores(){
+        String mess = "High Scores: \n";
+        for (int i = 0; i < scoreList.size(); i++) {
+            mess += ((i + 1) + ". " + scoreList.get(i) + "\n");
+        }
+        return mess;
     }
 
     public void shuffleOrder(){

@@ -41,14 +41,8 @@ public class TetrisGUI extends JPanel {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Show options when the start button is clicked
-                TetrisGUI.this.removeAll();
-                TetrisGUI.this.add(mainContentPanel, BorderLayout.CENTER);
-                TetrisGUI.this.add(menuPanel, BorderLayout.WEST);
                 gifLabel.setVisible(false);
                 mainContentPanel.start();
-                TetrisGUI.this.revalidate();
-                TetrisGUI.this.repaint();
             }
         });
         menuPanel.add(startButton);

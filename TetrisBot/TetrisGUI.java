@@ -161,10 +161,10 @@ public class TetrisGUI extends JPanel {
     
         // Create a text area for the instructions
         JTextArea textArea = new JTextArea(6, 20);
-        textArea.setText("Welcome to Tetris, you are the chosen one!\n"
+        textArea.setText(("Welcome to Tetris, you are the chosen one!\n"
         + "This is a game of Tetris in matrix world.\n"
         + "You are on the Bot version where you can choose from Bot 1, Bot2 or Bot 3.\n"
-        + "Press\"P\" key for pause. Good Luck!");
+        + "Press the \"P\" key for pause. Good Luck!"));
         textArea.setEditable(false);
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
@@ -235,7 +235,7 @@ public class TetrisGUI extends JPanel {
         UIManager.put("OptionPane.background", new Color(145, 0, 12));
         UIManager.put("Panel.background", new Color(145, 0, 12));
 
-        String instructions = "<html><font color='white'>Tetris Instructions: A = left, D = right, Space = fast-forward, SHIFT= rotate, P = pause</font></html>";
+        String instructions = "<html><font color='white'>Tetris Instructions: A = left, D = right, P = pause, Space = fast-forward, SHIFT= rotate</font></html>";
 
         JLabel label = new JLabel(instructions);
         label.setFont(new Font("SansSerif", Font.PLAIN, 20)); // You can adjust the font if needed

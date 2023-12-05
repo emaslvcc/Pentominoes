@@ -283,7 +283,8 @@ public class Game extends JPanel implements KeyListener {
             localGraphics2D.drawLine(450, (i * this.size)+220, (this.nextPentomino.length * this.size) + 450, (i * this.size) + 220);
         } 
 
-// Calculate next index
+
+       // Calculate next index
 this.nextIndex = this.currentPentominoIndex + 1;
 if (this.nextIndex == PentominoDatabase.data.length) {
     this.nextIndex = 0;

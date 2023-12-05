@@ -103,8 +103,8 @@ public class Game extends JPanel implements KeyListener {
                             label.setForeground(Color.WHITE); // Set text color to white
 
                             // Customize JOptionPane with a green background
-                            UIManager.put("OptionPane.background", new Color(145, 0, 12)); // Green background
-                            UIManager.put("Panel.background", new Color(145, 0, 12)); // Green background
+                            UIManager.put("OptionPane.background", Color.BLACK); // Set background color of the option pane to black
+                            UIManager.put("Panel.background", Color.BLACK); // Set background color of the panel to black
 
                             // Create and show JOptionPane
                             JOptionPane optionPane = new JOptionPane(label, JOptionPane.PLAIN_MESSAGE);

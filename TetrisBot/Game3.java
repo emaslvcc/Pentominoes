@@ -208,13 +208,13 @@ public class Game3 extends JPanel implements KeyListener {
         }
         else{
 
-            localGraphics2D.setColor(Color.lightGray);
+            localGraphics2D.setColor(Color.BLACK);
             localGraphics2D.fill(this.getVisibleRect());
 
 
 
             // Paints the Tetris grid
-            localGraphics2D.setColor(Color.BLACK);
+            localGraphics2D.setColor(Color.GREEN);
             for (int i = 0; i <= this.state.length; i++) {
                 localGraphics2D.drawLine(i * this.size, 0, i * this.size, this.state[0].length * this.size);
             }
@@ -323,7 +323,7 @@ public class Game3 extends JPanel implements KeyListener {
                     this.score++;
                     for(int t=0; t<5; t++){
                         this.state[t][i] = -1;
-                        g.setColor(Color.lightGray);
+                        g.setColor(Color.BLACK);
                         localGraphics2D.fill(new Rectangle2D.Double(t * this.size + 1, i * this.size + 1, this.size - 1, this.size - 1));
                     }
                     // drop pentominos if lines where removed
@@ -399,7 +399,7 @@ public class Game3 extends JPanel implements KeyListener {
         else if (i == 9) {return new Color(0, 0, 100);}
         else if (i == 10) {return new Color(100, 0,0);}
         else if (i == 11) {return new Color(0, 100, 0);}
-        else {return Color.LIGHT_GRAY;}
+        else {return Color.BLACK;}
     }
 
     public void reset() {
@@ -518,13 +518,12 @@ public class Game3 extends JPanel implements KeyListener {
         }
     }
 
-    public static void highScores(){
+    public static String highScores(){
         String mess = "High Scores: \n";
-        for(int i = 0; i < scoreList.size(); i++) mess += ((i+1) + ". " + scoreList.get(i) + "\n");
-        JOptionPane optionPane = new JOptionPane(mess, JOptionPane.PLAIN_MESSAGE);
-        optionPane.setPreferredSize(new Dimension(700, 380)); // Set your preferred size here
-        JDialog dialog = optionPane.createDialog("High scores");
-        dialog.setVisible(true);
+        for (int i = 0; i < scoreList.size(); i++) {
+            mess += ((i + 1) + ". " + scoreList.get(i) + "\n");
+        }
+        return mess;
     }
 
     public void shuffleOrder(){

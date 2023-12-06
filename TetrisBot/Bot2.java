@@ -312,10 +312,10 @@ for (int i = 0; i < this.nextPentomino.length; i++) {
                     }
                     // Drop pentominos if lines where removed
                     for (int t = i; t > 0; t--) {
-                        for (int u = 0; u < 5 ; u++) {
-                            if (this.state[u][t-1] != -1) {
-                                this.state[u][t] = this.state[u][t-1];
-                                this.state[u][t-1] = -1;
+                        for (int u = 0; u < 5; u++) {
+                            if (this.state[u][t - 1] != -1) {
+                                this.state[u][t] = this.state[u][t - 1];
+                                this.state[u][t - 1] = -1;
                             } 
                         }
                     }

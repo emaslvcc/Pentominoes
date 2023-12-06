@@ -1,13 +1,10 @@
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.plaf.metal.MetalButtonUI;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 // This class extends "JPanel", which is a swing component used for creating panels in the GUI
 public class TetrisGUI extends JPanel {

@@ -326,13 +326,13 @@ public class Bot3 extends JPanel implements KeyListener {
                         g.setColor(Color.BLACK);
                         localGraphics2D.fill(new Rectangle2D.Double(t * this.size + 1, i * this.size + 1, this.size - 1, this.size - 1));
                     }
-                    // drop pentominos if lines where removed
-                    for(int t=i; t>0; t--){
-                        for(int u=0; u<5 ; u++){
-                            if(this.state[u][t-1] != -1){
-                                this.state[u][t] = this.state[u][t-1];
-                                this.state[u][t-1] = -1;
-                            }
+                    // Drop pentominos if lines where removed
+                    for (int t = i; t > 0; t--) {
+                        for (int u = 0; u < 5; u++) {
+                            if (this.state[u][t - 1] != -1) {
+                                this.state[u][t] = this.state[u][t - 1];
+                                this.state[u][t - 1] = -1;
+                            } 
                         }
                     }
                 }

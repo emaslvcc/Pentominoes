@@ -26,11 +26,11 @@ public class TetrisGUI extends JPanel {
         menuPanel.setLayout(new GridLayout(4, 1, 0, 0));
 
         // Create an object of each bot
-        Game mainContentPanel = new Game(5, 15, 45);
+        Bot1 mainContentPanel = new Bot1(5, 15, 45);
         this.addKeyListener(mainContentPanel);
         Bot2 bot2 = new Bot2(5, 15,45);
         this.addKeyListener(bot2);
-        Game3 bot3 = new Game3(5,15, 45);
+        Bot3 bot3 = new Bot3(5, 15, 45);
         this.addKeyListener(bot3); // This h
 
         ImageIcon gifIcon = new ImageIcon("/Users/emachagas/Desktop/9pII.gif");
@@ -127,9 +127,9 @@ public class TetrisGUI extends JPanel {
         dialog.setTitle("Scores:");
 
         // Getting high scores by game modes
-        String highScoresBot1 = Game.highScores();
+        String highScoresBot1 = Bot1.highScores();
         String highScoresBot2 = Bot2.highScores();
-        String highScoresBot3 = Game3.highScores();
+        String highScoresBot3 = Bot3.highScores();
 
         JTextArea textArea = new JTextArea(6, 20);
         textArea.setText("Game 1 High Scores:\n" + highScoresBot1 + "\nGame 2 High Scores:\n" + highScoresBot2 + "\nGame 3 High Scores:\n" + highScoresBot3);

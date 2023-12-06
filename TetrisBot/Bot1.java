@@ -26,7 +26,7 @@ import javax.swing.UIManager;
 /**
 * This class takes care of all the graphics to display a certain state.
 */
-public class Game extends JPanel implements KeyListener {
+public class Bot1 extends JPanel implements KeyListener {
     private int[][] state;
     private int size;
     private Timer looper;
@@ -49,7 +49,7 @@ public class Game extends JPanel implements KeyListener {
     private static ArrayList<Integer> scoreList = new ArrayList<>();
 
      
-    public Game(int x, int y, int _size) {
+    public Bot1(int x, int y, int _size) {
         this.currentPentominoIndex = this.pentominoOrder[0];
         
         this.looper = new Timer(400, new ActionListener() {
@@ -57,25 +57,25 @@ public class Game extends JPanel implements KeyListener {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if(Game.this.startx == 0 && Game.this.starty == 0) Game.this.CheckBestOption();
+                if(Bot1.this.startx == 0 && Bot1.this.starty == 0) Bot1.this.CheckBestOption();
                 // Checks if the pentomino has reached the end of the grid
-                if (Game.this.starty + Game.this.currentPentomino[0].length == 15 ) {
+                if (Bot1.this.starty + Bot1.this.currentPentomino[0].length == 15 ) {
 
-                    Game.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
+                    Bot1.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
 
                 } else {
                     // Check if pentomino is going to collide with any other pentomino
                     boolean collide = false;
 
-                    for(int i=Game.this.startx; i<Game.this.currentPentomino.length + Game.this.startx; i++){
-                        for(int j=Game.this.starty; j<Game.this.currentPentomino[0].length + Game.this.starty; j++){
-                            if(Game.this.currentPentomino[i-Game.this.startx][j-Game.this.starty] == 1){
-                                if(j<14 && Game.this.state[i][j+1] != -1){
+                    for(int i=Bot1.this.startx; i<Bot1.this.currentPentomino.length + Bot1.this.startx; i++){
+                        for(int j=Bot1.this.starty; j<Bot1.this.currentPentomino[0].length + Bot1.this.starty; j++){
+                            if(Bot1.this.currentPentomino[i-Bot1.this.startx][j-Bot1.this.starty] == 1){
+                                if(j<14 && Bot1.this.state[i][j+1] != -1){
                                     // check if game over
-                                    if((Game.this.startx<=0 && Game.this.starty<=0)){
-                                        Game.this.looper.stop();
-                                        Game.this.started = false;
-                                        scoreList.add(Game.this.score);
+                                    if((Bot1.this.startx<=0 && Bot1.this.starty<=0)){
+                                        Bot1.this.looper.stop();
+                                        Bot1.this.started = false;
+                                        scoreList.add(Bot1.this.score);
                                         Collections.sort(scoreList);
                                         Collections.reverse(scoreList);
                                         
@@ -114,7 +114,7 @@ public class Game extends JPanel implements KeyListener {
                             dialog.setVisible(true);
 
                             // Reset the game or perform other actions as needed
-                            Game.this.reset();
+                            Bot1.this.reset();
                             return;
 
                                     } 
@@ -125,22 +125,22 @@ public class Game extends JPanel implements KeyListener {
                         }
                     }
                     if(!collide){
-                        if(Game.this.mutation != Game.this.destmut) Game.this.mutation = Game.this.destmut;
-                        if(Game.this.startx != Game.this.destx) Game.this.startx++;
+                        if(Bot1.this.mutation != Bot1.this.destmut) Bot1.this.mutation = Bot1.this.destmut;
+                        if(Bot1.this.startx != Bot1.this.destx) Bot1.this.startx++;
                         
-                        if(Game.this.starty < 14 && Game.this.state[Game.this.startx][Game.this.starty+1] == -1)
-                        Game.this.starty++; // Pentomino descends one line
+                        if(Bot1.this.starty < 14 && Bot1.this.state[Bot1.this.startx][Bot1.this.starty+1] == -1)
+                        Bot1.this.starty++; // Pentomino descends one line
 
-                        if(Game.this.starty < Game.this.desty && Game.this.mutation==Game.this.destmut && Game.this.startx==Game.this.destx) Game.this.starty++;
+                        if(Bot1.this.starty < Bot1.this.desty && Bot1.this.mutation==Bot1.this.destmut && Bot1.this.startx==Bot1.this.destx) Bot1.this.starty++;
 
 
                     }
                     
                     else{
-                        Game.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
+                        Bot1.this.advanceToNextPentomino(); // Advances to the next pentomino in the database
                     }
                 }
-                if(Game.this.started) Game.this.repaint();
+                if(Bot1.this.started) Bot1.this.repaint();
             }
         });
         this.size = _size;
@@ -351,8 +351,8 @@ for (int i = 0; i < this.nextPentomino.length; i++) {
         this.mutation = 0;
 
         // Reposition next pentomino at the beginning of the grid
-        Game.this.startx = 0;
-        Game.this.starty = 0;
+        Bot1.this.startx = 0;
+        Bot1.this.starty = 0;
 
         // Check if all the pentominos have been reached to go back to the beginning
         if (this.currentPentominoIndex >= PentominoBuilder.basicDatabase.length) {

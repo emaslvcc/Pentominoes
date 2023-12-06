@@ -1,8 +1,24 @@
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.plaf.metal.MetalButtonUI;
 
@@ -29,6 +45,8 @@ public class TetrisGUI extends JPanel {
         this.addKeyListener(bot2);
         Bot3 bot3 = new Bot3(5, 15, 45);
         this.addKeyListener(bot3); // This h
+        BestOrderBot bot4 = new BestOrderBot(5, 15, 45);
+        this.addKeyListener(bot4);
 
         ImageIcon gifIcon = new ImageIcon("/Users/emachagas/Desktop/9pII.gif");
         final JLabel gifLabel = new JLabel(gifIcon);
@@ -45,14 +63,14 @@ public class TetrisGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Show options when the start button is clicked
-                showOptions();
+                this.showOptions();
             }
 
             private void showOptions() {
-                String[] options = {"Bot 1", "Bot 2", "Bot 3"};
-                selectedOption = JOptionPane.showOptionDialog(null, "Choose an Option", "Game Options", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+                String[] options = {"Bot 1", "Bot 2", "Bot 3","Bot 4"};
+                TetrisGUI.this.selectedOption = JOptionPane.showOptionDialog(null, "Choose an Option", "Game Options", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 
-                switch (selectedOption) {
+                switch (TetrisGUI.this.selectedOption) {
                     case 0:
                         System.out.println("Bot 1 selected");
                         TetrisGUI.this.removeAll();
@@ -77,6 +95,14 @@ public class TetrisGUI extends JPanel {
                         gifLabel.setVisible(false);
                         bot3.start();
                         break;
+                    case 3:
+                        System.out.println("Bot 4 selected");
+                        TetrisGUI.this.removeAll();
+                        TetrisGUI.this.add(bot4, BorderLayout.CENTER);
+                        TetrisGUI.this.add(menuPanel, BorderLayout.WEST);
+                        gifLabel.setVisible(false);
+                        bot4.start();
+                        break;
                     default:
                         System.out.println("No option selected");
                         break;
@@ -95,6 +121,7 @@ public class TetrisGUI extends JPanel {
             mainContentPanel.reset();
             bot2.reset();
             bot3.reset();
+            bot4.reset();
         });
         menuPanel.add(resetButton);
 
@@ -103,13 +130,13 @@ public class TetrisGUI extends JPanel {
         highScoreButton.addActionListener(e -> {
 
             // Display high scores logic goes here
-            displayCombinedHighScores();
+            this.displayCombinedHighScores();
         });
         menuPanel.add(highScoreButton);
 
         // Instruction button implementation
-        JButton instructionButton = createMenuButtonWithImage("???", "/Users/emachagas/Desktop/kisspng-morpheus-the-matrix-neo-red-pill-and-blue-pill-you-good-pills-will-play-5adf94a99c4d73.4062390915246020256402.png");
-        instructionButton.addActionListener(e -> showNewInstructions());
+        JButton instructionButton = this.createMenuButtonWithImage("???", "/Users/emachagas/Desktop/kisspng-morpheus-the-matrix-neo-red-pill-and-blue-pill-you-good-pills-will-play-5adf94a99c4d73.4062390915246020256402.png");
+        instructionButton.addActionListener(e -> this.showNewInstructions());
         menuPanel.add(instructionButton);
 
         // Adds the menu panel to the left of the GUI

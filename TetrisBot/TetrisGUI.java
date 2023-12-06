@@ -108,7 +108,7 @@ public class TetrisGUI extends JPanel {
         menuPanel.add(highScoreButton);
 
         // Instruction button implementation
-        JButton instructionButton = createMenuButtonWithImage("Instructions", "/Users/emachagas/Desktop/kisspng-morpheus-the-matrix-neo-red-pill-and-blue-pill-you-good-pills-will-play-5adf94a99c4d73.4062390915246020256402.png");
+        JButton instructionButton = createMenuButtonWithImage("???", "/Users/emachagas/Desktop/kisspng-morpheus-the-matrix-neo-red-pill-and-blue-pill-you-good-pills-will-play-5adf94a99c4d73.4062390915246020256402.png");
         instructionButton.addActionListener(e -> showNewInstructions());
         menuPanel.add(instructionButton);
 

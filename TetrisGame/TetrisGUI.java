@@ -1,13 +1,26 @@
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicButtonUI;
-import javax.swing.plaf.metal.MetalButtonUI;
-
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.plaf.metal.MetalButtonUI;
 
 // This class extends "JPanel", which is a swing component used for creating panels in the GUI
 public class TetrisGUI extends JPanel {
@@ -66,8 +79,8 @@ public class TetrisGUI extends JPanel {
         menuPanel.add(highScoreButton);
 
         // Instruction button implementation
-        JButton instructionButton = createMenuButtonWithImage("???", "/Users/emachagas/Desktop/kisspng-morpheus-the-matrix-neo-red-pill-and-blue-pill-you-good-pills-will-play-5adf94a99c4d73.4062390915246020256402.png");
-        instructionButton.addActionListener(e -> showNewInstructions());
+        JButton instructionButton = this.createMenuButtonWithImage("???", "/Users/emachagas/Desktop/kisspng-morpheus-the-matrix-neo-red-pill-and-blue-pill-you-good-pills-will-play-5adf94a99c4d73.4062390915246020256402.png");
+        instructionButton.addActionListener(e -> this.showNewInstructions());
         menuPanel.add(instructionButton);
 
         // Adds the menu panel to the left of the GUI

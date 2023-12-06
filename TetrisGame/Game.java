@@ -57,7 +57,7 @@ public class Game extends JPanel implements KeyListener {
     public Game(int x, int y, int _size) {
 
         // Starts at the first index of the Pentomino Order array
-        this.currentPentominoIndex = pentominoOrder[0];
+        this.currentPentominoIndex = this.pentominoOrder[0];
 
         // Performs the action specified every 600 milliseconds
         this.looper = new Timer(600, new ActionListener() {
@@ -256,9 +256,9 @@ public class Game extends JPanel implements KeyListener {
                 }
             }
 
-            this.nextIndex = pentominoOrder[currentPentominoIndex+1];
+            this.nextIndex = this.currentPentominoIndex+1;
             if (this.nextIndex == PentominoDatabase.data.length) this.nextIndex = 0;
-                this.nextPentomino = PentominoDatabase.data[pentominoOrder[currentPentominoIndex + 1]][0];
+                this.nextPentomino = PentominoDatabase.data[this.pentominoOrder[this.nextIndex]][0];
 
             // Paint next grid
             localGraphics2D.setColor(Color.BLACK);
@@ -325,7 +325,7 @@ public class Game extends JPanel implements KeyListener {
                 } 
             }
         }
-        this.currentPentominoIndex = pentominoOrder[currentPentominoIndex + 1];
+        this.currentPentominoIndex = this.nextIndex;
         this.mutation = 0;
 
         // Reposition next pentomino at the beginning of the grid
@@ -352,7 +352,7 @@ public class Game extends JPanel implements KeyListener {
         else if (i == 5) {return Color.PINK;}
         else if (i == 6) {return Color.RED;}
         else if (i == 7) {return Color.YELLOW;}
-        else if (i == 8) {return new Color(0, 0, 0);}
+        else if (i == 8) {return new Color(75, 50, 50);}
         else if (i == 9) {return new Color(0, 0, 100);}
         else if (i == 10) {return new Color(100, 0,0);}
         else if (i == 11) {return new Color(0, 100, 0);}
@@ -373,7 +373,9 @@ public class Game extends JPanel implements KeyListener {
         }
         this.startx = 0;
         this.starty = 0;
-        this.currentPentominoIndex = pentominoOrder[0];
+        this.currentPentominoIndex = this.pentominoOrder[0];
+        this.nextIndex = this.pentominoOrder[1];
+        this.mutation = 0;
         this.started = false;
         this.score = 0;
 

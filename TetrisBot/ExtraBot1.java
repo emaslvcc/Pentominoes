@@ -357,7 +357,7 @@ public class ExtraBot1 extends JPanel implements KeyListener {
         else if (i == 5) {return Color.PINK;}
         else if (i == 6) {return Color.RED;}
         else if (i == 7) {return Color.YELLOW;}
-        else if (i == 8) {return new Color(0, 0, 0);}
+        else if (i == 8) {return new Color(75, 50, 50);}
         else if (i == 9) {return new Color(0, 0, 100);}
         else if (i == 10) {return new Color(100, 0,0);}
         else if (i == 11) {return new Color(0, 100, 0);}
@@ -527,7 +527,7 @@ public class ExtraBot1 extends JPanel implements KeyListener {
             }
             //System.out.println(this.columnHeightDifference(testState));
 
-            score = evaluateNextPentomino(testState);
+            score = this.evaluateNextPentomino(testState);
             if (score < bestScore) {
                 bestScore = score;
                 mutation = this.mutation;

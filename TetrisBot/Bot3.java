@@ -55,7 +55,7 @@ public class Bot3 extends JPanel implements KeyListener {
         this.nextIndex = this.pentominoOrder[1];
 
         // Performs the action specified every 300 milliseconds
-        this.looper = new Timer(500, new ActionListener() {
+        this.looper = new Timer(50, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,11 +86,11 @@ public class Bot3 extends JPanel implements KeyListener {
 
 
 
-                                                " _____ ____  _      _____   ____  _     _____ ____ \n" +
-                                                        "/  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\\n" +
-                                                        "| |  _| / \\|| |\\/|||  \\    | / \\|| | //|  \\  |  \\/|\n" +
-                                                        "| |_//| |-||| |  |||  /_   | \\_/|| \\// |  /_ |    /\n" +
-                                                        "\\____\\_/ \\|\\_/  \\|\\____\\  \\____/\\__/  \\____\\/_/\\_\\";
+                                        "   _____          __  __ ______    ______      ________ _____  \n" +
+                                        "  / ____|   /\\   |  \\/  |  ____|  / __ \\ \\    / /  ____|  __ \\ \n" +
+                                        " | | |_ | / /\\ \\ | |\\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / \n" +
+                                        " | |__| |/ ____ \\| |  | | |____  | |__| | \\  /  | |____| | \\ \\ \n" +
+                                        "  \\_____/_/    \\_\\_|  |_|______|  \\____/   \\/   |______|_|  \\_\\";
 
 
 
@@ -103,7 +103,7 @@ public class Bot3 extends JPanel implements KeyListener {
 
                                         // Create a JLabel with HTML formatting
                                         JLabel label = new JLabel("<html><pre>" + gameOverMessage + "</pre></html>");
-                                        label.setForeground(Color.WHITE); // Set text color to white
+                                        label.setForeground(Color.GREEN); // Set text color to white
 
                                         // Customize JOptionPane with a green background
                                         UIManager.put("OptionPane.background", Color.BLACK); // Set background color of the option pane to black
@@ -111,7 +111,7 @@ public class Bot3 extends JPanel implements KeyListener {
 
                                         // Create and show JOptionPane
                                         JOptionPane optionPane = new JOptionPane(label, JOptionPane.PLAIN_MESSAGE);
-                                        optionPane.setPreferredSize(new Dimension(400, 180));
+                                        optionPane.setPreferredSize(new Dimension(550, 220));
 
                                         JDialog dialog = optionPane.createDialog("Game Over");
                                         dialog.setVisible(true);
@@ -173,22 +173,30 @@ public class Bot3 extends JPanel implements KeyListener {
             // ASCII art for "START SCREEN"
             String startScreenArt =
 
-                    "                                                                                       \n" +
-                            " _________________      ______   _________________      _____    ____          ______  \n" +
-                            "/                 \\ ___|\\     \\ /                 \\ ___|\\    \\  |    |     ___|\\     \\\n" +
-                            "\\______     ______/|     \\     \\\\______     ______/|    |\\    \\ |    |    |    |\\     \\\n" +
-                            "   \\( /    /  )/   |     ,_____/|  \\( /    /  )/   |    | |    ||    |    |    |/____/|\n" +
-                            "    ' |   |   '    |     \\--'\\_|/   ' |   |   '    |    |/____/ |    | ___|    \\|   | |\n" +
-                            "      |   |        |     /___/|       |   |        |    |\\    \\ |    ||    \\    \\___|/ \n" +
-                            "     /   //        |     \\____|\\     /   //        |    | |    ||    ||    |\\     \\    \n" +
-                            "    /___//         |____ '     /|   /___//         |____| |____||____||\\ ___\\|_____|   \n" +
-                            "   |`   |          |    /_____/ |  |`   |          |    | |    ||    || |    |     |   \n" +
-                            "   |____|          |____|     | /  |____|          |____| |____||____| \\|____|_____|   \n" +
-                            "     \\(              \\( |_____|/     \\(              \\(     )/    \\(      \\(    )/     \n" +
-                            "      '               '    )/         '               '     '      '       '    '      ";
+            "                                                                                       \n" +
+            " _________________      ______   _________________      _____    ____          ______  \n" +
+            "/                 \\ ___|\\     \\ /                 \\ ___|\\    \\  |    |     ___|\\     \\\n" +
+            "\\______     ______/|     \\     \\\\______     ______/|    |\\    \\ |    |    |    |\\     \\\n" +
+            "   \\( /    /  )/   |     ,_____/|  \\( /    /  )/   |    | |    ||    |    |    |/____/|\n" +
+            "    ' |   |   '    |     \\--'\\_|/   ' |   |   '    |    |/____/ |    | ___|    \\|   | |\n" +
+            "      |   |        |     /___/|       |   |        |    |\\    \\ |    ||    \\    \\___|/ \n" +
+            "     /   //        |     \\____|\\     /   //        |    | |    ||    ||    |\\     \\    \n" +
+            "    /___//         |____ '     /|   /___//         |____| |____||____||\\ ___\\|_____|   \n" +
+            "   |`   |          |    /_____/ |  |`   |          |    | |    ||    || |    |     |   \n" +
+            "   |____|          |____|     | /  |____|          |____| |____||____| \\|____|_____|   \n" +
+            "     \\(              \\( |_____|/     \\(              \\(     )/    \\(      \\(    )/     \n" +
+            "      '               '    )/         '               '     '      '       '    '      \n"+
+    
+    
+            
+            
+            
+            
+            
+            "                        Created by Group 5                          Version 1.0                                                       ";
 
 
-            localGraphics2D.setColor(Color.white);
+            localGraphics2D.setColor(Color.GREEN);
             Font font = new Font("Monospaced", Font.PLAIN, 12);
             localGraphics2D.setFont(font);
 

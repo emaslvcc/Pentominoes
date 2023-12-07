@@ -67,7 +67,7 @@ public class TetrisGUI extends JPanel {
             }
 
             private void showOptions() {
-                String[] options = {"Bot 1", "Bot 2", "Bot 3","Bot 4"};
+                String[] options = {"Bot 1", "Bot 2", "Bot 3", "Optimal Order Demo"};
                 TetrisGUI.this.selectedOption = JOptionPane.showOptionDialog(null, "Choose an Option", "Game Options", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 
                 switch (TetrisGUI.this.selectedOption) {

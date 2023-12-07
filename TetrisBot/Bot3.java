@@ -213,12 +213,10 @@ public class Bot3 extends JPanel implements KeyListener {
             }
 
         }
-        else{
+        else {
 
             localGraphics2D.setColor(Color.BLACK);
             localGraphics2D.fill(this.getVisibleRect());
-
-
 
             // Paints the Tetris grid
             localGraphics2D.setColor(Color.GREEN);
@@ -229,15 +227,12 @@ public class Bot3 extends JPanel implements KeyListener {
                 localGraphics2D.drawLine(0, i * this.size, this.state.length * this.size, i * this.size);
             }
 
-
             localGraphics2D.drawString("NEXT PENTOMINO", 450, 200);
             localGraphics2D.drawString("Current score :  " + this.score, 450, 500);
 
-
-
-            for(int i=0 ; i<this.state.length; i++){
-                for(int j=0 ; j<this.state[0].length; j++){
-                    if(this.state[i][j] != -1){
+            for (int i = 0; i < this.state.length; i++) {
+                for (int j = 0; j < this.state[0].length; j++) {
+                    if (this.state[i][j] != -1) {
                         g.setColor(this.GetColorOfID(this.state[i][j]));
                         localGraphics2D.fill(new Rectangle2D.Double(i * this.size + 1, j * this.size + 1, this.size - 1, this.size - 1));
                     }
@@ -250,10 +245,10 @@ public class Bot3 extends JPanel implements KeyListener {
             for (int i = 0; i < this.currentPentomino.length; i++) {
                 for (int j = 0; j < this.currentPentomino[0].length; j++) {
                     if (this.currentPentomino[i][j] == 1) {
-                        if(this.state[i+this.startx][j+this.starty] != -1){
+                        if (this.state[i + this.startx][j + this.starty] != -1) {
                             this.starty--;
-                            i=100;
-                            j=100;
+                            i = 100;
+                            j = 100;
                             break;
                         }
                     }
@@ -263,7 +258,7 @@ public class Bot3 extends JPanel implements KeyListener {
             for (int i = 0; i < this.currentPentomino.length; i++) {
                 for (int j = 0; j < this.currentPentomino[0].length; j++) {
                     if (this.currentPentomino[i][j] == 1) {
-                        if(this.started){
+                        if (this.started){
                             g.setColor(this.GetColorOfID(this.currentPentominoIndex));
                             localGraphics2D.fill(new Rectangle2D.Double(i * this.size + this.startx * this.size + 1, j * this.size + this.starty * this.size + 1, this.size - 1, this.size - 1));
                         }
@@ -271,14 +266,13 @@ public class Bot3 extends JPanel implements KeyListener {
                 }
             }
 
-            this.nextIndex = this.currentPentominoIndex+1;
-            if(this.nextIndex == PentominoDatabase.data.length) this.nextIndex = 0;
+            this.nextIndex = this.currentPentominoIndex + 1;
+            if (this.nextIndex == PentominoDatabase.data.length) this.nextIndex = 0;
             this.nextPentomino = PentominoDatabase.data[this.nextIndex][0];
 
-
-        // Paint next grid
-        localGraphics2D.setColor(Color.BLACK);
-        for (int i = 0; i <= this.nextPentomino.length; i++) {
+            // Paint next grid
+            localGraphics2D.setColor(Color.BLACK);
+            for (int i = 0; i <= this.nextPentomino.length; i++) {
                 localGraphics2D.drawLine((i * this.size) + 450 , 220, (i * this.size) + 450, (this.nextPentomino[0].length * this.size) + 220);
 
             }
@@ -286,8 +280,7 @@ public class Bot3 extends JPanel implements KeyListener {
                 localGraphics2D.drawLine(450, (i * this.size)+220, (this.nextPentomino.length * this.size) + 450, (i * this.size) + 220);
             }
 
-
-            // paint next pentomino
+            // Paint next pentomino
             for (int i = 0; i < this.nextPentomino.length; i++) {
                 for (int j = 0; j < this.nextPentomino[0].length; j++) {
                     if (this.nextPentomino[i][j] == 1) {
@@ -300,21 +293,22 @@ public class Bot3 extends JPanel implements KeyListener {
             }
 
             // check if horizontal lines should be removed
-            for(int i=0; i<this.state[0].length; i++){
+            for (int i = 0; i < this.state[0].length; i++) {
                 boolean filledline = true;
-                for(int j=0; j<this.state.length; j++){
-                    if(this.state[j][i] == -1){
+                for (int j = 0; j < this.state.length; j++) {
+                    if (this.state[j][i] == -1) {
                         filledline = false;
                         break;
                     }
                 }
                 if(filledline){
                     this.score++;
-                    for(int t=0; t<5; t++){
+                    for (int t = 0; t < 5; t++) {
                         this.state[t][i] = -1;
                         g.setColor(Color.BLACK);
                         localGraphics2D.fill(new Rectangle2D.Double(t * this.size + 1, i * this.size + 1, this.size - 1, this.size - 1));
                     }
+
                     // Drop pentominos if lines where removed
                     for (int t = i; t > 0; t--) {
                         for (int u = 0; u < 5; u++) {
@@ -328,12 +322,12 @@ public class Bot3 extends JPanel implements KeyListener {
             }
         }
     }
+
     /**
      * Advances to the following pentomino in the database
      * @return void
      */
     public void advanceToNextPentomino() {
-        //Add pentomino to state
         for (int i = this.startx; i < this.currentPentomino.length + this.startx; i++) {
             for (int j = this.starty; j < this.currentPentomino[0].length + this.starty; j++) {
                 if (this.currentPentomino[i-this.startx][j-this.starty] == 1) {
@@ -375,42 +369,48 @@ public class Bot3 extends JPanel implements KeyListener {
         else {return Color.BLACK;}
     }
 
+    /**
+     * Resets the game
+     * @return void
+     */
     public void reset() {
-        
-        for(int i=0; i < this.state.length ; i++){
-            for(int j=0; j < this.state[0].length ; j++)
+        for (int i = 0; i < this.state.length ; i++) {
+            for (int j = 0; j < this.state[0].length ; j++) {
                 this.state[i][j] = -1;
-            this.looper.stop();
+                this.looper.stop();
+            }
         }
         this.startx = 0;
         this.starty = 0;
         this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
         this.started = false;
         this.score = 0;
-
         this.repaint();
-
     }
 
+    /**
+     * Starts the game
+     * @return void
+     */
     public void start() {
         this.started = true;
         this.looper.start();
         this.repaint();
     }
 
+    /**
+     * Handles keyboard input for "P" (pausing the game)
+     */
     @Override
     public void keyPressed(KeyEvent e) {
-        if(this.startx < 0 || this.starty<0) return;
+        if (this.startx < 0 || this.starty < 0) return;
         if (e.getKeyCode() == 80) {
-            if(!this.pause){
+            if (!this.pause) {
                 this.looper.stop();
                 this.pause = true;
-
-            }
-            else if(this.pause){
+            } else if (this.pause) {
                 this.looper.start();
                 this.pause = false;
-
             }
         }
     }
@@ -425,35 +425,48 @@ public class Bot3 extends JPanel implements KeyListener {
         //To change body of generated methods, choose Tools | Templates.
     }
 
-    public boolean moveRight(){
-        for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
-            for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
-                if(i + 1 == 5) return false;
-                else{
+    /**
+     * Checks if the pentomino can move to the right
+     * @return if the pentomino can move to the right (true) or if it cannot (false)
+     */
+    public boolean moveRight() {
+        for (int i = this.startx; i < this.startx + this.currentPentomino.length; i++) {
+            for (int j = this.starty; j < this.starty + this.currentPentomino[0].length; j++) {
+                if (i + 1 == 5) return false;
+                else {
                     if(this.state[i + 1][j] != -1) return false;
                 }
             }
         }
         return true;
     }
-    public boolean moveLeft(){
-        for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
-            for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
-                if(i - 1 == -1) return false;
-                else{
+
+    /**
+     * Checks if the pentomino can move to the left
+     * @return if the pentomino can move to the left (true) or if it cannot (false)
+     */
+    public boolean moveLeft() {
+        for (int i = this.startx; i < this.startx + this.currentPentomino.length; i++) {
+            for (int j = this.starty; j < this.starty + this.currentPentomino[0].length; j++) {
+                if (i - 1 == -1) return false;
+                else {
                     if(this.state[i - 1][j] != -1) return false;
                 }
             }
         }
         return true;
     }
-    public boolean moveDown(){
 
-        for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
-            for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
-                if(j + 1 == 15) return false;
-                else{
-                    if(this.state[i][j+1] != -1 && this.currentPentomino[i-this.startx][j-this.starty] == 1){
+    /**
+     * Checks if the pentomino can move downwards
+     * @return if the pentomino can move downwards (true) or if it cannot (false)
+     */
+    public boolean moveDown() {
+        for (int i = this.startx; i < this.startx + this.currentPentomino.length; i++) {
+            for (int j = this.starty; j < this.starty + this.currentPentomino[0].length; j++) {
+                if (j + 1 == 15) return false;
+                else {
+                    if (this.state[i][j + 1] != -1 && this.currentPentomino[i - this.startx][j - this.starty] == 1) {
                         return false;
                     }
                 }
@@ -461,33 +474,36 @@ public class Bot3 extends JPanel implements KeyListener {
         }
         return true;
     }
+
+    /**
+     * Rotates pentomino
+     * @return void
+     */
     public void rotate(){
-
         int lastmutation = this.mutation;
-
         this.mutation++;
         if(this.mutation >= PentominoDatabase.data[this.currentPentominoIndex].length) this.mutation = 0;
         int[][] curr = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
 
-
-        for(int i=this.startx; i<this.startx+curr.length ; i++){
-            for(int j=this.starty; j<this.starty+curr[0].length; j++){
-                if( j == 15 || i==5 ){
-                    if(this.mutation>0)
-                        this.mutation = lastmutation ;
+        for (int i = this.startx; i < this.startx+curr.length ; i++) {
+            for (int j = this.starty; j < this.starty + curr[0].length; j++) {
+                if (j == 15 || i == 5) {
+                    if (this.mutation > 0) this.mutation = lastmutation;
                     System.out.println("rotate failed");
                     return;
-                }
-                else if(this.state[i][j] != -1){
+                } else if (this.state[i][j] != -1) {
                     this.mutation = lastmutation;
                     System.out.println("rotate failed");
                     return;
                 }
             }
-
         }
     }
 
+    /**
+     * Display High Scores
+     * @return High Score string 
+     */
     public static String highScores(){
         String mess = "High Scores: \n";
         for (int i = 0; i < scoreList.size(); i++) {
@@ -496,7 +512,11 @@ public class Bot3 extends JPanel implements KeyListener {
         return mess;
     }
 
-    public void shuffleOrder(){
+    /**
+     * Shuffles the Database information
+     * @return void
+     */
+    public void shuffleOrder() {
         int[][][][] data = PentominoDatabase.data;
 
         for (int i = 0; i < data.length; i++) {
@@ -507,7 +527,11 @@ public class Bot3 extends JPanel implements KeyListener {
         }
     }
 
-    public void CheckBestOption(){
+    /**
+     * Checks the best possible pentomino positioning and picks it
+     * @return void
+     */
+    public void CheckBestOption() {
         double max = 0;
         double curr = 0;
         int mut = 0;
@@ -515,55 +539,59 @@ public class Bot3 extends JPanel implements KeyListener {
         int y = 0;
         int[][] teststate = new int[5][15];
 
-        while(true){
+        while (true) {
             this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
 
-            for(int i=0;i<this.state.length;i++){
-                for(int j=0;j<this.state[0].length;j++){
+            for (int i = 0; i < this.state.length; i++) {
+                for (int j = 0; j < this.state[0].length; j++) {
                     teststate[i][j] = this.state[i][j];
                 }
             }
-            while(this.moveDown()){
+
+            while (this.moveDown()) {
                 this.starty++;
             }
-            // erase possible full row!
-            for(int i=0; i<teststate[0].length; i++){
+
+            // Erases a possible full row
+            for (int i = 0; i < teststate[0].length; i++) {
                 boolean filledline = true;
-                for(int j=0; j<teststate.length; j++){
-                    if(teststate[j][i] == -1){
+                for (int j = 0; j < teststate.length; j++) {
+                    if (teststate[j][i] == -1) {
                         filledline = false;
                         break;
                     }
                 }
-                if(filledline){
-                    for(int t=0; t<5; t++){
+                if(filledline) {
+                    for (int t = 0; t < 5; t++) {
                         teststate[t][i] = -1;
                     }
-                    // drop pentominos if lines where removed
-                    for(int t=i; t>0; t--){
-                        for(int u=0; u<5 ; u++){
-                            if(teststate[u][t-1] != -1){
-                                teststate[u][t] = teststate[u][t-1];
-                                teststate[u][t-1] = -1;
+                    
+                    // Drop pentominos if lines where removed
+                    for (int t = i; t > 0; t--) {
+                        for (int u = 0; u < 5; u++) {
+                            if (teststate[u][t - 1] != -1) {
+                                teststate[u][t] = teststate[u][t - 1];
+                                teststate[u][t - 1] = -1;
                             }
                         }
                     }
                 }
             }
 
-            // places a possible option in teststate
-            for(int i=this.starty; i<this.starty + this.currentPentomino[0].length; i++){
-                for(int j=this.startx; j<this.startx + this.currentPentomino.length; j++){
-                    if(this.currentPentomino[j-this.startx][i-this.starty] == 1){
+            // Places a possible option as the test state
+            for (int i = this.starty; i < this.starty + this.currentPentomino[0].length; i++) {
+                for (int j = this.startx; j < this.startx + this.currentPentomino.length; j++) {
+                    if (this.currentPentomino[j - this.startx][i - this.starty] == 1) {
                         teststate[j][i] = this.currentPentominoIndex;
                     }
                 }
             }
-            // counts the value of this state
+
+            // Counts the value of this state
             curr = this.EvaluateNextThreePentominoes(teststate);
 
-            // if the value is higher than max, safe the mutation and update max
-            if(curr > max){
+            // If the value is higher than the maximum, save the mutation and update maximum
+            if (curr > max) {
                 max = curr;
                 mut = this.mutation;
                 x = this.startx;
@@ -572,14 +600,13 @@ public class Bot3 extends JPanel implements KeyListener {
 
             curr = 0;
             this.starty = 0;
-            if(!this.moveRight()){
+            if (!this.moveRight()) {
                 this.startx = 0;
                 this.mutation++;
-                if(this.mutation >= PentominoDatabase.data[this.currentPentominoIndex].length){
+                if (this.mutation >= PentominoDatabase.data[this.currentPentominoIndex].length) {
                     break;
                 }
-            }
-            else{
+            } else {
                 this.startx++;
                 this.starty=0;
             }
@@ -589,6 +616,11 @@ public class Bot3 extends JPanel implements KeyListener {
         this.destmut = mut;      
     }
 
+    /**
+     * Evaluates the score for the next possible three pentomino positions
+     * @param teststate possible pentomino positioning
+     * @return maximum score
+     */
     public double EvaluateNextThreePentominoes(int[][] teststate) {
         double nextMax = 0;
         double nextCurr = 0;
@@ -678,24 +710,38 @@ public class Bot3 extends JPanel implements KeyListener {
         return nextMax;
     }
 
+    /**
+     * Checks if the pentomino can move to the right
+     * @param teststate possible pentomino positioning
+     * @param x x coordinate in position (x,y)
+     * @param y y coordinate in position (x,y)
+     * @return if the pentomino can move to the right (true) or if it cannot (false)
+     */
     public boolean nextMoveRight(int[][] teststate, int x, int y){
-        for(int i=x; i<x+this.nextPentomino.length ; i++){
-            for(int j=y; j<y+this.nextPentomino[0].length; j++){
-                if(i + 1 == 5) return false;
-                else{
-                    if(teststate[i + 1][j] != -1) return false;
+        for (int i = x; i < x + this.nextPentomino.length; i++) {
+            for (int j = y; j < y + this.nextPentomino[0].length; j++) {
+                if (i + 1 == 5) return false;
+                else {
+                    if (teststate[i + 1][j] != -1) return false;
                 }
             }
         }
         return true;
     }
 
+    /**
+     * Checks if the pentomino can move downwards
+     * @param teststate possible pentomino positioning
+     * @param x x coordinate in position (x,y)
+     * @param y y coordinate in position (x,y)
+     * @return if the pentomino can move down (true) or if it cannot (false)
+     */
     public boolean nextMoveDown(int[][] teststate, int x, int y){
-        for(int i=x; i<x+this.nextPentomino.length ; i++){
-            for(int j=y; j<y+this.nextPentomino[0].length; j++){
-                if(j + 1 == 15) return false;
-                else{
-                    if(teststate[i][j+1] != -1 && this.nextPentomino[i-x][j-y] == 1){
+        for (int i = x; i < x + this.nextPentomino.length; i++) {
+            for (int j = y; j < y + this.nextPentomino[0].length; j++) {
+                if (j + 1 == 15) return false;
+                else {
+                    if (teststate[i][j + 1] != -1 && this.nextPentomino[i - x][j - y] == 1) {
                         return false;
                     }
                 }
@@ -703,5 +749,4 @@ public class Bot3 extends JPanel implements KeyListener {
         }
         return true;
     }
-}   
- 
+} 

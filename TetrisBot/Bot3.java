@@ -40,22 +40,21 @@ public class Bot3 extends JPanel implements KeyListener {
     private int[][] currentPentomino;
     private int[][] nextPentomino;
     private int nextIndex;
-    private Random random = new Random();
+    private Random random;
     private int score = 0;
     private int destx=0;
     private int desty=0;
     private int destmut=0;
-    private int[] pentominoOrder = {5, 2, 10, 11, 1, 9, 6, 3, 7, 8, 0, 4};
     private static ArrayList<Integer> scoreList = new ArrayList<>();
 
 
     public Bot3(int x, int y, int _size) {
-        this.currentPentominoIndex = this.pentominoOrder[0];
-
-        this.nextIndex = this.pentominoOrder[1];
+        this.random = new Random();
+        this.shuffleOrder(); // shuffle order of database
+        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
 
         // Performs the action specified every 300 milliseconds
-        this.looper = new Timer(50, new ActionListener() {
+        this.looper = new Timer(300, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -272,28 +271,10 @@ public class Bot3 extends JPanel implements KeyListener {
                 }
             }
 
-            int currentIndexInSequence = -1;
-            for (int i = 0; i < this.pentominoOrder.length; i++) {
-                if (this.pentominoOrder[i] == this.currentPentominoIndex) {
-                    currentIndexInSequence = i;
-                    break;
-                }
-            }
-
-            // Determine the next index in the sequence
-            if (currentIndexInSequence != -1) {
-                this.nextIndex = this.pentominoOrder[(currentIndexInSequence + 1) % this.pentominoOrder.length];
-            } else {
-                // Handle error if current pentomino is not found in sequence
-                System.err.println("Error: Current pentomino not found in pentominoOrder.");
-            }
-
-            // Update nextPentomino
+            this.nextIndex = this.currentPentominoIndex+1;
+            if(this.nextIndex == PentominoDatabase.data.length) this.nextIndex = 0;
             this.nextPentomino = PentominoDatabase.data[this.nextIndex][0];
-            
 
-        // this.pen2 = PentominoDatabase.data[(nextIndex + 1) % PentominoDatabase.data.length][0];
-        // this.pen3 = PentominoDatabase.data[(nextIndex + 2) % PentominoDatabase.data.length][0];
 
         // Paint next grid
         localGraphics2D.setColor(Color.BLACK);
@@ -352,41 +333,25 @@ public class Bot3 extends JPanel implements KeyListener {
      * @return void
      */
     public void advanceToNextPentomino() {
-        // Add the current pentomino to the state
+        //Add pentomino to state
         for (int i = this.startx; i < this.currentPentomino.length + this.startx; i++) {
             for (int j = this.starty; j < this.currentPentomino[0].length + this.starty; j++) {
-                if (this.currentPentomino[i - this.startx][j - this.starty] == 1) {
+                if (this.currentPentomino[i-this.startx][j-this.starty] == 1) {
                     this.state[i][j] = this.currentPentominoIndex;
                 }
             }
         }
-
-        // Find the current index in the pentominoOrder array
-        int currentIndex = -1;
-        for (int i = 0; i < this.pentominoOrder.length; i++) {
-            if (this.pentominoOrder[i] == this.currentPentominoIndex) {
-                currentIndex = i;
-                break;
-            }
-        }
-
-        // Advance to the next index in the sequence or loop back to the beginning
-        if (currentIndex != -1) {
-            currentIndex = (currentIndex + 1) % this.pentominoOrder.length;
-            this.currentPentominoIndex = this.pentominoOrder[currentIndex];
-        } else {
-            // Handle the error if the current pentomino is not found in the sequence
-            System.err.println("Error: Current pentomino not found in pentominoOrder.");
-        }
-
-        // Calculate the index of the next pentomino in the sequence
-        int nextIndex = (currentIndex + 1) % this.pentominoOrder.length;
-        this.nextPentomino = PentominoDatabase.data[nextIndex][0];
-
-        // Reset mutation and reposition the next pentomino at the start
+        this.currentPentominoIndex++; // Move to the next pentomino in your PentominoDatabase
         this.mutation = 0;
-        this.startx = 0;
-        this.starty = 0;
+
+        // Reposition next pentomino at the beginning of the grid
+        Bot3.this.startx = 0;
+        Bot3.this.starty = 0;
+
+        // Check if all the pentominos have been reached to go back to the beginning
+        if (this.currentPentominoIndex >= PentominoBuilder.basicDatabase.length) {
+            this.currentPentominoIndex = 0;
+        }
     }
 
     /**
@@ -411,23 +376,20 @@ public class Bot3 extends JPanel implements KeyListener {
     }
 
     public void reset() {
-
+        
         for(int i=0; i < this.state.length ; i++){
             for(int j=0; j < this.state[0].length ; j++)
                 this.state[i][j] = -1;
-                this.looper.stop();
+            this.looper.stop();
         }
         this.startx = 0;
         this.starty = 0;
         this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
-        this.nextIndex = this.currentPentominoIndex+1;
-        this.currentPentominoIndex = this.pentominoOrder[0];
-        this.nextIndex = this.pentominoOrder[1];
-        this.mutation = 0;
         this.started = false;
         this.score = 0;
 
         this.repaint();
+
     }
 
     public void start() {

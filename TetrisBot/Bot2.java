@@ -48,10 +48,12 @@ public class Bot2 extends JPanel implements KeyListener {
     private static ArrayList<Integer> scoreList = new ArrayList<>();
      
     public Bot2(int x, int y, int _size) {
-        this.currentPentominoIndex = this.pentominoOrder[0];
+        this.random = new Random();
+        this.shuffleOrder(); // shuffle order of database
+        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
 
         // Performs the action specified every 300 milliseconds
-        this.looper = new Timer(50, new ActionListener() {
+        this.looper = new Timer(300, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -197,7 +199,7 @@ public class Bot2 extends JPanel implements KeyListener {
         
         
         
-        "                        Created by Group5                          Version1.0                                                       ";
+        "                        Created by Group 5                          Version 1.0                                                       ";
     
 
             localGraphics2D.setColor(Color.GREEN);
@@ -272,7 +274,7 @@ public class Bot2 extends JPanel implements KeyListener {
 
             this.nextIndex = this.currentPentominoIndex+1;
             if(this.nextIndex == PentominoDatabase.data.length) this.nextIndex = 0;
-            this.nextPentomino = PentominoDatabase.data[this.pentominoOrder[this.nextIndex]][0];
+            this.nextPentomino = PentominoDatabase.data[this.nextIndex][0];
 
             // Paint next grid
             localGraphics2D.setColor(Color.BLACK);
@@ -283,21 +285,18 @@ public class Bot2 extends JPanel implements KeyListener {
                 localGraphics2D.drawLine(450, (i * this.size)+220, (this.nextPentomino.length * this.size) + 450, (i * this.size) + 220);
             } 
 
-            // Calculate nextIndex properly
-this.nextIndex = (this.currentPentominoIndex + 1) % PentominoDatabase.data.length;
-
-// Paint next pentomino
-for (int i = 0; i < this.nextPentomino.length; i++) {
-    for (int j = 0; j < this.nextPentomino[0].length; j++) {
-        if (this.nextPentomino[i][j] == 1) {
-            if (this.started) {
-                // Use nextIndex directly
-                g.setColor(this.GetColorOfID(this.pentominoOrder[this.nextIndex]));
-                localGraphics2D.fill(new Rectangle2D.Double(i * this.size + 1 + 450, j * this.size + 1 + 220, this.size - 1, this.size - 1));
+            // Paint next pentomino
+            for (int i = 0; i < this.nextPentomino.length; i++) {
+                for (int j = 0; j < this.nextPentomino[0].length; j++) {
+                    if (this.nextPentomino[i][j] == 1) {
+                        if (this.started) {
+                        // Use nextIndex directly
+                            g.setColor(this.GetColorOfID(this.nextIndex));
+                            localGraphics2D.fill(new Rectangle2D.Double(i * this.size + 1 + 450, j * this.size + 1 + 220, this.size - 1, this.size - 1));
+                        }
+                    }
+                }
             }
-        }
-    }
-}
 
 
             // Check if horizontal lines should be removed 
@@ -337,15 +336,15 @@ for (int i = 0; i < this.nextPentomino.length; i++) {
      * @return void
      */
     public void advanceToNextPentomino() {
-        //Aadd pentomino to state
+        //Add pentomino to state
         for (int i = this.startx; i < this.currentPentomino.length + this.startx; i++) {
             for (int j = this.starty; j < this.currentPentomino[0].length + this.starty; j++) {
                 if (this.currentPentomino[i-this.startx][j-this.starty] == 1) {
                     this.state[i][j] = this.currentPentominoIndex;
-                } 
+                }
             }
         }
-        this.currentPentominoIndex = this.pentominoOrder[this.nextIndex];
+        this.currentPentominoIndex++; // Move to the next pentomino in your PentominoDatabase
         this.mutation = 0;
 
         // Reposition next pentomino at the beginning of the grid
@@ -384,13 +383,11 @@ for (int i = 0; i < this.nextPentomino.length; i++) {
         for(int i=0; i < this.state.length ; i++){
             for(int j=0; j < this.state[0].length ; j++)
                 this.state[i][j] = -1;
-                this.looper.stop();
+            this.looper.stop();
         }
         this.startx = 0;
         this.starty = 0;
-        this.currentPentominoIndex = this.pentominoOrder[0];
-        this.nextIndex = this.pentominoOrder[1];
-        this.mutation = 0;
+        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
         this.started = false;
         this.score = 0;
 

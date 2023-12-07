@@ -584,24 +584,4 @@ public class Bot1 extends JPanel implements KeyListener {
         this.desty = y;
         this.destmut = mut;
     }
-
-    /**
-     * Drops lines until collision
-     * @param y y coordinate in position (x,y)
-     * @return void
-     */
-    public void dropLine(int y) {
-        int left = 0;
-        int right = 5;
-        while (true) {
-            int left2 = left;
-            int right2 = right;
-            for (int i = left; i < right - 1; i++) {
-                if (this.state[i][y] == 1) {
-                    left = i;
-                    break;
-                }
-            }
-        }
-    }
 }

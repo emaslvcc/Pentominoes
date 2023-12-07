@@ -37,7 +37,6 @@ public class BestOrderBot extends JPanel implements KeyListener {
     private int currentPentominoIndex;
     private int mutation = 0;
     private int[][] currentPentomino;
-    private int currentPentominoMutation;
     private int[][] nextPentomino;
     private int nextIndex;
     private Random random;
@@ -227,6 +226,7 @@ public class BestOrderBot extends JPanel implements KeyListener {
             // Prints the current pentomino at the positions they go through
             this.currentPentomino = BestOrderDatabase.data[this.currentPentominoIndex][this.mutation];
 
+            // extra check if a pentomino won't collide, if it collides put pentomino one step back upwards
             for (int i = 0; i < this.currentPentomino.length; i++) {
                 for (int j = 0; j < this.currentPentomino[0].length; j++) {
                     if (this.currentPentomino[i][j] == 1) {
@@ -324,7 +324,6 @@ public class BestOrderBot extends JPanel implements KeyListener {
                 } 
             }
         }
-        //this.
         this.currentPentominoIndex = this.pentominoOrder[this.nextIndex];
         this.nextIndex++;
         this.mutation = 0;
@@ -512,25 +511,5 @@ public class BestOrderBot extends JPanel implements KeyListener {
         this.destx = this.spots[curr][0];
         this.desty = this.spots[curr][1];
         this.destmut = this.spots[curr][2];
-    }
-
-    /**
-     * Drops line until collision
-     * @param y y coordinate of position (x,y)
-     * @return void
-     */
-    public void dropLine(int y) {
-        int left = 0;
-        int right = 5;
-        while (true) {
-            int left2 = left;
-            int right2 = right;
-            for (int i = left; i < right - 1; i++) {
-                if (this.state[i][y] == 1) {
-                    left = i;
-                    break;
-                }
-            }
-        }
     }
 }

@@ -44,18 +44,13 @@ This class handles all the graphics to display a certain state.
 
 It extends _JPanel_ (corresponding to a panel of the GUI's main frame), and implements a _KeyListener_ to handle keyboard input.
 
-```java
-import foobar
+1. A **_Game_ constructor** is implemented to handle the general Tetris game logic. It sets up a game board, initializes pentomino shapes, and manages their descent by means of a timer (looper). The timer checks for collisions with existing pentominos, and handles Game Over scenarios, by displaying a graphical message and resetting the game.
 
-# returns 'words'
-foobar.pluralize('word')
+2. The **_paintComponent_** method is responsible for rendering the graphical representation of the Tetris game within a Java Swing component, updating the display as the game progresses.
 
-# returns 'geese'
-foobar.pluralize('goose')
+3. The **_advanceToNextPentomino_** method advances to the next pentomino in the _pentominoOrder_ array.
 
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
+4. A method **_getColorID_** decodes the ID of a pentomino into the corresponding color.
 
 ## Institute
 

@@ -89,11 +89,11 @@ public class Game extends JPanel implements KeyListener {
                                                                                                                                                                       
                                                      
                                          
-                                         " _____ ____  _      _____   ____  _     _____ ____ \n" +
-                                         "/  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\\n" +
-                                         "| |  _| / \\|| |\\/|||  \\    | / \\|| | //|  \\  |  \\/|\n" +
-                                         "| |_//| |-||| |  |||  /_   | \\_/|| \\// |  /_ |    /\n" +
-                                         "\\____\\_/ \\|\\_/  \\|\\____\\  \\____/\\__/  \\____\\/_/\\_\\";
+                                        "   _____          __  __ ______    ______      ________ _____  \n" +
+                                        "  / ____|   /\\   |  \\/  |  ____|  / __ \\ \\    / /  ____|  __ \\ \n" +
+                                        " | | |_ | / /\\ \\ | |\\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / \n" +
+                                        " | |__| |/ ____ \\| |  | | |____  | |__| | \\  /  | |____| | \\ \\ \n" +
+                                        "  \\_____/_/    \\_\\_|  |_|______|  \\____/   \\/   |______|_|  \\_\\";
                                      
                                     
                                                                                                                                                 
@@ -107,15 +107,15 @@ public class Game extends JPanel implements KeyListener {
                                          
                                         // Create a JLabel with HTML formatting to display a Game Over message
                                         JLabel label = new JLabel("<html><pre>" + gameOverMessage + "</pre></html>");
-                                        label.setForeground(Color.WHITE); // Set text color to white
+                                        label.setForeground(Color.GREEN); // Set text color to white
 
                                         // Customize background to be red
-                                        UIManager.put("OptionPane.background", new Color(145, 0, 12));
-                                        UIManager.put("Panel.background", new Color(145, 0, 12)); 
+                                        UIManager.put("OptionPane.background", new Color(0, 0, 0));
+                                        UIManager.put("Panel.background", new Color(0, 0, 0)); 
                             
                                         // Display message
                                         JOptionPane optionPane = new JOptionPane(label, JOptionPane.PLAIN_MESSAGE);
-                                        optionPane.setPreferredSize(new Dimension(400, 180));
+                                        optionPane.setPreferredSize(new Dimension(550, 220));
                                         JDialog dialog = optionPane.createDialog("Game Over");
                                         dialog.setVisible(true);
 
@@ -184,10 +184,18 @@ public class Game extends JPanel implements KeyListener {
             "   |`   |          |    /_____/ |  |`   |          |    | |    ||    || |    |     |   \n" +
             "   |____|          |____|     | /  |____|          |____| |____||____| \\|____|_____|   \n" +
             "     \\(              \\( |_____|/     \\(              \\(     )/    \\(      \\(    )/     \n" +
-            "      '               '    )/         '               '     '      '       '    '      ";
+            "      '               '    )/         '               '     '      '       '    '      \n"+
+
+
+        
+        
+        
+        
+        
+            "                        Created by Group 5                          Version 1.0                                                       ";
     
 
-            localGraphics2D.setColor(Color.white); // Set letters to white
+            localGraphics2D.setColor(Color.GREEN); // Set letters to white
             Font font = new Font("Monospaced", Font.BOLD, 12);
             localGraphics2D.setFont(font);
     
@@ -258,7 +266,7 @@ public class Game extends JPanel implements KeyListener {
 
             this.nextIndex = this.currentPentominoIndex+1;
             if (this.nextIndex == PentominoDatabase.data.length) this.nextIndex = 0;
-                this.nextPentomino = PentominoDatabase.data[this.pentominoOrder[this.nextIndex]][0];
+                this.nextPentomino = PentominoDatabase.data[this.nextIndex][0];
 
             // Paint next grid
             localGraphics2D.setColor(Color.BLACK);

@@ -479,7 +479,7 @@ public class Bot3 extends JPanel implements KeyListener {
      * Rotates pentomino
      * @return void
      */
-    public void rotate(){
+    public void rotate() {
         int lastmutation = this.mutation;
         this.mutation++;
         if(this.mutation >= PentominoDatabase.data[this.currentPentominoIndex].length) this.mutation = 0;

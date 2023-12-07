@@ -24,7 +24,7 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 
 /**
- * This class implements the demonstration of the optimal ordering by means of a bot
+ * This class implementsthe game play for BestOrderBot
  */
 public class BestOrderBot extends JPanel implements KeyListener {
     private int[][] state;
@@ -53,11 +53,12 @@ public class BestOrderBot extends JPanel implements KeyListener {
         this.currentPentominoIndex = this.pentominoOrder[0]; // Picks the first pentomino in the chosen ordering
         this.nextIndex = 1;
 
+
         this.looper = new Timer(400, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (BestOrderBot.this.startx == 0 && BestOrderBot.this.starty == 0) BestOrderBot.this.CheckBestOption();
+                if(BestOrderBot.this.startx == 0 && BestOrderBot.this.starty == 0) BestOrderBot.this.CheckBestOption();
 
                 // Checks if the pentomino has reached the end of the grid
                 if (BestOrderBot.this.starty + BestOrderBot.this.currentPentomino[0].length == 15) {
@@ -82,11 +83,11 @@ public class BestOrderBot extends JPanel implements KeyListener {
                                                                                                                                                                       
                                                      
                                          
-                                        "   _____          __  __ ______    ______      ________ _____  \n" +
-                                        "  / ____|   /\\   |  \\/  |  ____|  / __ \\ \\    / /  ____|  __ \\ \n" +
-                                        " | | |_ | / /\\ \\ | |\\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / \n" +
-                                        " | |__| |/ ____ \\| |  | | |____  | |__| | \\  /  | |____| | \\ \\ \n" +
-                                        "  \\_____/_/    \\_\\_|  |_|______|  \\____/   \\/   |______|_|  \\_\\";
+                                        " _____ ____  _      _____   ____  _     _____ ____ \n" +
+                                        "/  __//  _ \\/ \\__/|/  __/  /  _ \\/ \\ |\\/  __//  __\\\n" +
+                                        "| |  _| / \\|| |\\/|||  \\    | / \\|| | //|  \\  |  \\/|\n" +
+                                        "| |_//| |-||| |  |||  /_   | \\_/|| \\// |  /_ |    /\n" +
+                                        "\\____\\_/ \\|\\_/  \\|\\____\\  \\____/\\__/  \\____\\/_/\\_\\";
                                      
                                     
                                                                                                                                                 
@@ -99,7 +100,7 @@ public class BestOrderBot extends JPanel implements KeyListener {
                                     
                                         // Create a JLabel with HTML formatting for a Game Over message
                                         JLabel label = new JLabel("<html><pre>" + gameOverMessage + "</pre></html>");
-                                        label.setForeground(Color.GREEN); // Set text color to white
+                                        label.setForeground(Color.WHITE); // Set text color to white
 
                                         // Customize JOptionPane with a green background
                                         UIManager.put("OptionPane.background", Color.BLACK); // Set background color of the option pane to black
@@ -145,10 +146,10 @@ public class BestOrderBot extends JPanel implements KeyListener {
     }
 
     /**
-     * This function is called by the system if required for a new frame
-     * @param g 
-     * @return void
-     */
+    * This function is called by the system if required for a new frame
+    * @param g 
+    * @return void
+    */
     public void paintComponent(Graphics g) {
         Graphics2D localGraphics2D = (Graphics2D) g;
 
@@ -171,17 +172,10 @@ public class BestOrderBot extends JPanel implements KeyListener {
             "   |`   |          |    /_____/ |  |`   |          |    | |    ||    || |    |     |   \n" +
             "   |____|          |____|     | /  |____|          |____| |____||____| \\|____|_____|   \n" +
             "     \\(              \\( |_____|/     \\(              \\(     )/    \\(      \\(    )/     \n" +
-            "      '               '    )/         '               '     '      '       '    '      \n"+
-
-
-        
-        
-        
-        
-        
-            "                        Created by Group 5                          Version 1.0                                                       ";
+            "      '               '    )/         '               '     '      '       '    '      ";
     
-            localGraphics2D.setColor(Color.GREEN);
+
+            localGraphics2D.setColor(Color.white);
             Font font = new Font("Monospaced", Font.PLAIN, 12);
             localGraphics2D.setFont(font);
     
@@ -249,7 +243,7 @@ public class BestOrderBot extends JPanel implements KeyListener {
                 }
             }
 
-            if (this.nextIndex == this.pentominoOrder.length) this.nextIndex = 0;
+            if  (this.nextIndex == this.pentominoOrder.length) this.nextIndex = 0;
             this.nextPentomino = BestOrderDatabase.data[this.pentominoOrder[this.nextIndex]][0];
 
             // Paint next grid
@@ -314,13 +308,15 @@ public class BestOrderBot extends JPanel implements KeyListener {
      * @return void
      */
     public void advanceToNextPentomino() {
-        for (int i = this.startx; i < this.currentPentomino.length + this.startx; i++) {
-            for (int j = this.starty; j < this.currentPentomino[0].length + this.starty; j++) {
-                if (this.currentPentomino[i - this.startx][j - this.starty] == 1) {
+        // add pentomino to state
+        for(int i=this.startx; i<this.currentPentomino.length+this.startx; i++){
+            for(int j=this.starty; j<this.currentPentomino[0].length+this.starty; j++){
+                if(this.currentPentomino[i-this.startx][j-this.starty] == 1){
                     this.state[i][j] = this.currentPentominoIndex;
                 } 
             }
         }
+        //this.
         this.currentPentominoIndex = this.pentominoOrder[this.nextIndex];
         this.nextIndex++;
         this.mutation = 0;
@@ -331,10 +327,10 @@ public class BestOrderBot extends JPanel implements KeyListener {
     }
  
     /**
-     * Decodes the ID of a pentomino into a color
-     * @param i ID of the pentomino to be colored
-     * @return the color to represent the pentomino. It uses the class Color (more in ICS2 course in Period 2)
-     */
+    * Decodes the ID of a pentomino into a color
+    * @param i ID of the pentomino to be colored
+    * @return the color to represent the pentomino. It uses the class Color (more in ICS2 course in Period 2)
+    */
     private Color GetColorOfID(int i) {
         if (i == 0) {return Color.BLUE;}
         else if (i == 1) {return Color.ORANGE;}
@@ -351,16 +347,12 @@ public class BestOrderBot extends JPanel implements KeyListener {
         else {return Color.BLACK;}
     }
 
-    /**
-     * Resets the game
-     * @return void
-     */
     public void reset() {
-        for (int i = 0; i < this.state.length ; i++) {
-            for (int j = 0; j < this.state[0].length; j++) {
+        
+        for(int i=0; i < this.state.length ; i++){
+            for(int j=0; j < this.state[0].length ; j++)
                 this.state[i][j] = -1;
                 this.looper.stop();
-            }
         }
         this.startx = 0;
         this.starty = 0;
@@ -369,32 +361,29 @@ public class BestOrderBot extends JPanel implements KeyListener {
         this.mutation = 0;
         this.started = false;
         this.score = 0;
+
         this.repaint();
     }
 
-    /**
-     * Starts the game
-     * @return void
-     */
     public void start() {
         this.started = true;
         this.looper.start();
         this.repaint();
     }
 
-    /**
-     * Handles keyboard input for "P" (pause)
-     */
     @Override
     public void keyPressed(KeyEvent e) {
-        if (this.startx < 0 || this.starty < 0) return;
+        if(this.startx < 0 || this.starty<0) return;
         if (e.getKeyCode() == 80) {
-            if (!this.pause){
+            if(!this.pause){
                 this.looper.stop();
                 this.pause = true;
-            } else if (this.pause) {
+
+            }
+            else if(this.pause){
                 this.looper.start();
                 this.pause = false;
+            
             }
         }
     }
@@ -409,88 +398,70 @@ public class BestOrderBot extends JPanel implements KeyListener {
          //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * Checks if the pentomino can move to the right
-     * @return if the pentomino can move to the right (true) or if it cannot (false)
-     */
-    public boolean moveRight() {
-        for (int i = this.startx; i < this.startx + this.currentPentomino.length; i++) {
-            for (int j = this.starty; j < this.starty + this.currentPentomino[0].length; j++) {
-                if (i + 1 == 5) return false;
-                else {
+    public boolean moveRight(){
+        for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
+            for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
+                if(i + 1 == 5) return false;
+                else{
                     if(this.state[i + 1][j] != -1) return false;
                 }
             }
         }
         return true;
     }
-
-    /**
-     * Checks if the pentomino can move to the left
-     * @return if the pentomino can move to the left (true) or if it cannot (false)
-     */
-    public boolean moveLeft() {
-        for (int i = this.startx; i < this.startx + this.currentPentomino.length; i++) {
-            for (int j = this.starty; j < this.starty + this.currentPentomino[0].length; j++) {
-                if (i - 1 == -1) return false;
-                else {
+    public boolean moveLeft(){
+        for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
+            for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
+                if(i - 1 == -1) return false;
+                else{
                     if(this.state[i - 1][j] != -1) return false;
                 }
             }
         }
         return true;
     }
+    public boolean moveDown(){
 
-    /**
-     * Checks if the pentomino can move downwards
-     * @return if the pentomino can move downwards (true) or if it cannot (false)
-     */
-    public boolean moveDown() {
-        for (int i = this.startx; i < this.startx + this.currentPentomino.length; i++) {
-            for (int j = this.starty; j < this.starty + this.currentPentomino[0].length; j++) {
-                if (j + 1 == 15) return false;
-                else {
-                    if (this.state[i][j+1] != -1 && this.currentPentomino[i - this.startx][j - this.starty] == 1) { 
+        for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
+            for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
+                if(j + 1 == 15) return false;
+                else{
+                    if(this.state[i][j+1] != -1 && this.currentPentomino[i-this.startx][j-this.starty] == 1){ 
                         return false;
                     } 
                 }
             }
         }
         return true;
-    }
+   }
+   public void rotate(){
 
-    /**
-     * Rotates pentomino
-     * @return void
-     */
-    public void rotate() {
         int lastmutation = this.mutation;
+
         this.mutation++;
         if(this.mutation >= BestOrderDatabase.data[this.currentPentominoIndex].length) this.mutation = 0;
         int[][] curr = BestOrderDatabase.data[this.currentPentominoIndex][this.mutation];
 
-        for (int i = this.startx; i < this.startx + curr.length; i++) {
-            for (int j = this.starty; j < this.starty + curr[0].length; j++) {
-                if (j == 15 || i == 5) {
-                    if(this.mutation > 0) {
-                        this.mutation = lastmutation ;
+
+            for(int i=this.startx; i<this.startx+curr.length ; i++){
+                for(int j=this.starty; j<this.starty+curr[0].length; j++){
+                    if( j == 15 || i==5 ){
+                        if(this.mutation>0)
+                            this.mutation = lastmutation ;
+                        System.out.println("rotate failed");
+                        return;
+                    } 
+                    else if(this.state[i][j] != -1){
+                            this.mutation = lastmutation;
                         System.out.println("rotate failed");
                         return;
                     }
-                } else if(this.state[i][j] != -1) {
-                    this.mutation = lastmutation;
-                    System.out.println("rotate failed");
-                    return;
-                }
             }
+        
         }
-    }
+   }
 
-    /**
-     * Display High Scores
-     * @return High Score string 
-     */
-    public static String highScores() {
+    public static String highScores(){
         String mess = "High Scores: \n";
         for (int i = 0; i < scoreList.size(); i++) {
             mess += ((i + 1) + ". " + scoreList.get(i) + "\n");
@@ -498,36 +469,36 @@ public class BestOrderBot extends JPanel implements KeyListener {
         return mess;
     }
 
-    /**
-     * Check which positioning is best
-     * @return void
-     */
-    public void CheckBestOption() {
-        int curr = this.nextIndex - 1;
-        if (curr == -1) curr = 11;
+
+    public void CheckBestOption(){
+        
+        int curr = this.nextIndex-1;
+        if(curr==-1) curr = 11;
+
         this.destx = this.spots[curr][0];
         this.desty = this.spots[curr][1];
         this.destmut = this.spots[curr][2];
+        
+
     }
 
-    /**
-     * Drops line until collision
-     * @param y y coordinate of position (x,y)
-     * @return void
-     */
-    public void dropLine(int y) {
-        int left = 0;
-        int right = 5;
-
-        while (true) {
-            int left2 = left;
-            int right2 = right;
-            for (int i = left; i < right - 1; i++) {
-                if (this.state[i][y] == 1) {
+    public void dropLine(int y){
+        int left=0;
+        int right=5;
+        while(true){
+            int left2=left;
+            int right2=right;
+            for(int i=left; i<right-1; i++){
+                if(this.state[i][y] == 1){
                     left = i;
                     break;
                 }
+
             }
+
+            // drop line until collision
         }
     }
-}
+
+}   
+ 

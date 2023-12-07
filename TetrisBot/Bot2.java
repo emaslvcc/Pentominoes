@@ -488,12 +488,12 @@ public class Bot2 extends JPanel implements KeyListener {
                 if (j == 15 || i==5) {
                     if (this.mutation > 0) {
                         this.mutation = lastmutation;
-                        System.out.println("rotate failed");
+                        System.out.println("Rotate failed");
                         return;
                     }
                 } else if (this.state[i][j] != -1) {
                         this.mutation = lastmutation;
-                        System.out.println("rotate failed");
+                        System.out.println("Rotate failed");
                         return;
                 }
             }

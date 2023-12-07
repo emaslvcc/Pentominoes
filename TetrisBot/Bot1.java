@@ -160,18 +160,18 @@ public class Bot1 extends JPanel implements KeyListener {
             String startScreenArt = 
         
             "                                                                                       \n" +
-        " _________________      ______   _________________      _____    ____          ______  \n" +
-        "/                 \\ ___|\\     \\ /                 \\ ___|\\    \\  |    |     ___|\\     \\\n" +
-        "\\______     ______/|     \\     \\\\______     ______/|    |\\    \\ |    |    |    |\\     \\\n" +
-        "   \\( /    /  )/   |     ,_____/|  \\( /    /  )/   |    | |    ||    |    |    |/____/|\n" +
-        "    ' |   |   '    |     \\--'\\_|/   ' |   |   '    |    |/____/ |    | ___|    \\|   | |\n" +
-        "      |   |        |     /___/|       |   |        |    |\\    \\ |    ||    \\    \\___|/ \n" +
-        "     /   //        |     \\____|\\     /   //        |    | |    ||    ||    |\\     \\    \n" +
-        "    /___//         |____ '     /|   /___//         |____| |____||____||\\ ___\\|_____|   \n" +
-        "   |`   |          |    /_____/ |  |`   |          |    | |    ||    || |    |     |   \n" +
-        "   |____|          |____|     | /  |____|          |____| |____||____| \\|____|_____|   \n" +
-        "     \\(              \\( |_____|/     \\(              \\(     )/    \\(      \\(    )/     \n" +
-        "      '               '    )/         '               '     '      '       '    '      \n"+
+            " _________________      ______   _________________      _____    ____          ______  \n" +
+            "/                 \\ ___|\\     \\ /                 \\ ___|\\    \\  |    |     ___|\\     \\\n" +
+            "\\______     ______/|     \\     \\\\______     ______/|    |\\    \\ |    |    |    |\\     \\\n" +
+            "   \\( /    /  )/   |     ,_____/|  \\( /    /  )/   |    | |    ||    |    |    |/____/|\n" +
+            "    ' |   |   '    |     \\--'\\_|/   ' |   |   '    |    |/____/ |    | ___|    \\|   | |\n" +
+            "      |   |        |     /___/|       |   |        |    |\\    \\ |    ||    \\    \\___|/ \n" +
+            "     /   //        |     \\____|\\     /   //        |    | |    ||    ||    |\\     \\    \n" +
+            "    /___//         |____ '     /|   /___//         |____| |____||____||\\ ___\\|_____|   \n" +
+            "   |`   |          |    /_____/ |  |`   |          |    | |    ||    || |    |     |   \n" +
+            "   |____|          |____|     | /  |____|          |____| |____||____| \\|____|_____|   \n" +
+            "     \\(              \\( |_____|/     \\(              \\(     )/    \\(      \\(    )/     \n" +
+            "      '               '    )/         '               '     '      '       '    '      \n"+
 
 
         
@@ -179,9 +179,8 @@ public class Bot1 extends JPanel implements KeyListener {
         
         
         
-        "                        Created by Group 5                          Version 1.0                                                       ";
+            "                        Created by Group 5                          Version 1.0                                                       ";
     
-
             localGraphics2D.setColor(Color.GREEN);
             Font font = new Font("Monospaced", Font.PLAIN, 12);
             localGraphics2D.setFont(font);
@@ -314,9 +313,9 @@ public class Bot1 extends JPanel implements KeyListener {
      */
     public void advanceToNextPentomino() {
         // add pentomino to state
-        for(int i=this.startx; i<this.currentPentomino.length+this.startx; i++){
-            for(int j=this.starty; j<this.currentPentomino[0].length+this.starty; j++){
-                if(this.currentPentomino[i-this.startx][j-this.starty] == 1){
+        for(int i = this.startx; i < this.currentPentomino.length + this.startx; i++) {
+            for (int j = this.starty; j < this.currentPentomino[0].length + this.starty; j++) {
+                if (this.currentPentomino[i - this.startx][j - this.starty] == 1) {
                     this.state[i][j] = this.currentPentominoIndex;
                 } 
             }
@@ -355,41 +354,48 @@ public class Bot1 extends JPanel implements KeyListener {
         else {return Color.BLACK;}
     }
 
+    /**
+     * Resets the game
+     * @return void
+     */
     public void reset() {
-        
-        for(int i=0; i < this.state.length ; i++){
-            for(int j=0; j < this.state[0].length ; j++)
+        for (int i = 0; i < this.state.length; i++) {
+            for (int j = 0; j < this.state[0].length; j++) {
                 this.state[i][j] = -1;
                 this.looper.stop();
+            }
         }
         this.startx = 0;
         this.starty = 0;
         this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
         this.started = false;
         this.score = 0;
-
         this.repaint();
     }
 
+    /**
+     * Starts the game
+     * @return void
+     */
     public void start() {
         this.started = true;
         this.looper.start();
         this.repaint();
     }
 
+    /**
+     * Handles keyboard input for "P" (pause)
+     */
     @Override
     public void keyPressed(KeyEvent e) {
-        if(this.startx < 0 || this.starty<0) return;
+        if (this.startx < 0 || this.starty < 0) return;
         if (e.getKeyCode() == 80) {
-            if(!this.pause){
+            if (!this.pause) {
                 this.looper.stop();
                 this.pause = true;
-
-            }
-            else if(this.pause){
+            } else if(this.pause){
                 this.looper.start();
                 this.pause = false;
-            
             }
         }
     }
@@ -404,35 +410,48 @@ public class Bot1 extends JPanel implements KeyListener {
          //To change body of generated methods, choose Tools | Templates.
     }
 
-    public boolean moveRight(){
-        for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
-            for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
-                if(i + 1 == 5) return false;
-                else{
+    /**
+     * Checks if the pentomino can move to the right
+     * @return if the pentomino can move to the right (true) or if it cannot (false)
+     */
+    public boolean moveRight() {
+        for (int i = this.startx; i < this.startx + this.currentPentomino.length; i++) {
+            for (int j = this.starty; j < this.starty + this.currentPentomino[0].length; j++) {
+                if (i + 1 == 5) return false;
+                else {
                     if(this.state[i + 1][j] != -1) return false;
                 }
             }
         }
         return true;
     }
+
+    /**
+     * Checks if the pentomino can move to the left
+     * @return if the pentomino can move to the left (true) or if it cannot (false)
+     */
     public boolean moveLeft(){
-        for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
-            for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
-                if(i - 1 == -1) return false;
-                else{
+        for (int i = this.startx; i < this.startx + this.currentPentomino.length; i++) {
+            for (int j = this.starty; j < this.starty + this.currentPentomino[0].length; j++) {
+                if (i - 1 == -1) return false;
+                else {
                     if(this.state[i - 1][j] != -1) return false;
                 }
             }
         }
         return true;
     }
-    public boolean moveDown(){
 
-        for(int i=this.startx; i<this.startx+this.currentPentomino.length ; i++){
-            for(int j=this.starty; j<this.starty+this.currentPentomino[0].length; j++){
-                if(j + 1 == 15) return false;
-                else{
-                    if(this.state[i][j+1] != -1 && this.currentPentomino[i-this.startx][j-this.starty] == 1){ 
+    /**
+     * Checks if the pentomino can move downwards
+     * @return if the pentomino can move downwards (true) or if it cannot (false)
+     */
+    public boolean moveDown(){
+        for (int i = this.startx; i < this.startx + this.currentPentomino.length; i++) {
+            for (int j = this.starty; j < this.starty + this.currentPentomino[0].length; j++) {
+                if (j + 1 == 15) return false;
+                else {
+                    if (this.state[i][j+1] != -1 && this.currentPentomino[i - this.startx][j - this.starty] == 1) { 
                         return false;
                     } 
                 }
@@ -440,33 +459,38 @@ public class Bot1 extends JPanel implements KeyListener {
         }
         return true;
    }
-   public void rotate(){
 
+   /**
+     * Rotates pentomino
+     * @return void
+     */
+   public void rotate() {
         int lastmutation = this.mutation;
-
         this.mutation++;
         if(this.mutation >= PentominoDatabase.data[this.currentPentominoIndex].length) this.mutation = 0;
         int[][] curr = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
 
-
-            for(int i=this.startx; i<this.startx+curr.length ; i++){
-                for(int j=this.starty; j<this.starty+curr[0].length; j++){
-                    if( j == 15 || i==5 ){
-                        if(this.mutation>0)
-                            this.mutation = lastmutation ;
-                        System.out.println("rotate failed");
-                        return;
-                    } 
-                    else if(this.state[i][j] != -1){
-                            this.mutation = lastmutation;
-                        System.out.println("rotate failed");
+        for (int i = this.startx; i < this.startx + curr.length; i++) {
+            for (int j = this.starty; j < this.starty + curr[0].length; j++) {
+                if (j == 15 || i == 5 ) {
+                    if (this.mutation > 0) {
+                        this.mutation = lastmutation ;
+                        System.out.println("Rotate failed");
                         return;
                     }
+                } else if (this.state[i][j] != -1) {
+                        this.mutation = lastmutation;
+                        System.out.println("Rotate failed");
+                        return;
+                }
             }
-        
         }
-   }
+    }
 
+    /**
+     * Display High Scores
+     * @return High Score string 
+     */
     public static String highScores(){
         String mess = "High Scores: \n";
         for (int i = 0; i < scoreList.size(); i++) {
@@ -475,6 +499,10 @@ public class Bot1 extends JPanel implements KeyListener {
         return mess;
     }
 
+    /**
+     * Shuffles the Database information
+     * @return void
+     */
     public void shuffleOrder(){
         int[][][][] data = PentominoDatabase.data;
 
@@ -486,55 +514,52 @@ public class Bot1 extends JPanel implements KeyListener {
         } 
     }
 
+    /**
+     * Checks the best possible pentomino positioning and picks it
+     * @return void
+     */
     public void CheckBestOption(){
-
         double max = 0;
         double curr = 0;
-
         int mut = 0;
         int x = 0;
         int y = 0;
-
-
         int[][] teststate = new int[5][15];
 
-    
+        while (true) {
 
-        while(true){
-             this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
-             
-            for(int i=0;i<this.state.length;i++){
-                for(int j=0;j<this.state[0].length;j++){
+            this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
+            for (int i = 0; i < this.state.length; i++) {
+                for (int j = 0; j < this.state[0].length; j++) {
                     teststate[i][j] = this.state[i][j];
                 }
             }
 
-
-            while(this.moveDown()){
-                
-                    this.starty++;
+            while (this.moveDown()) {
+                this.starty++;
             }
             
-            // places a possible option in teststate
-            for(int i=this.starty; i<this.starty + this.currentPentomino[0].length; i++){
-                for(int j=this.startx; j<this.startx + this.currentPentomino.length; j++){
-                    if(this.currentPentomino[j-this.startx][i-this.starty] == 1){
+            // Places a possible option in teststate
+            for (int i = this.starty; i < this.starty + this.currentPentomino[0].length; i++) {
+                for (int j = this.startx; j < this.startx + this.currentPentomino.length; j++) {
+                    if (this.currentPentomino[j - this.startx][i - this.starty] == 1) {
                         teststate[j][i] = this.currentPentominoIndex;
                     }
                 }
-
             }
-            // counts the value of this state
-            for(int i=0; i<teststate[0].length; i++){
+
+            // Counts the value of this state
+            for (int i = 0; i < teststate[0].length; i++) {
                 int rowval=0;
-                for(int j=0; j<teststate.length; j++){
-                    if(teststate[j][i] != -1) rowval++;
+                for (int j = 0; j < teststate.length; j++) {
+                    if (teststate[j][i] != -1) rowval++;
                 }
                 rowval *= rowval;
                 curr += rowval;
             }
-            // if the value is higher than max, safe the mutation and update max
-            if(curr > max){
+
+            // If the value is higher than ther maxium, save the mutation and update maximum
+            if (curr > max) {
                 max = curr;
                 mut = this.mutation;
                 x = this.startx;
@@ -543,49 +568,40 @@ public class Bot1 extends JPanel implements KeyListener {
             
             curr = 0;
             this.starty = 0;
-            if(!this.moveRight()){
-           
+            if (!this.moveRight()) {
                 this.startx = 0;
                 this.mutation++;
-                if(this.mutation >= PentominoDatabase.data[this.currentPentominoIndex].length){
+                if (this.mutation >= PentominoDatabase.data[this.currentPentominoIndex].length) {
                     this.mutation = 0;
                     break;
                 }
-                
-
-            }
-            else{
+            } else{
                 this.startx++;
                 this.starty=0;
             }
-            
         }
         this.destx = x;
         this.desty = y;
         this.destmut = mut;
-
-
-        
-
     }
 
-    public void dropLine(int y){
-        int left=0;
-        int right=5;
-        while(true){
-            int left2=left;
-            int right2=right;
-            for(int i=left; i<right-1; i++){
-                if(this.state[i][y] == 1){
+    /**
+     * Drops lines until collision
+     * @param y y coordinate in position (x,y)
+     * @return void
+     */
+    public void dropLine(int y) {
+        int left = 0;
+        int right = 5;
+        while (true) {
+            int left2 = left;
+            int right2 = right;
+            for (int i = left; i < right - 1; i++) {
+                if (this.state[i][y] == 1) {
                     left = i;
                     break;
                 }
-
             }
-
-            // drop line until collision
         }
     }
-
-}   
- 
+}

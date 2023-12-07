@@ -217,7 +217,7 @@ public class BestOrderBot extends JPanel implements KeyListener {
             }
 
             // Prints the current pentomino at the positions they go through
-            this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
+            this.currentPentomino = BestOrderDatabase.data[this.currentPentominoIndex][this.mutation];
 
             for (int i = 0; i < this.currentPentomino.length; i++) {
                 for (int j = 0; j < this.currentPentomino[0].length; j++) {
@@ -244,7 +244,7 @@ public class BestOrderBot extends JPanel implements KeyListener {
             }
 
             if  (this.nextIndex == this.pentominoOrder.length) this.nextIndex = 0;
-            this.nextPentomino = PentominoDatabase.data[this.pentominoOrder[this.nextIndex]][0];
+            this.nextPentomino = BestOrderDatabase.data[this.pentominoOrder[this.nextIndex]][0];
 
             // Paint next grid
             localGraphics2D.setColor(Color.BLACK);
@@ -256,7 +256,7 @@ public class BestOrderBot extends JPanel implements KeyListener {
             } 
 
             // Calculate next index
-            this.nextPentomino = PentominoDatabase.data[this.pentominoOrder[this.nextIndex]][0];
+            this.nextPentomino = BestOrderDatabase.data[this.pentominoOrder[this.nextIndex]][0];
 
             // Paint next pentomino
             for (int i = 0; i < this.nextPentomino.length; i++) {
@@ -324,11 +324,6 @@ public class BestOrderBot extends JPanel implements KeyListener {
         // Reposition next pentomino at the beginning of the grid
         BestOrderBot.this.startx = 0;
         BestOrderBot.this.starty = 0;
-
-        // Check if all the pentominos have been reached to go back to the beginning
-        if (this.currentPentominoIndex >= PentominoBuilder.basicDatabase.length) {
-            this.currentPentominoIndex = 0;
-        }
     }
  
     /**
@@ -444,8 +439,8 @@ public class BestOrderBot extends JPanel implements KeyListener {
         int lastmutation = this.mutation;
 
         this.mutation++;
-        if(this.mutation >= PentominoDatabase.data[this.currentPentominoIndex].length) this.mutation = 0;
-        int[][] curr = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
+        if(this.mutation >= BestOrderDatabase.data[this.currentPentominoIndex].length) this.mutation = 0;
+        int[][] curr = BestOrderDatabase.data[this.currentPentominoIndex][this.mutation];
 
 
             for(int i=this.startx; i<this.startx+curr.length ; i++){
@@ -474,19 +469,9 @@ public class BestOrderBot extends JPanel implements KeyListener {
         return mess;
     }
 
-    public void shuffleOrder(){
-        int[][][][] data = PentominoDatabase.data;
-
-        for (int i = 0; i < data.length; i++) {
-            int randomPosition = this.random.nextInt(data.length);
-            int[][][] temp = data[i];
-            data[i] = data[randomPosition];
-            data[randomPosition] = temp;
-        } 
-    }
 
     public void CheckBestOption(){
-
+        
         int curr = this.nextIndex-1;
         if(curr==-1) curr = 11;
 

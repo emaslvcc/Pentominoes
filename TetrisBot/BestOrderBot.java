@@ -172,10 +172,18 @@ public class BestOrderBot extends JPanel implements KeyListener {
             "   |`   |          |    /_____/ |  |`   |          |    | |    ||    || |    |     |   \n" +
             "   |____|          |____|     | /  |____|          |____| |____||____| \\|____|_____|   \n" +
             "     \\(              \\( |_____|/     \\(              \\(     )/    \\(      \\(    )/     \n" +
-            "      '               '    )/         '               '     '      '       '    '      ";
+            "      '               '    )/         '               '     '      '       '    '      \n"+
+
+
+        
+        
+        
+        
+        
+            "                        Created by Group 5                          Version 1.0                                                       ";
     
 
-            localGraphics2D.setColor(Color.white);
+            localGraphics2D.setColor(Color.GREEN);
             Font font = new Font("Monospaced", Font.PLAIN, 12);
             localGraphics2D.setFont(font);
     

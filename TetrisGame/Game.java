@@ -44,7 +44,7 @@ public class Game extends JPanel implements KeyListener {
     private int[] pentominoOrder = {5, 2, 10, 11, 1, 9, 6, 3, 7, 8, 0, 4};
     private int[][] nextPentomino;
     private int nextIndex;
-    private Random random;
+    private Random random = new Random();
     private int score = 0;
     private static ArrayList<Integer> scoreList = new ArrayList<>();
 
@@ -55,9 +55,10 @@ public class Game extends JPanel implements KeyListener {
      * @param _size size of the Tetris board
      */
     public Game(int x, int y, int _size) {
-
+        
+        this.shuffleOrder();
         // Starts at the first index of the Pentomino Order array
-        this.currentPentominoIndex = this.pentominoOrder[0];
+        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
 
         // Performs the action specified every 600 milliseconds
         this.looper = new Timer(600, new ActionListener() {
@@ -381,11 +382,12 @@ public class Game extends JPanel implements KeyListener {
         }
         this.startx = 0;
         this.starty = 0;
-        this.currentPentominoIndex = this.pentominoOrder[0];
-        this.nextIndex = this.pentominoOrder[1];
+        this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
+        this.nextIndex = this.currentPentominoIndex+1;
         this.mutation = 0;
         this.started = false;
         this.score = 0;
+        this.shuffleOrder();
 
         this.repaint();
     }
@@ -556,5 +558,16 @@ public class Game extends JPanel implements KeyListener {
         JOptionPane optionPane = new JOptionPane(scrollPane, JOptionPane.PLAIN_MESSAGE);
         JDialog dialog = optionPane.createDialog("High scores");
         dialog.setVisible(true);
+    }
+
+    public void shuffleOrder(){
+        int[][][][] data = PentominoDatabase.data;
+
+        for (int i = 0; i < data.length; i++) {
+            int randomPosition = this.random.nextInt(data.length);
+            int[][][] temp = data[i];
+            data[i] = data[randomPosition];
+            data[randomPosition] = temp;
+        } 
     }
 }

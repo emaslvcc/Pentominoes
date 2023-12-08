@@ -80,7 +80,7 @@ public class TetrisGUI extends JPanel {
 
         // Instruction button implementation
         JButton instructionButton = this.createMenuButtonWithImage("???", "/Users/emachagas/Desktop/kisspng-morpheus-the-matrix-neo-red-pill-and-blue-pill-you-good-pills-will-play-5adf94a99c4d73.4062390915246020256402.png");
-        instructionButton.addActionListener(e -> this.showNewInstructions());
+        instructionButton.addActionListener(e -> this.showInstructions());
         menuPanel.add(instructionButton);
 
         // Adds the menu panel to the left of the GUI
@@ -113,30 +113,7 @@ public class TetrisGUI extends JPanel {
         return button;
     }
 
-    /** 
-     * Displays the game's instructions
-     * @return the instructions for the game to be played
-     */
-    public void getInstructions() {
-        
-        // Set background color of the option pane and panel
-        UIManager.put("OptionPane.background", new Color(145, 0, 12));
-        UIManager.put("Panel.background", new Color(145, 0, 12));
-
-        String instructions = "<html><font color='white'>Tetris Instructions: A = left, D = right, S = down, Space = fast-forward, SHIFT= rotate</font></html>";
-
-        JLabel label = new JLabel(instructions);
-        label.setFont(new Font("SansSerif", Font.PLAIN, 20)); // You can adjust the font if needed
-        label.setForeground(Color.WHITE);
-
-        JOptionPane.showMessageDialog(this, label, "Tetris Instructions", JOptionPane.INFORMATION_MESSAGE);
-
-        // Reset UIManager settings after the dialog is closed
-        UIManager.put("OptionPane.background", UIManager.get("OptionPane.background"));
-        UIManager.put("Panel.background", UIManager.get("Panel.background"));
-    }
-
-    private void showNewInstructions() {
+    private void showInstructions() {
         JDialog dialog = new JDialog();
         dialog.setTitle("Instructions");
     

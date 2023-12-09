@@ -236,12 +236,19 @@ public class Game extends JPanel implements KeyListener {
                 }
             }
 
-            // Prints the current pentomino at the positions it goes through
+            // extra out of bounds or collide check.
             this.currentPentomino = PentominoDatabase.data[this.currentPentominoIndex][this.mutation];
-            //System.out.println(this.startx + " " + this.starty);
             for (int i = 0; i < this.currentPentomino.length; i++) {
                 for (int j = 0; j < this.currentPentomino[0].length; j++) {
                     if (this.currentPentomino[i][j] == 1) {
+                        if(i+this.startx >= 5){
+                            this.startx--;
+                            if(i+this.startx >= 5) this.startx = 4-i;
+                        }
+                        if(j+this.starty >= 15){
+                            this.starty--;
+                            if(this.starty>= 15) this.starty = 14-j;
+                        }
                         if (this.state[i + this.startx][j + this.starty] != -1) {
                             this.starty--;
                             i = 100;
@@ -251,7 +258,7 @@ public class Game extends JPanel implements KeyListener {
                     }
                 }
             }
-
+            // Prints the current pentomino at the positions it goes through
             for (int i = 0; i < this.currentPentomino.length; i++) {
                 for (int j = 0; j < this.currentPentomino[0].length; j++) {
                     if (this.currentPentomino[i][j] == 1) {

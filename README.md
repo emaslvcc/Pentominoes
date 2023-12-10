@@ -126,7 +126,7 @@ _Bot1_ extends _JPanel_, and implements a _KeyListener_ to handle keyboard input
 
 11. **_shuffleOrder()_** shuffles the database to further randomize the pentominoes.
 
-12. **_CheckBestOption()_** is the heart of this bot's decision-making. It determines what the best pentomino positioning is, which depends on the number of non-empty cells.
+12. **_CheckBestOption()_** is the heart of this bot's decision-making. It determines what the best pentomino positioning is, which depends on the number of non-empty rows.
 
 **_Bot2.java_**
 
@@ -186,7 +186,7 @@ It makes use of methods previously explained in the _Bot1_ section:
 
 Furthermore, it implements the following methods:
 
-1. **_CheckBestOption()_** is the heart of this bot's decision-making. It determines what the best pentomino positioning is, which depends on the number of non-empty cells.
+1. **_CheckBestOption()_** is the heart of this bot's decision-making. It determines what the best pentomino positioning is, which depends on the number of non-empty rows.
 
 2. **_EvaluateNextThreePentominoes_** evaluates positionings for the following three pentominoes.
 

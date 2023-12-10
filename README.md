@@ -208,6 +208,21 @@ _Bot3_ extends _JPanel_, and implements a _KeyListener_ to handle keyboard input
 
 This class handles the implementation of a bot that demonstrates the optimal ordering gameplay.
 
+It makes use of previously explained methods such as:
+1. **_paintComponent()_**
+2. **_advanceToNextPentomino()_**
+3. **_getColorID()_**
+4. **_reset()_**
+5. **_start()_**
+6. **_keyPressed()_**
+7. **_moveRight()_**
+8. **_moveLeft()_**
+9. **_moveDown()_**
+10. **_rotate()_**
+11. **_highScores()_**
+
+Furthermore, it implements a method **_CheckBestOption()_**
+
 ## Institute
 
 [University of Maastricht](https://www.maastrichtuniversity.nl/nl)

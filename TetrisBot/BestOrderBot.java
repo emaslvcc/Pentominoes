@@ -57,7 +57,7 @@ public class BestOrderBot extends JPanel implements KeyListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(BestOrderBot.this.startx == 0 && BestOrderBot.this.starty == 0) BestOrderBot.this.CheckBestOption();
+                if(BestOrderBot.this.startx == 0 && BestOrderBot.this.starty == 0) BestOrderBot.this.placePentomino();
 
                 // Checks if the pentomino has reached the end of the grid
                 if (BestOrderBot.this.starty + BestOrderBot.this.currentPentomino[0].length == 15) {

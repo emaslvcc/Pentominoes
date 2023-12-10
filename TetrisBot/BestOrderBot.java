@@ -502,10 +502,10 @@ public class BestOrderBot extends JPanel implements KeyListener {
     }
 
     /**
-     * Picks the best pentomino positioning
+     * Places the pentomino at its designated position
      * @return void
      */
-    public void CheckBestOption(){
+    public void placePentomino() {
         int curr = this.nextIndex - 1;
         if(curr == -1) curr = 11;
         this.destx = this.spots[curr][0];

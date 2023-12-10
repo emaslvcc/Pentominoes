@@ -44,7 +44,7 @@ This class handles all the graphics to display a certain state.
 
 It extends _JPanel_ (corresponding to a panel of the GUI's main frame), and implements a _KeyListener_ to handle keyboard input.
 
-1. A **_Game_ constructor** is implemented to handle the general Tetris game logic. It sets up a game board, initializes pentomino shapes, and manages their descent by means of a timer (looper). The timer checks for collisions with existing pentominos, and handles Game Over scenarios, by displaying a graphical message and resetting the game.
+1. A **_Game_ constructor** is implemented to handle the general Tetris game logic. It sets up a game board, initializes pentomino shapes, and manages their descent by means of a timer (looper). The timer checks for collisions with existing pentominoes, and handles Game Over scenarios, by displaying a graphical message and resetting the game.
 
 2. **_paintComponent()_** method is responsible for rendering the graphical representation of the Tetris game within a Java Swing component, updating the display as the game progresses.
 
@@ -76,9 +76,9 @@ This class handles the graphical display of the game on a Graphical User Interfa
 
 4. **_createMenuButtonWithImage()_** creates a button that can display an image.
 
-**_PentominoBuilder.java_** and **_PentominoDatabase.java_**
+**_PentominoBuilder.java_**, **_PentominoDatabase.java_**, and **_pentominos.csv_**
 
-These classes were authored by the Department of Data Science and Knowledge Engineering (DKE) of Maastricht Universty. In short, they handle all the logic behind the pentominos (which ones exist, how they rotate, their IDs, among other things).
+These classes were authored by the Department of Data Science and Knowledge Engineering (DKE) of Maastricht Universty. In short, they handle all the logic behind the pentominoes (which ones exist, how they rotate, their IDs, among other things).
 
 ### Bots ###
 
@@ -104,7 +104,7 @@ This class handles the implementation of a bot that considers the next possible 
 
 _Bot1_ extends _JPanel_, and implements a _KeyListener_ to handle keyboard input.
 
-1. A **_Bot1_** constructor is implemented to handle the general bot's logic. It sets up a game board, initializes pentomino shapes, and manages their descent by means of a timer (looper). The timer checks for collisions with existing pentominos, and handles Game Over scenarios, by displaying a graphical message and resetting the game.
+1. A **_Bot1_** constructor is implemented to handle the general bot's logic. It sets up a game board, initializes pentomino shapes, and manages their descent by means of a timer (looper). The timer checks for collisions with existing pentominoes, and handles Game Over scenarios, by displaying a graphical message and resetting the game.
 
 2. **_paintComponent()_** method is responsible for rendering the graphical representation of the game within a Java Swing component, updating the display as the game progresses.
 
@@ -124,7 +124,7 @@ _Bot1_ extends _JPanel_, and implements a _KeyListener_ to handle keyboard input
 
 10. **_highScores()_** returns the bot's scores.
 
-11. **_shuffleOrder()_** shuffles the database to further randomize the pentominos.
+11. **_shuffleOrder()_** shuffles the database to further randomize the pentominoes.
 
 12. **_CheckBestOption()_** is the heart of this bot's decision-making. It determines what the best pentomino positioning is, which depends on the number of non-empty cells.
 
@@ -134,7 +134,7 @@ This class handles the implementation of a bot that considers the next possible 
 
 _Bot2_ extends _JPanel_, and implements a _KeyListener_ to handle keyboard input.
 
-1. A **_Bot2_** constructor is implemented to handle the general bot's logic. It sets up a game board, initializes pentomino shapes, and manages their descent by means of a timer (looper). The timer checks for collisions with existing pentominos, and handles Game Over scenarios, by displaying a graphical message and resetting the game.
+1. A **_Bot2_** constructor is implemented to handle the general bot's logic. It sets up a game board, initializes pentomino shapes, and manages their descent by means of a timer (looper). The timer checks for collisions with existing pentominoes, and handles Game Over scenarios, by displaying a graphical message and resetting the game.
 
 It makes use of methods previously explained in the _Bot1_ section:
 1. **_paintComponent()_**
@@ -170,7 +170,7 @@ This class handles the implementation of a bot that considers the next 3 possibl
 
 _Bot3_ extends _JPanel_, and implements a _KeyListener_ to handle keyboard input.
 
-1. A **_Bot3_** constructor is implemented to handle the general bot's logic. It sets up a game board, initializes pentomino shapes, and manages their descent by means of a timer (looper). The timer checks for collisions with existing pentominos, and handles Game Over scenarios, by displaying a graphical message and resetting the game.
+1. A **_Bot3_** constructor is implemented to handle the general bot's logic. It sets up a game board, initializes pentomino shapes, and manages their descent by means of a timer (looper). The timer checks for collisions with existing pentominoes, and handles Game Over scenarios, by displaying a graphical message and resetting the game.
 
 It makes use of methods previously explained in the _Bot1_ section:
 1. **_paintComponent()_**
@@ -207,11 +207,11 @@ It makes use of methods previously explained in the _Bot1_ section:
 8. **_rotate()_**
 9. **_highScores()_**
 
-Furthermore, it implements a method **_CheckBestOption()_** (check this part with Mika)
+Furthermore, it implements a method **_placePentomino()_**, that essentially palces the pentomino at its previously designated spot.
 
-**_PentominoBuilder.java_** and **_PentominoDatabase.java_**
+**_PentominoBuilder.java_**, **_PentominoDatabase.java_**, and **_pentominos.csv_**
 
-These classes were authored by the Department of Data Science and Knowledge Engineering (DKE) of Maastricht Universty. In short, they handle all the logic behind the pentominos (which ones exist, how they rotate, their IDs, among other things).
+These classes were authored by the Department of Data Science and Knowledge Engineering (DKE) of Maastricht Universty. In short, they handle all the logic behind the pentominoes (which ones exist, how they rotate, their IDs, among other things).
 
 **_BestOrderDatabase.java_**
 

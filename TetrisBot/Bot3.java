@@ -383,6 +383,7 @@ public class Bot3 extends JPanel implements KeyListener {
         this.startx = 0;
         this.starty = 0;
         this.currentPentominoIndex = this.random.nextInt(PentominoDatabase.data.length);
+        this.mutation = 0;
         this.started = false;
         this.score = 0;
         this.repaint();

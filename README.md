@@ -1,6 +1,6 @@
 # Tetris
 
-The present code entails a computer application with a user-friendly interface to play the Tetris-style game using 12 different pentomino-shapes that appear for the player in random order, each with the same probability. Furthermore, there are 3 different bots that are able to play the game. 
+The present code entails a computer application with a user-friendly interface to play the Tetris-style game using 12 different pentomino-shapes that appear for the player in random order, each with the same probability. Furthermore, there are 3 different bots that are able to play the game, and 1 bot that demonstrates the optimal ordering of pentominoes.
 
 ## Table of Contents
 1. Installation
@@ -30,7 +30,7 @@ git clone https://gitlab.maastrichtuniversity.nl/bcs_group05_2023/project-1-1.gi
 
 **Run the Bots**
 1. Navigate to the _TetrisBot_ folder.
-2. Run _Bot1.java_/_Bot2.java_/_Bot3.java_ file (whichever bot you want).
+2. Run the _TetrisGUI_ file, and an option to pick which bot you wish to use will be displayed once you click 'Start'.
 
 ## Description
 
@@ -132,43 +132,37 @@ _Bot1_ extends _JPanel_, and implements a _KeyListener_ to handle keyboard input
 
 This class handles the implementation of a bot that considers the next possible move, and bases its pick on various variables (number of gaps, columns height average, height difference between the highest column and the lowest column, maximum height difference between consecutive columns, and amount of non-removable rows).
 
-_Bot1_ extends _JPanel_, and implements a _KeyListener_ to handle keyboard input.
+_Bot2_ extends _JPanel_, and implements a _KeyListener_ to handle keyboard input.
 
-1. A **_Bot1_** constructor is implemented to handle the general bot's logic. It sets up a game board, initializes pentomino shapes, and manages their descent by means of a timer (looper). The timer checks for collisions with existing pentominos, and handles Game Over scenarios, by displaying a graphical message and resetting the game.
+1. A **_Bot2_** constructor is implemented to handle the general bot's logic. It sets up a game board, initializes pentomino shapes, and manages their descent by means of a timer (looper). The timer checks for collisions with existing pentominos, and handles Game Over scenarios, by displaying a graphical message and resetting the game.
 
-2. **_paintComponent()_** method is responsible for rendering the graphical representation of the game within a Java Swing component, updating the display as the game progresses.
+It makes use of methods previously explained in the _Bot1_ section:
+1. **_paintComponent()_**
+2. **_advanceToNextPentomino()_**
+3. **_getColorID()_**
+4. **_reset()_**
+5. **_start()_**
+6. **_keyPressed()_**
+7. **_moveRight()_**, **_moveLeft()_**, and **_moveDown()_**
+8. **_rotate()_**
+9. **_highScores()_**
+10. **_shuffleOrder()_**
 
-3. **_advanceToNextPentomino()_** advances to the following random pentomino.
+Furthermore, it implements the following methods:
 
-4. **_getColorID()_** method decodes the ID of a pentomino into the corresponding color.
+1. **_bestScore()_** is the heart of this bot's decision-making. It determines what the best pentomino positioning is, which depends on the variables previously mentioned.
 
-5. **_reset()_** method resets the game to its initial state.
+2. **_gapCount()_** calculates the amount of gaps on the board.
 
-6. **_start()_** method starts the game.
+3. **_averageHeight()_** calculates the average height of the columns.
 
-7. **_keyPressed()_** is overriden to handle keyboard input "P", which corresponds to pausing the game.
+4. **_columnHeightDifference()_** calculates the difference between the highest column and the lowest column.
 
-8. **_moveRight()_**, **_moveLeft()_**, and **_moveDown()_** check if the pentomino piece can make the respective movements.
+5. **_consecutiveHeightDifference()_** calculates the maximum height difference between consecutive columns.
 
-9. **_rotate()_** rotates the pentomino by changing its mutation.
+6. **_removableRow()_** calculates the amount of non-removable rows.
 
-10. **_highScores()_** returns the bot's scores.
-
-11. **_shuffleOrder()_** shuffles the database to further randomize the pentominos.
-
-12. **_bestScore()_** is the heart of this bot's decision-making. It determines what the best pentomino positioning is, which depends on the variables previously mentioned.
-
-13. **_gapCount()_** calculates the amount of gaps on the board.
-
-14. **_averageHeight()_** calculates the average height of the columns.
-
-15. **_columnHeightDifference()_** calculates the difference between the highest column and the lowest column.
-
-16. **_consecutiveHeightDifference()_** calculates the maximum height difference between consecutive columns.
-
-17. **_removableRow()_** calculates the amount of non-removable rows.
-
-18. **_calculateScore()_** multiplies each propertie by a pre-defined weight attributed to it, and sums up all the values to calculate a score.
+7. **_calculateScore()_** multiplies each propertie by a pre-defined weight attributed to it, and sums up all the values to calculate a score.
 
 **_Bot3.java_**
 
@@ -178,50 +172,50 @@ _Bot3_ extends _JPanel_, and implements a _KeyListener_ to handle keyboard input
 
 1. A **_Bot3_** constructor is implemented to handle the general bot's logic. It sets up a game board, initializes pentomino shapes, and manages their descent by means of a timer (looper). The timer checks for collisions with existing pentominos, and handles Game Over scenarios, by displaying a graphical message and resetting the game.
 
-2. **_paintComponent()_** method is responsible for rendering the graphical representation of the game within a Java Swing component, updating the display as the game progresses.
-
-3. **_advanceToNextPentomino()_** advances to the following random pentomino.
-
-4. **_getColorID()_** method decodes the ID of a pentomino into the corresponding color.
-
-5. **_reset()_** method resets the game to its initial state.
-
-6. **_start()_** method starts the game.
-
-7. **_keyPressed()_** is overriden to handle keyboard input "P", which corresponds to pausing the game.
-
-8. **_moveRight()_**, **_moveLeft()_**, and **_moveDown()_** check if the pentomino piece can make the respective movements.
-
-9. **_rotate()_** rotates the pentomino by changing its mutation.
-
-10. **_highScores()_** returns the bot's scores.
-
-11. **_shuffleOrder()_** shuffles the database to further randomize the pentominos.
-
-12. **_CheckBestOption()_** is the heart of this bot's decision-making. It determines what the best pentomino positioning is, which depends on the number of non-empty cells.
-
-13. **_EvaluateNextThreePentominoes_** evaluates positionings for the following three pentominoes.
-
-14. **_nextMoveRight_** and **_nextMoveLeft_** check if the next pentomino can move to the right and if it can move to the left, respectively.
-
-**_BestOrderBot.java_**
-
-This class handles the implementation of a bot that demonstrates the optimal ordering gameplay.
-
-It makes use of previously explained methods such as:
+It makes use of methods previously explained in the _Bot1_ section:
 1. **_paintComponent()_**
 2. **_advanceToNextPentomino()_**
 3. **_getColorID()_**
 4. **_reset()_**
 5. **_start()_**
 6. **_keyPressed()_**
-7. **_moveRight()_**
-8. **_moveLeft()_**
-9. **_moveDown()_**
-10. **_rotate()_**
-11. **_highScores()_**
+7. **_moveRight()_**, **_moveLeft()_**, and **_moveDown()_**
+8. **_rotate()_**
+9. **_highScores()_**
+10. **_shuffleOrder()_**
 
-Furthermore, it implements a method **_CheckBestOption()_**
+Furthermore, it implements the following methods:
+
+1. **_CheckBestOption()_** is the heart of this bot's decision-making. It determines what the best pentomino positioning is, which depends on the number of non-empty cells.
+
+2. **_EvaluateNextThreePentominoes_** evaluates positionings for the following three pentominoes.
+
+3. **_nextMoveRight_** and **_nextMoveLeft_** check if the next pentomino can move to the right and if it can move to the left, respectively.
+
+**_BestOrderBot.java_**
+
+This class handles the implementation of a bot that demonstrates the optimal ordering gameplay.
+
+It makes use of methods previously explained in the _Bot1_ section:
+1. **_paintComponent()_**
+2. **_advanceToNextPentomino()_**
+3. **_getColorID()_**
+4. **_reset()_**
+5. **_start()_**
+6. **_keyPressed()_**
+7. **_moveRight()_**, **_moveLeft()_**, and **_moveDown()_**
+8. **_rotate()_**
+9. **_highScores()_**
+
+Furthermore, it implements a method **_CheckBestOption()_** (check this part with Mika)
+
+**_PentominoBuilder.java_** and **_PentominoDatabase.java_**
+
+These classes were authored by the Department of Data Science and Knowledge Engineering (DKE) of Maastricht Universty. In short, they handle all the logic behind the pentominos (which ones exist, how they rotate, their IDs, among other things).
+
+**_BestOrderDatabase.java_**
+
+This class is identical to _PenotominoDatabase.java_. It was implemented because the other bot classes shuffle the initial database to further randomize the pentominoes. Hence, for the _BestOrderBot_ to work properly, the database could not be shuffled, and this class was added.
 
 ## Institute
 

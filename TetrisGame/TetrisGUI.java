@@ -38,7 +38,7 @@ public class TetrisGUI extends JPanel {
         Game mainContentPanel = new Game(5, 15, 45);
         this.addKeyListener(mainContentPanel);
 
-        ImageIcon gifIcon = new ImageIcon("/Users/emachagas/Desktop/9pII.gif");
+        ImageIcon gifIcon = new ImageIcon("gif.gif");
         final JLabel gifLabel = new JLabel(gifIcon);
         mainContentPanel.add(gifLabel);
         Timer gifTimer = new Timer(500000, e -> {
@@ -77,7 +77,7 @@ public class TetrisGUI extends JPanel {
         menuPanel.add(highScoreButton);
 
         // Instruction button implementation
-        JButton instructionButton = this.createMenuButtonWithImage("???", "/Users/emachagas/Desktop/kisspng-morpheus-the-matrix-neo-red-pill-and-blue-pill-you-good-pills-will-play-5adf94a99c4d73.4062390915246020256402.png");
+        JButton instructionButton = this.createMenuButtonWithImage("???", "morphius.png");
         instructionButton.addActionListener(e -> this.showInstructions());
         menuPanel.add(instructionButton);
 

@@ -18,6 +18,10 @@ public class Visualizer extends Application {
     private double lastX;
     private double lastY;
 
+    private Box A;
+    private Box B;
+    private Box C;
+
     @Override
     public void start(Stage stage) throws Exception {
         // Drawing a box to represent the Truck
@@ -43,15 +47,33 @@ public class Visualizer extends Application {
         group.translateXProperty().set(WIDTH / 2);
         group.translateYProperty().set(HEIGHT / 2);
 
+        A = new Box(scale, scale, 2 * scale);
+        A.setTranslateX(truck.getTranslateX());
+        A.setTranslateY(truck.getTranslateY());
+        A.setTranslateZ(truck.getTranslateZ());
+        A.setMaterial(createMaterial(Color.RED));
+        group.getChildren().add(A);
+
+        B = new Box(scale, 1.5 * scale, 2 * scale);
+        B.setTranslateX(truck.getTranslateX() - 200);
+        B.setTranslateY(truck.getTranslateY() - 0);
+        B.setTranslateZ(truck.getTranslateZ() - 0);
+        B.setMaterial(createMaterial(Color.GREEN));
+        group.getChildren().add(B);
+
+        C = new Box(1.5 * scale, 1.5 * scale, 1.5 * scale);
+        C.setTranslateX(truck.getTranslateX() + 200);
+        C.setTranslateY(truck.getTranslateY() - 0);
+        C.setTranslateZ(truck.getTranslateZ() - 0);
+        C.setMaterial(createMaterial(Color.PINK));
+        group.getChildren().add(C);
+
         // Setting title to the Stage
         stage.setTitle("Truck Visualizer");
-
         // Adding scene to the stage
         stage.setScene(scene);
-
         // Displaying the contents of the stage
         stage.show();
-
         // Enable mouse interaction for rotating the box
         enableMouseInteraction(scene);
     }
@@ -73,10 +95,19 @@ public class Visualizer extends Application {
             Rotate rotateY = new Rotate(deltaXAngle, Rotate.Y_AXIS);
 
             truck.getTransforms().addAll(rotateX, rotateY);
+            A.getTransforms().addAll(rotateX, rotateY);
+            B.getTransforms().addAll(rotateX, rotateY);
+            C.getTransforms().addAll(rotateX, rotateY);
 
             lastX = event.getSceneX();
             lastY = event.getSceneY();
         });
+    }
+
+    private javafx.scene.paint.PhongMaterial createMaterial(Color color) {
+        javafx.scene.paint.PhongMaterial material = new javafx.scene.paint.PhongMaterial();
+        material.setDiffuseColor(color);
+        return material;
     }
 
     public static void main(String args[]) {

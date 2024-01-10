@@ -1,9 +1,9 @@
 public class Parcel {
-    private int x;
-    private int y;
-    private int z;
-    private int val;
-    private int weight;
+    public int x;
+    public int y;
+    public int z;
+    public int val;
+    public int weight;
 
     /**
      * A constructor that creates a parcel object

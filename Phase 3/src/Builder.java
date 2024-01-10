@@ -9,7 +9,7 @@ public class Builder
 {
     public static int width = 5;
     public static int length = 33;
-    public static int height = 9;
+    public static int height = 8;
     public static int capacity = width*length*height;
 
     public static Parcel A = new Parcel('A');

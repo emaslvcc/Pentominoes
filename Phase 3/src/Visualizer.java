@@ -18,9 +18,9 @@ public class Visualizer extends Application {
     private double lastX;
     private double lastY;
 
-    private Box A;
-    private Box B;
-    private Box C;
+    private double scale;
+    private Group group;
+    private Box newBox;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -28,13 +28,13 @@ public class Visualizer extends Application {
         truck = new Box();
 
         // Setting the properties of the Truck
-        double scale = 70.0;
+        scale = 70.0;
         truck.setWidth(16.5 * scale);
         truck.setHeight(4.0 * scale);
         truck.setDepth(2.5 * scale);
 
         // Creating a Group object
-        Group group = new Group();
+        group = new Group();
         group.getChildren().add(truck);
 
         // Creating a scene object colored in black
@@ -47,26 +47,7 @@ public class Visualizer extends Application {
         group.translateXProperty().set(WIDTH / 2);
         group.translateYProperty().set(HEIGHT / 2);
 
-        A = new Box(scale, scale, 2 * scale);
-        A.setTranslateX(truck.getTranslateX());
-        A.setTranslateY(truck.getTranslateY());
-        A.setTranslateZ(truck.getTranslateZ());
-        A.setMaterial(createMaterial(Color.RED));
-        group.getChildren().add(A);
-
-        B = new Box(scale, 1.5 * scale, 2 * scale);
-        B.setTranslateX(truck.getTranslateX() - 200);
-        B.setTranslateY(truck.getTranslateY() - 0);
-        B.setTranslateZ(truck.getTranslateZ() - 0);
-        B.setMaterial(createMaterial(Color.GREEN));
-        group.getChildren().add(B);
-
-        C = new Box(1.5 * scale, 1.5 * scale, 1.5 * scale);
-        C.setTranslateX(truck.getTranslateX() + 200);
-        C.setTranslateY(truck.getTranslateY() - 0);
-        C.setTranslateZ(truck.getTranslateZ() - 0);
-        C.setMaterial(createMaterial(Color.PINK));
-        group.getChildren().add(C);
+        drawParcel(5, 50.0, 50.0, 50.0);
 
         // Setting title to the Stage
         stage.setTitle("Truck Visualizer");
@@ -95,9 +76,7 @@ public class Visualizer extends Application {
             Rotate rotateY = new Rotate(deltaXAngle, Rotate.Y_AXIS);
 
             truck.getTransforms().addAll(rotateX, rotateY);
-            A.getTransforms().addAll(rotateX, rotateY);
-            B.getTransforms().addAll(rotateX, rotateY);
-            C.getTransforms().addAll(rotateX, rotateY);
+            newBox.getTransforms().addAll(rotateX, rotateY);
 
             lastX = event.getSceneX();
             lastY = event.getSceneY();
@@ -108,6 +87,36 @@ public class Visualizer extends Application {
         javafx.scene.paint.PhongMaterial material = new javafx.scene.paint.PhongMaterial();
         material.setDiffuseColor(color);
         return material;
+    }
+
+    public void drawParcel(int value, double xCoordinate, double yCoordinate, double zCoordinate) {
+        newBox = createParcelBox(value, scale);
+        newBox.setTranslateX(xCoordinate);
+        newBox.setTranslateY(yCoordinate);
+        newBox.setTranslateZ(zCoordinate);
+        group.getChildren().add(newBox);
+    }
+
+    private Box createParcelBox(int value, double scale) {
+        Box parcelBox;
+        switch (value) {
+            case 3:
+                parcelBox = new Box(scale, scale, 2 * scale);
+                parcelBox.setMaterial(createMaterial(Color.RED));
+                break;
+            case 4:
+                parcelBox = new Box(scale, 1.5 * scale, 2 * scale);
+                parcelBox.setMaterial(createMaterial(Color.GREEN));
+                break;
+            case 5:
+                parcelBox = new Box(1.5 * scale, 1.5 * scale, 1.5 * scale);
+                parcelBox.setMaterial(createMaterial(Color.PINK));
+                break;
+            default:
+                parcelBox = new Box(scale, scale, scale);
+                parcelBox.setMaterial(createMaterial(Color.BLACK));
+        }
+        return parcelBox;
     }
 
     public static void main(String args[]) {

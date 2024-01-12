@@ -3,6 +3,7 @@ import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
@@ -20,12 +21,28 @@ public class Visualizer extends Application {
 
     private double scale;
     private Group group;
+    private Group parcelsGroup;
     private Box newBox;
 
     @Override
     public void start(Stage stage) throws Exception {
         // Drawing a box to represent the Truck
+        int b = 55;
+        
+        int[][][] parcelB = new int[4][4][8];
+
+
         truck = new Box();
+        int[][][] truckArray = new int[33][8][5];
+        for (int i = 0; i < 33; i++) {
+            for (int j = 0; j < 8; j++) {
+                for (int r = 0; r < 5; r++) {
+                    if (truckArray[i][j][r] == 0) {
+                        addParcel(i, j, r);
+                    }
+                }
+            }
+        }
 
         // Setting the properties of the Truck
         scale = 70.0;
@@ -33,9 +50,13 @@ public class Visualizer extends Application {
         truck.setHeight(4.0 * scale);
         truck.setDepth(2.5 * scale);
 
+        PhongMaterial glassMaterial = new PhongMaterial(Color.color(1, 1, 1, 0.6));
+        truck.setMaterial(glassMaterial);
+
         // Creating a Group object
         group = new Group();
-        group.getChildren().add(truck);
+        parcelsGroup = new Group();
+        group.getChildren().addAll(truck, parcelsGroup);
 
         // Creating a scene object colored in black
         camera = new PerspectiveCamera();
@@ -43,11 +64,15 @@ public class Visualizer extends Application {
         scene.setFill(Color.BLACK);
         scene.setCamera(camera);
 
-        // Set truck's position to the center of the GUI
+        // Set truck's position to the center of the GUI 
         group.translateXProperty().set(WIDTH / 2);
         group.translateYProperty().set(HEIGHT / 2);
 
-        drawParcel(5, 50.0, 50.0, 50.0);
+        drawParcel(3, 0, 0, 0);
+        drawParcel(5, 70, 0, 0);
+        drawParcel(4, 140, 0, 0);
+        double height = newBox.getHeight();
+        System.out.println(height);
 
         // Setting title to the Stage
         stage.setTitle("Truck Visualizer");
@@ -76,7 +101,7 @@ public class Visualizer extends Application {
             Rotate rotateY = new Rotate(deltaXAngle, Rotate.Y_AXIS);
 
             truck.getTransforms().addAll(rotateX, rotateY);
-            newBox.getTransforms().addAll(rotateX, rotateY);
+            parcelsGroup.getTransforms().addAll(rotateX, rotateY);
 
             lastX = event.getSceneX();
             lastY = event.getSceneY();
@@ -94,7 +119,7 @@ public class Visualizer extends Application {
         newBox.setTranslateX(xCoordinate);
         newBox.setTranslateY(yCoordinate);
         newBox.setTranslateZ(zCoordinate);
-        group.getChildren().add(newBox);
+        parcelsGroup.getChildren().add(newBox);
     }
 
     private Box createParcelBox(int value, double scale) {
@@ -117,6 +142,16 @@ public class Visualizer extends Application {
                 parcelBox.setMaterial(createMaterial(Color.BLACK));
         }
         return parcelBox;
+    }
+
+    public void addParcel(int x, int y, int z){
+        for(int i=x; i<33; i++){
+            for(int j=y; j<8; j++){
+                for(int r=z; r<5; r++){
+
+                }
+            }
+        }
     }
 
     public static void main(String args[]) {

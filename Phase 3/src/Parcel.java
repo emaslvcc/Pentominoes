@@ -48,4 +48,43 @@ public class Parcel {
     public int getValue(){
         return this.val;
     }
+
+    public int[][][] parcelArray(int value) {
+        int scale = 70;
+        int[][][] A = new int[1 * scale][1 * scale][2 * scale];
+        int[][][] B = new int[1 * scale][105][2 * scale];
+        int[][][] C = new int[105][105][105];
+
+        switch (value) {
+            case 3:
+                for (int length = 0; length < 1 * scale; length++) {
+                    for (int height = 0; height < 1 * scale; height++) {
+                        for (int width = 0; width < 2 * scale; width++) {
+                            A[length][height][width] = 1;
+                        }
+                    }
+                }
+                return A;
+            case 4:
+                for (int length = 0; length < 1 * scale; length++) {
+                    for (int height = 0; height < 105; height++) {
+                        for (int width = 0; width < 2 * scale; width++) {
+                            B[length][height][width] = 1;
+                        }
+                    }
+                }
+                return B;
+            case 5:
+                for (int length = 0; length < 105; length++) {
+                    for (int height = 0; height < 105; height++) {
+                        for (int width = 0; width < 105; width++) {
+                            C[length][height][width] = 1;
+                        }
+                    }
+                }
+                return C;
+            default:
+                return null;
+        }
+    }
 }

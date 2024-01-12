@@ -1,11 +1,14 @@
 import javafx.application.Application;
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import javafx.scene.shape.Cylinder;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 public class Visualizer extends Application {
@@ -21,28 +24,12 @@ public class Visualizer extends Application {
 
     private double scale;
     private Group group;
-    private Group parcelsGroup;
     private Box newBox;
 
     @Override
     public void start(Stage stage) throws Exception {
         // Drawing a box to represent the Truck
-        int b = 55;
-        
-        int[][][] parcelB = new int[4][4][8];
-
-
         truck = new Box();
-        int[][][] truckArray = new int[33][8][5];
-        for (int i = 0; i < 33; i++) {
-            for (int j = 0; j < 8; j++) {
-                for (int r = 0; r < 5; r++) {
-                    if (truckArray[i][j][r] == 0) {
-                        addParcel(i, j, r);
-                    }
-                }
-            }
-        }
 
         // Setting the properties of the Truck
         scale = 70.0;
@@ -53,10 +40,9 @@ public class Visualizer extends Application {
         PhongMaterial glassMaterial = new PhongMaterial(Color.color(1, 1, 1, 0.6));
         truck.setMaterial(glassMaterial);
 
-        // Creating a Group object
+        // Creating a single Group object for parcels and outlines
         group = new Group();
-        parcelsGroup = new Group();
-        group.getChildren().addAll(truck, parcelsGroup);
+        group.getChildren().add(truck);
 
         // Creating a scene object colored in black
         camera = new PerspectiveCamera();
@@ -64,15 +50,17 @@ public class Visualizer extends Application {
         scene.setFill(Color.BLACK);
         scene.setCamera(camera);
 
-        // Set truck's position to the center of the GUI 
+        // Set truck's position to the center of the GUI
         group.translateXProperty().set(WIDTH / 2);
         group.translateYProperty().set(HEIGHT / 2);
 
+        // Draw parcels without outlines
         drawParcel(3, 0, 0, 0);
         drawParcel(5, 70, 0, 0);
         drawParcel(4, 140, 0, 0);
-        double height = newBox.getHeight();
-        System.out.println(height);
+
+        // Draw outlines for the truck container
+        createOutlines(truck, group);
 
         // Setting title to the Stage
         stage.setTitle("Truck Visualizer");
@@ -100,8 +88,8 @@ public class Visualizer extends Application {
             Rotate rotateX = new Rotate(deltaYAngle, Rotate.X_AXIS);
             Rotate rotateY = new Rotate(deltaXAngle, Rotate.Y_AXIS);
 
-            truck.getTransforms().addAll(rotateX, rotateY);
-            parcelsGroup.getTransforms().addAll(rotateX, rotateY);
+            // Apply rotation transformations to the group (truck, parcels, and outlines)
+            group.getTransforms().addAll(rotateX, rotateY);
 
             lastX = event.getSceneX();
             lastY = event.getSceneY();
@@ -114,12 +102,13 @@ public class Visualizer extends Application {
         return material;
     }
 
-    public void drawParcel(int value, double xCoordinate, double yCoordinate, double zCoordinate) {
+    private void drawParcel(int value, double xCoordinate, double yCoordinate, double zCoordinate) {
         newBox = createParcelBox(value, scale);
         newBox.setTranslateX(xCoordinate);
         newBox.setTranslateY(yCoordinate);
         newBox.setTranslateZ(zCoordinate);
-        parcelsGroup.getChildren().add(newBox);
+
+        group.getChildren().add(newBox);
     }
 
     private Box createParcelBox(int value, double scale) {
@@ -127,31 +116,65 @@ public class Visualizer extends Application {
         switch (value) {
             case 3:
                 parcelBox = new Box(scale, scale, 2 * scale);
-                parcelBox.setMaterial(createMaterial(Color.RED));
+                parcelBox.setMaterial(createMaterial(Color.RED)); // Fully solid without transparency
                 break;
             case 4:
                 parcelBox = new Box(scale, 1.5 * scale, 2 * scale);
-                parcelBox.setMaterial(createMaterial(Color.GREEN));
+                parcelBox.setMaterial(createMaterial(Color.GREEN)); // Fully solid without transparency
                 break;
             case 5:
                 parcelBox = new Box(1.5 * scale, 1.5 * scale, 1.5 * scale);
-                parcelBox.setMaterial(createMaterial(Color.PINK));
+                parcelBox.setMaterial(createMaterial(Color.PINK)); // Fully solid without transparency
                 break;
             default:
                 parcelBox = new Box(scale, scale, scale);
-                parcelBox.setMaterial(createMaterial(Color.BLACK));
+                parcelBox.setMaterial(createMaterial(Color.BLACK)); // Fully solid without transparency
         }
         return parcelBox;
     }
 
-    public void addParcel(int x, int y, int z){
-        for(int i=x; i<33; i++){
-            for(int j=y; j<8; j++){
-                for(int r=z; r<5; r++){
+    private void createOutlines(Box box, Group group) {
+        double width = 0.2; // Adjust the width as needed
 
-                }
-            }
-        }
+        double x = box.getTranslateX();
+        double y = box.getTranslateY();
+        double z = box.getTranslateZ();
+        double w = box.getWidth();
+        double h = box.getHeight();
+        double d = box.getDepth();
+
+        createLine(group, new Point3D(x - w / 2, y - h / 2, z - d / 2), new Point3D(x + w / 2, y - h / 2, z - d / 2), width);
+        createLine(group, new Point3D(x - w / 2, y + h / 2, z - d / 2), new Point3D(x + w / 2, y + h / 2, z - d / 2), width);
+        createLine(group, new Point3D(x - w / 2, y - h / 2, z + d / 2), new Point3D(x + w / 2, y - h / 2, z + d / 2), width);
+        createLine(group, new Point3D(x - w / 2, y + h / 2, z + d / 2), new Point3D(x + w / 2, y + h / 2, z + d / 2), width);
+
+        createLine(group, new Point3D(x - w / 2, y - h / 2, z - d / 2), new Point3D(x - w / 2, y + h / 2, z - d / 2), width);
+        createLine(group, new Point3D(x + w / 2, y - h / 2, z - d / 2), new Point3D(x + w / 2, y + h / 2, z - d / 2), width);
+        createLine(group, new Point3D(x - w / 2, y - h / 2, z + d / 2), new Point3D(x - w / 2, y + h / 2, z + d / 2), width);
+        createLine(group, new Point3D(x + w / 2, y - h / 2, z + d / 2), new Point3D(x + w / 2, y + h / 2, z + d / 2), width);
+
+        createLine(group, new Point3D(x - w / 2, y - h / 2, z - d / 2), new Point3D(x - w / 2, y - h / 2, z + d / 2), width);
+        createLine(group, new Point3D(x + w / 2, y - h / 2, z - d / 2), new Point3D(x + w / 2, y - h / 2, z + d / 2), width);
+        createLine(group, new Point3D(x - w / 2, y + h / 2, z - d / 2), new Point3D(x - w / 2, y + h / 2, z + d / 2), width);
+        createLine(group, new Point3D(x + w / 2, y + h / 2, z - d / 2), new Point3D(x + w / 2, y + h / 2, z + d / 2), width);
+    }
+
+    private void createLine(Group group, Point3D origin, Point3D target, double width) {
+        Point3D yPoint = new Point3D(0, 1, 0);
+        Point3D diff = target.subtract(origin);
+        double height = diff.magnitude();
+
+        Point3D mid = target.midpoint(origin);
+        Translate moveToOriginCenter = new Translate(mid.getX(), mid.getY(), mid.getZ());
+
+        Point3D rAxis = diff.crossProduct(yPoint);
+        double angle = Math.acos(diff.normalize().dotProduct(yPoint));
+        Rotate rotate = new Rotate(-Math.toDegrees(angle), rAxis);
+
+        Cylinder line = new Cylinder(width, height);
+
+        line.getTransforms().addAll(moveToOriginCenter, rotate);
+        group.getChildren().add(line);
     }
 
     public static void main(String args[]) {

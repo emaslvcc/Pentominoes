@@ -87,4 +87,8 @@ public class Parcel {
                 return null;
         }
     }
+
+    public void rotate(){
+        
+    }
 }

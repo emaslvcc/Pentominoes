@@ -3,6 +3,7 @@ import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -10,6 +11,7 @@ import javafx.scene.shape.Cylinder;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
+import javafx.scene.AmbientLight;
 
 public class JavaFX extends Application {
 
@@ -17,8 +19,8 @@ public class JavaFX extends Application {
     private static final int HEIGHT = 800;
 
     private Group group; // Move this line to the top of the class
-
     private PerspectiveCamera camera;
+    private AmbientLight ambientLight;
 
     private double lastX;
     private double lastY;
@@ -57,8 +59,10 @@ public class JavaFX extends Application {
 
         // Creating a scene object colored in black
         camera = new PerspectiveCamera();
+        ambientLight = new AmbientLight(Color.WHITE);
+        group.getChildren().add(ambientLight);
 
-        Scene scene = new Scene(group, WIDTH, HEIGHT);
+        Scene scene = new Scene(group, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
         scene.setFill(Color.WHITE);
         scene.setCamera(camera);
 
@@ -105,19 +109,21 @@ public class JavaFX extends Application {
 
     private PhongMaterial getColor(int value) {
         final PhongMaterial material = new PhongMaterial();
+
         switch(value) {
             case 1:
                 material.setDiffuseColor(Color.RED);
-                return material;
+                break;
             case 2:
                 material.setDiffuseColor(Color.BLUE);
-                return material;
+                break;
             case 3:
                 material.setDiffuseColor(Color.PURPLE);
-                return material;
+                break;
             default:
                 return null;
         }
+        return material;
     }
 
     private void drawParcel(int[][][] array) {

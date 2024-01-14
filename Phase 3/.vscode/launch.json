@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "Phase 3_6840df19"
+        },
+        {
+            "type": "java",
+            "name": "JavaFX",
+            "request": "launch",
+            "mainClass": "JavaFX",
+            "projectName": "Phase 3_6840df19"
+        },
+        {
+            "type": "java",
             "name": "QuestionA",
             "request": "launch",
             "mainClass": "QuestionA",

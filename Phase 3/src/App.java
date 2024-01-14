@@ -2,6 +2,6 @@ import javafx.application.Application;
 
 public class App {
     public static void main(String[] args) {
-        Application.launch(Visualizer.class, args);
+        Application.launch(JavaFX.class, args);
     }
 }

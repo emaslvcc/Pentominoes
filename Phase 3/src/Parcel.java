@@ -1,21 +1,27 @@
 public class Parcel {
-    public int x;
-    public int y;
-    public int z;
-    public int val;
-    public int weight;
+    private int x;
+    private int y;
+    private int z;
+    private int val;
+    private int weight;
+    int rotation;
+    private int num;
 
     /**
      * A constructor that creates a parcel object
      * @param c a character correspondent to a parcel (A, B or C)
      **/
     public Parcel(char c){
+
         if (c == 'A') {
             this.x = 2;
             this.y = 2;
             this.z = 4;
             this.weight = 2 * 2 * 4;
             this.val = 3;
+            this.num = 1;
+            this.rotation = 0;
+
         } 
         else if (c == 'B') {
             this.x = 2;
@@ -23,6 +29,8 @@ public class Parcel {
             this.z = 4;
             this.weight = 2 * 3 * 4;
             this.val = 4;
+            this.num = 2;
+            this.rotation = 0;
         }
         else if (c == 'C') {
             this.x = 3;
@@ -30,6 +38,8 @@ public class Parcel {
             this.z = 3;
             this.weight = 3 * 3 * 3;
             this.val = 5;
+            this.num = 3;
+            this.rotation = 0;
         }
     }
 
@@ -49,46 +59,53 @@ public class Parcel {
         return this.val;
     }
 
-    public int[][][] parcelArray(int value) {
-        int scale = 70;
-        int[][][] A = new int[1 * scale][1 * scale][2 * scale];
-        int[][][] B = new int[1 * scale][105][2 * scale];
-        int[][][] C = new int[105][105][105];
+    public int getNum(){
+        return this.num;
+    }
 
-        switch (value) {
+    public int getX(){
+        return this.x;
+    }
+    public int getY(){
+        return this.y;
+    }
+    public int getZ(){
+        return this.z;
+    }
+    
+
+    public int[][][] getParcelArray() {
+        switch(this.rotation){
+            case 0:
+                return new int[this.x][this.y][this.z];
+            case 1:
+                return new int[this.x][this.z][this.y];
+            case 2:
+                return new int[this.y][this.x][this.z];
             case 3:
-                for (int length = 0; length < 1 * scale; length++) {
-                    for (int height = 0; height < 1 * scale; height++) {
-                        for (int width = 0; width < 2 * scale; width++) {
-                            A[length][height][width] = 1;
-                        }
-                    }
-                }
-                return A;
+                return new int[this.y][this.z][this.x];
             case 4:
-                for (int length = 0; length < 1 * scale; length++) {
-                    for (int height = 0; height < 105; height++) {
-                        for (int width = 0; width < 2 * scale; width++) {
-                            B[length][height][width] = 1;
-                        }
-                    }
-                }
-                return B;
+                return new int[this.z][this.y][this.x];
             case 5:
-                for (int length = 0; length < 105; length++) {
-                    for (int height = 0; height < 105; height++) {
-                        for (int width = 0; width < 105; width++) {
-                            C[length][height][width] = 1;
-                        }
-                    }
-                }
-                return C;
+                return new int[this.z][this.x][this.y];
             default:
-                return null;
+                return new int[0][0][0];
+        }
+
+    }
+
+    public boolean rotate(){
+        if(this.rotation<5){
+            this.rotation++;
+            return true;
+        }
+        else{
+            return false;
         }
     }
-
-    public void rotate(){
-        
+    public void resetRotation(){
+        this.rotation = 0;
     }
+
+    
 }

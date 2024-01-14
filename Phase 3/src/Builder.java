@@ -68,20 +68,8 @@ public class Builder {
     }
 
     public static boolean fillTruck(int[][][] field, int[] used){
-        // are all parcels used?
-        if(used[0]==0 && used[1]==0 && used[2]==0){
 
-            for(int a=0; a<field.length; a++){
-                for(int b=0; b<field[0].length; b++){
-                    for(int c=0; c<field[0][0].length; c++){
-                        truck[a][b][c] = field[a][b][c];
-                    }
-                }
-            }
-
-            return true;
-        }
-
+        
 
         int x=-1;
         int y=-1;
@@ -105,9 +93,32 @@ public class Builder {
                 }
             }
         }
+        System.out.println(x + " " + y + " " + z + "   " + used[0]);
+        if(used[0]==46){
+            int count=0;
+            System.out.println(field.length);
+            for(int a=0; a<field.length; a++){
+                for(int b=0; b<field[0].length; b++){
+                    for(int c=0; c<field[0][0].length; c++){
+                        truck[a][b][c] = field[a][b][c];
+                    }
+                }
+            }
+            return true;
+        
+        }
 
         if(x==-1 && y==-1 && z==-1){
-            // truck is filled
+                for(int a=0; a<field.length; a++){
+                    for(int b=0; b<field[0].length; b++){
+                        for(int c=0; c<field[0][0].length; c++){
+                            truck[a][b][c] = field[a][b][c];
+                            
+                        }
+                    }
+                }
+                return true;
+            
         }
 
         int[][][] fieldcopy = new int[field.length][field[0].length][field[0][0].length];
@@ -119,14 +130,13 @@ public class Builder {
             Parcel curr = A;
                 if(i==1) curr = B;
                 else if(i==2) curr = C;
-            if(used[i]!=0){
 
-                
-                while(true){
-                    System.out.println(used[0] + " " + curr.rotation);
+            if(used[i]!=0){
+            boolean bool=true;
+                while(bool){
+                    
                     if(canAdd(field, curr, x, y, z)){
                         // Set the copy of the field to the original field before adding the parcel
-
                         for(int a=0; a<field.length; a++){
                             for(int b=0; b<field[0].length; b++){
                                 for(int c=0; c<field[0][0].length; c++){
@@ -139,22 +149,28 @@ public class Builder {
 
                         usedcopy[i]--;
 
+                        int temp = curr.rotation;
+
+                        curr.resetRotation();
+
 
                         if(fillTruck(fieldcopy, usedcopy)) return true;
+
+                        curr.rotation = temp;
     
                         usedcopy[i]++;
 
 
                     }
                     if(!curr.rotate()){
-                            curr.resetRotation();
-                            break;
-                        
+                        curr.resetRotation();
+                        bool=false;
+                        break;
                     }
                     //curr.resetRotation();
                 }
-            }
             
+            }
         }
         return false;
 
@@ -167,7 +183,6 @@ public class Builder {
 
         int[][][] arr = curr.getParcelArray();
 
-        
         for(int a=x; a<x+arr.length; a++){
             for(int b=y; b<y+arr[0].length; b++){
                 for(int c=z; c<z+arr[0][0].length; c++){
@@ -204,8 +219,16 @@ public class Builder {
     
     public static void main(String[] args) {
         calculateMax();
+
         System.out.println(fillTruck(emptytruck, used));
         
+        for(int i=0; i<truck.length; i++){
+            for(int j=0; j<truck[0].length; j++){
+                for(int k=0; k<truck[0][0].length; k++){
+                    if(truck[i][j][k]!=0) System.out.println(truck[i][j][k]);
+                }
+            }
+        }
 
        // for(int i=0; i<truck.length; i++){
           //  for(int j=0; j<truck[0].length; j++){

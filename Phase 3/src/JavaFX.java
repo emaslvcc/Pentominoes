@@ -71,7 +71,10 @@ public class JavaFX extends Application {
         group.translateYProperty().set(HEIGHT / 2);
         createContainerOutlines();
 
-        drawParcel(exampleArray);
+        Builder b = new Builder();
+        b.calculateMax();
+        b.fillTruck(b.emptytruck, b.used);
+        this.drawParcel(b.truck);
 
         // Setting title to the Stage
         stage.setTitle("Truck Visualizer");

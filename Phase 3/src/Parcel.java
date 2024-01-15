@@ -5,7 +5,7 @@ public class Parcel {
     private int val;
     private int weight;
     int rotation;
-    private int num;
+    public int num;
 
     /**
      * A constructor that creates a parcel object

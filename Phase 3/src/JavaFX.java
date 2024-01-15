@@ -69,12 +69,11 @@ public class JavaFX extends Application {
         // Set truck's position to the center of the GUI
         group.translateXProperty().set(WIDTH / 2);
         group.translateYProperty().set(HEIGHT / 2);
-        createContainerOutlines();
 
-        Builder b = new Builder();
-        b.calculateMax();
-        b.fillTruck(b.emptytruck, b.used);
-        this.drawParcel(b.truck);
+        GreedyAlgorithm greedy = new GreedyAlgorithm();
+        greedy.fillTruck();
+        drawParcel(greedy.truck);
+        createContainerOutlines();
 
         // Setting title to the Stage
         stage.setTitle("Truck Visualizer");

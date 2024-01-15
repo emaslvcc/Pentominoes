@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GreedyAlgorithm",
+            "request": "launch",
+            "mainClass": "GreedyAlgorithm",
+            "projectName": "Phase 3_6840df19"
+        },
+        {
+            "type": "java",
             "name": "App",
             "request": "launch",
             "mainClass": "App",

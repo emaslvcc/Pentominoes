@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class GreedyAlgorithm {
 
     // Create parcel objects
@@ -12,38 +9,29 @@ public class GreedyAlgorithm {
     public final int LENGTH = 33;
     public final int HEIGHT = 8;
     public int[][][] truck = new int[WIDTH][LENGTH][HEIGHT];
+    public int score = 0;
 
     public void fillTruck() {
-
-        if (placeParcel((parcelC))) {
-            while (placeParcel(parcelC)) {
-                placeParcel(parcelC);
+        if (placementAttempt(parcelC)) {
+            while (placementAttempt(parcelC)) {
+                // Do nothing, just continue placing parcelC
+                printMatrix(); // Optional: Print the truck after each placement
             }
         }
-        else {
-            while (placeParcel(parcelB)) {
-                placeParcel(parcelB);
-            } 
-        }
-
-        if (!placeParcel(parcelC) && !placeParcel(parcelB)) {
-            placeParcel(parcelA);
-        }
-    }
-
-    public boolean placeParcel(Parcel parcel) {
-        int maxAttempts = 1000; // Set a maximum number of attempts
-        int attempts = 0;
-
-        while (attempts < maxAttempts) {
-            if (placementAttempt(parcel)) {
-                return true; // Successfully placed the parcel
+    
+        if (placementAttempt(parcelB)) {
+            while (placementAttempt(parcelB)) {
+                // Do nothing, just continue placing parcelB
+                printMatrix(); // Optional: Print the truck after each placement
             }
-            attempts++;
         }
-
-        // Failed to place the parcel after maximum attempts
-        return false;
+    
+        if (placementAttempt(parcelA)) {
+            while (placementAttempt(parcelA)) {
+                // Do nothing, just continue placing parcelA
+                printMatrix(); // Optional: Print the truck after each placement
+            }
+        }
     }
 
     public boolean placementAttempt(Parcel parcel) {
@@ -75,7 +63,7 @@ public class GreedyAlgorithm {
         return true;
     }
 
-    public void addParcel(Parcel parcel, int x, int y, int z) {
+    public int addParcel(Parcel parcel, int x, int y, int z) {
         int[][][] array = parcel.getParcelArray();
         for (int i = x; i < x + array.length; i++) {
             for (int j = y; j < y + array[0].length; j++) {
@@ -84,6 +72,8 @@ public class GreedyAlgorithm {
                 }
             }
         }
+        score += parcel.getValue();
+        return score;
     }
 
     private boolean isTruckFilled() {
@@ -111,6 +101,7 @@ public class GreedyAlgorithm {
             }
             System.out.println();
         }
+        System.out.println(score);
     }
 
     public static void main(String[] args) {

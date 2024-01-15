@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.geometry.Point3D;
+import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
@@ -11,7 +12,6 @@ import javafx.scene.shape.Cylinder;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
-import javafx.scene.AmbientLight;
 
 public class JavaFX extends Application {
 
@@ -25,7 +25,7 @@ public class JavaFX extends Application {
     private double lastX;
     private double lastY;
 
-    private final int BLOCK_SIZE = 70;
+    private final int BLOCK_SIZE = 30;
     private final int OFFSET = 0;
     private final int width = 175; // Move these declarations above their usage
     private final int height = 280;
@@ -139,11 +139,11 @@ public class JavaFX extends Application {
                         continue;
 
                     PhongMaterial color = getColor(array[i][j][k]);
-                    Box box = new Box(70, 70, 70);
+                    Box box = new Box(30, 30, 30);
                     box.setMaterial(color);
-                    box.setTranslateX(k * 70);
-                    box.setTranslateY(j * 70);
-                    box.setTranslateZ(i * 70);
+                    box.setTranslateX(k * 30);
+                    box.setTranslateY(j * 30);
+                    box.setTranslateZ(i * 30);
                     group.getChildren().add(box);
                 }
             }

@@ -10,31 +10,27 @@ public class GreedyAlgorithm {
     public final int HEIGHT = 8;
     public int[][][] truck = new int[WIDTH][LENGTH][HEIGHT];
     public int score = 0;
+    public int added = 0;
 
     public void fillTruck() {
-        if (placementAttempt(parcelC)) {
-            while (placementAttempt(parcelC)) {
-                // Do nothing, just continue placing parcelC
-                printMatrix(); // Optional: Print the truck after each placement
-            }
-        }
-    
-        if (placementAttempt(parcelB)) {
-            while (placementAttempt(parcelB)) {
-                // Do nothing, just continue placing parcelB
-                printMatrix(); // Optional: Print the truck after each placement
-            }
-        }
-    
-        if (placementAttempt(parcelA)) {
-            while (placementAttempt(parcelA)) {
-                // Do nothing, just continue placing parcelA
-                printMatrix(); // Optional: Print the truck after each placement
+        Parcel[] parcels = {parcelC, parcelB, parcelA};
+
+        for (Parcel parcel : parcels) {
+            for (int rotation = 0; rotation < 6; rotation++) {
+                while(placementAttempt(parcel, rotation)) {
+                    added++;
+                }
             }
         }
     }
 
-    public boolean placementAttempt(Parcel parcel) {
+    public boolean placementAttempt(Parcel parcel, int rotation) {
+        
+        while (rotation > 0) {
+            parcel.rotate();
+            rotation--;
+        }
+        
         int[][][] array = parcel.getParcelArray();
         for (int x = 0; x < truck.length - array.length + 1; x++) {
             for (int y = 0; y < truck[0].length - array[0].length; y++) {

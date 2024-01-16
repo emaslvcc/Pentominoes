@@ -10,6 +10,8 @@ public class QuestionA {
     private static int bestParcelB = 0;
     private static int bestParcelC = 0;
 
+    private static double usedCapacity;
+
     private static boolean validCombinationFound = false;
 
     public static void main(String[] args) {
@@ -17,13 +19,14 @@ public class QuestionA {
 
         if (validCombinationFound) {
             System.out.println("Best combination: Parcel A - " + bestParcelA + ", Parcel B - " + bestParcelB + ", Parcel C - " + bestParcelC);
+            System.out.println(usedCapacity);
         } else {
             System.out.println("No valid combination found to fill the truck.");
         }
     }
 
     public static void TruckFiller(int currentParcelA, int currentParcelB, int currentParcelC) {
-        double usedCapacity = currentParcelA * VOLUME_A + currentParcelB * VOLUME_B + currentParcelC * VOLUME_C;
+        usedCapacity = currentParcelA * VOLUME_A + currentParcelB * VOLUME_B + currentParcelC * VOLUME_C;
 
         if (usedCapacity == TRUCK_VOLUME) {
             bestParcelA = currentParcelA;

@@ -1,10 +1,12 @@
+package SuperParcels;
+
 public class Parcel {
     private int x;
     private int y;
     private int z;
     private int val;
     private int weight;
-    int rotation;
+    private int rotation;
     public int num;
 
     /**
@@ -41,6 +43,9 @@ public class Parcel {
             this.num = 3;
             this.rotation = 0;
         }
+        else if (c == 'F') {
+            this.num = 7;
+        }
     }
 
     /**
@@ -63,6 +68,7 @@ public class Parcel {
         return this.num;
     }
 
+    public int getRotation () { return rotation; }
     public int getX(){
         return this.x;
     }
@@ -97,6 +103,15 @@ public class Parcel {
     public boolean rotate(){
         if(this.rotation<5){
             this.rotation++;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public boolean rotate(int newRotation){
+        if(newRotation <= 5){
+            this.rotation = newRotation;
             return true;
         }
         else{

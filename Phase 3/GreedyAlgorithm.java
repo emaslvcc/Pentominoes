@@ -1,3 +1,5 @@
+import SuperParcels.Parcel;
+
 public class GreedyAlgorithm {
 
     // Create parcel objects

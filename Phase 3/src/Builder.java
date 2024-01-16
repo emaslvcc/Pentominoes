@@ -1,3 +1,5 @@
+import SuperParcels.Parcel;
+
 /**
  * This class includes the methods to support the search of a solution.
  */
@@ -149,14 +151,14 @@ public class Builder {
 
                         usedcopy[i]--;
 
-                        int temp = curr.rotation;
+                        int temp = curr.getRotation();
 
                         curr.resetRotation();
 
 
                         if(fillTruck(fieldcopy, usedcopy)) return true;
 
-                        curr.rotation = temp;
+                        curr.rotate(temp);
     
                         usedcopy[i]++;
 

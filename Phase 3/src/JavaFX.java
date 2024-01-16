@@ -27,12 +27,12 @@ public class JavaFX extends Application {
 
     private final int BLOCK_SIZE = 30;
     private final int OFFSET = 0;
-    private final int width = 75; // Move these declarations above their usage
-    private final int height = 120;
-    private final int depth = 495;
-    private final int xCoord = (width * BLOCK_SIZE + (width * OFFSET)) / 2;
-    private final int yCoord = (height * BLOCK_SIZE + (height * OFFSET)) / 2;
-    private final int zCoord = (depth * BLOCK_SIZE + (depth * OFFSET)) / 2;
+    //private final int width = 75; // Move these declarations above their usage
+    //private final int height = 120;
+    //private final int depth = 495;
+    //private final int xCoord = (width * BLOCK_SIZE + (width * OFFSET)) / 2;
+    //private final int yCoord = (height * BLOCK_SIZE + (height * OFFSET)) / 2;
+    //private final int zCoord = (depth * BLOCK_SIZE + (depth * OFFSET)) / 2;
 
     int[][][] exampleArray = {
         {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -101,7 +101,6 @@ public class JavaFX extends Application {
         drawParcel(greedy.truck);
         createContainerOutlines();
         System.out.println(greedy.score);
-        System.out.println(greedy.added);
 
         // Setting title to the Stage
         stage.setTitle("Truck Visualizer");

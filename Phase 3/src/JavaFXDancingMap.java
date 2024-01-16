@@ -30,9 +30,9 @@ public class JavaFXDancingMap extends Application {
 
     private final int BLOCK_SIZE = 30;
     private final int OFFSET = 0;
-    private final int width = 75; // Move these declarations above their usage
-    private final int height = 120;
-    private final int depth = 495;
+    //private final int width = 75; // Move these declarations above their usage
+    //private final int height = 120;
+    //private final int depth = 495;
 
     @Override
     public void start(Stage stage) throws Exception {

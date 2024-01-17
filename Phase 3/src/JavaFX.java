@@ -13,6 +13,8 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import QuestionC.*;
+//import javafx.fxml.FXMLLoader;
+//import javafx.scene.Parent;
 
 public class JavaFX extends Application {
 
@@ -81,6 +83,9 @@ public class JavaFX extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+     
+   // Parent root= FXMLLoader.load(getClass().getResource("/ui/mygui.fxml"));
+     // Scene scene = new Scene(root);
 
         this.group = new Group();
 
@@ -89,6 +94,7 @@ public class JavaFX extends Application {
         this.ambientLight = new AmbientLight(Color.WHITE);
         this.group.getChildren().add(this.ambientLight);
 
+        
         Scene scene = new Scene(this.group, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
         scene.setFill(Color.WHITE);
         scene.setCamera(this.camera);

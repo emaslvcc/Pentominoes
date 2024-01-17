@@ -139,6 +139,7 @@ public class JavaFX extends Application {
         stage.setTitle("Truck Visualizer");
         // Adding scene to the stage
         stage.setScene(scene);
+        stage.setResizable(false);
         // Displaying the contents of the stage
         stage.show();
         // Enable mouse interaction for rotating the box

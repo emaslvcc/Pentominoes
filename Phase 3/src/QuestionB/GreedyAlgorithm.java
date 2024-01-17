@@ -1,3 +1,5 @@
+import Database.Parcel;
+
 public class GreedyAlgorithm {
 
     // Create parcel objects
@@ -70,20 +72,6 @@ public class GreedyAlgorithm {
         }
         score += parcel.getValue();
         return score;
-    }
-
-    private boolean isTruckFilled() {
-        // Check if the entire truck is filled
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < LENGTH; j++) {
-                for (int k = 0; k < HEIGHT; k++) {
-                    if (truck[i][j][k] == 0) {
-                        return false; // Not completely filled
-                    }
-                }
-            }
-        }
-        return true; // Completely filled
     }
 
     public void printMatrix() {

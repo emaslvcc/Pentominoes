@@ -95,7 +95,6 @@ public class Builder {
         }
         System.out.println(x + " " + y + " " + z + "   " + used[0]);
         if(used[0]==43){
-            int count=0;
             System.out.println(field.length);
             for(int a=0; a<field.length; a++){
                 for(int b=0; b<field[0].length; b++){

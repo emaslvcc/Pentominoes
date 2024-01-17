@@ -1,0 +1,103 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "PentominoTemplateBasicSearchWithGaps_3584469c"
+        },
+        {
+            "type": "java",
+            "name": "BruteForceAlgorithm",
+            "request": "launch",
+            "mainClass": "BruteForceAlgorithm",
+            "projectName": "PentominoTemplateBasicSearchWithGaps_3584469c"
+        },
+        {
+            "type": "java",
+            "name": "JavaFX",
+            "request": "launch",
+            "mainClass": "JavaFX",
+            "projectName": "PentominoTemplateBasicSearchWithGaps_3584469c",
+            "vmArgs": "--module-path /Users/dervis/Downloads/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "JavaFX",
+            "request": "launch",
+            "mainClass": "JavaFX",
+            "projectName": "Phase 3_a59fef5",
+            "vmArgs": "--module-path /Users/dervis/Downloads/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "GreedyAlgorithm",
+            "request": "launch",
+            "mainClass": "GreedyAlgorithm",
+            "projectName": "Phase 3_a59fef5",
+            "vmArgs": "--module-path /Users/dervis/Downloads/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "Phase 3_a59fef5"
+        },
+        {
+            "type": "java",
+            "name": "GreedyAlgorithm",
+            "request": "launch",
+            "mainClass": "GreedyAlgorithm",
+            "projectName": "Phase 3_6840df19"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "Phase 3_6840df19"
+        },
+        {
+            "type": "java",
+            "name": "JavaFX",
+            "request": "launch",
+            "mainClass": "JavaFX",
+            "projectName": "Phase 3_6840df19",
+            "vmArgs": "--module-path /Users/dervis/Downloads/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "QuestionA",
+            "request": "launch",
+            "mainClass": "QuestionA",
+            "projectName": "Phase 3_6840df19"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Builder",
+            "request": "launch",
+            "mainClass": "Builder",
+            "projectName": "Phase 3_6840df19"
+        },
+        {
+            "type": "java",
+            "name": "Visualizer",
+            "request": "launch",
+            "mainClass": "Visualizer",
+            "projectName": "Phase 3_6840df19",
+            "vmArgs": "--module-path /Users/dervis/Downloads/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml"
+        }
+    ]
+}

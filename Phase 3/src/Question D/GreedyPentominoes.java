@@ -1,4 +1,4 @@
-
+import java.util.Random;
 
 public class GreedyPentominoes {
 
@@ -13,15 +13,15 @@ public class GreedyPentominoes {
     public int[][][] truck = new int[this.WIDTH][this.LENGTH][this.HEIGHT];
     public int score = 0;
     public int added = 0;
+    private Random rand = new Random();
 
     public void fillTruck() {
         Pentominoes[] pentominoes = {this.T, this.P, this.L};
 
         for (Pentominoes pentomino : pentominoes) {
-            for (int rotation = 0; rotation < 10; rotation++) {
+            for (int rotation = this.rand.nextInt(11); rotation < 10; rotation++) {
                 while(this.placementAttempt(pentomino, pentomino.rotate.get(rotation))) {
                     this.added++;
-                    
                 }
             }
         }
@@ -29,8 +29,8 @@ public class GreedyPentominoes {
 
     public boolean placementAttempt(Pentominoes pentominoObj, int[][][] pentomino) {
         for (int x = 0; x < this.truck.length - pentomino.length + 1; x++) {
-            for (int y = 0; y < this.truck[0].length - pentomino[0].length; y++) {
-                for (int z = 0; z < this.truck[0][0].length - pentomino[0][0].length; z++) {
+            for (int y = 0; y < this.truck[0].length - pentomino[0].length+1; y++) {
+                for (int z = 0; z < this.truck[0][0].length - pentomino[0][0].length+1; z++) {
                     if (this.canAdd(pentominoObj, pentomino, x, y, z)) {
                         this.addParcel(pentominoObj, pentomino, x, y, z);
                         return true;

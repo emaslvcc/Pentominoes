@@ -1,14 +1,13 @@
-import javax.swing.Box;
-import javax.swing.GroupLayout.Group;
-
 import javafx.application.Application;
 import javafx.geometry.Point3D;
 import javafx.scene.AmbientLight;
+import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Box;
 import javafx.scene.shape.Cylinder;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
@@ -95,10 +94,7 @@ public class JavaFX extends Application {
         this.group.translateXProperty().set(WIDTH / 5);
         this.group.translateYProperty().set(HEIGHT / 2);
 
-        GreedyAlgorithm greedy = new GreedyAlgorithm();
-        greedy.fillTruck();
-        greedy.printMatrix();
-        this.exampleArray = greedy.truck;
+        
         this.drawParcel(this.exampleArray);
         this.createContainerOutlines();
         //drawParcel(Pentominoes.tPent);
@@ -180,9 +176,9 @@ public class JavaFX extends Application {
     }
 
     public void createContainerOutlines() {
-        int boxWidth = 120 * 2;
-        int boxHeight = 495 * 2;
-        int boxDepth = 75 * 2;
+        int boxWidth = 495 * 2;
+        int boxHeight = 75 * 2;
+        int boxDepth = 120 * 2;
         int offset = -(this.BLOCK_SIZE/2);
         Point3D p1 = new Point3D(offset, offset, offset);
         Point3D p2 = new Point3D(boxWidth + offset, offset, offset);

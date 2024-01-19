@@ -93,7 +93,7 @@ public class JavaFX extends Application {
         scene.setCamera(this.camera);
 
         // Set truck's position to the center of the GUI
-        this.group.translateXProperty().set(WIDTH / 2);
+        this.group.translateXProperty().set(WIDTH / 5);
         this.group.translateYProperty().set(HEIGHT / 2);
 
         BruteForceAlgorithm b = new BruteForceAlgorithm();

@@ -78,6 +78,8 @@ public class JavaFX extends Application {
 };
     @Override
     public void start(Stage stage) throws Exception {
+// Parent root= FXMLLoader.load(getClass().getResource("/ui/mygui.fxml"));
+     // Scene scene = new Scene(root);
 
         this.group = new Group();
 
@@ -108,6 +110,7 @@ public class JavaFX extends Application {
         stage.setScene(scene);
         // Displaying the contents of the stage
         stage.show();
+        stage.setResizable(false);
         // Enable mouse interaction for rotating the box
         this.enableMouseInteraction(scene);
     }

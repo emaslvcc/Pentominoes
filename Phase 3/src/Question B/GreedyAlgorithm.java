@@ -1,6 +1,6 @@
 
 
-public class GreedyAlgorithm {
+public class GreedyAlgorithm implements Runnable{
 
     Parcel parcelA = new Parcel('A');
     Parcel parcelB = new Parcel('B');
@@ -12,6 +12,11 @@ public class GreedyAlgorithm {
     public int[][][] truck = new int[this.WIDTH][this.LENGTH][this.HEIGHT];
     public int score = 0;
 
+    private static JavaFX visualizer;
+
+    public static void setVisualizer(JavaFX visualizer) {
+        GreedyAlgorithm.visualizer = visualizer;
+    }
     public void fillTruck() {
         Parcel[] parcels = {this.parcelC, this.parcelB, this.parcelA};
 
@@ -99,9 +104,9 @@ public class GreedyAlgorithm {
         System.out.println("Total score: " + this.score);
     }
 
-    public static void main(String[] args) {
-        GreedyAlgorithm alg = new GreedyAlgorithm();
-        alg.fillTruck();
-        alg.printMatrix();
+    public void run() {
+        fillTruck();
+         // Add this line if you have a method to update visualization.
+        printMatrix();
     }
 }

@@ -1,24 +1,52 @@
+import java.io.IOException;
 import javafx.application.Application;
-import javafx.geometry.Point3D;
-import javafx.scene.AmbientLight;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
+import javafx.scene.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Cylinder;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
-import javafx.stage.Stage;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point3D;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 public class JavaFX extends Application {
-
     private static final int WIDTH = 1400;
     private static final int HEIGHT = 800;
 
-    private Group group; // Move this line to the top of the class
+    static Scene scene;
+    public static String type;
+    static String algorithm;
+    public static String value1;
+    public static String value2;
+    public static String value3;
+    public static String quantity1;
+    public static String quantity2;
+    public static String quantity3;
+    static int[] values = new int[3];
+    public static int[] quantities = new int[3];
+    TextField[] textFields;
+    public static boolean unlimited;
+    static boolean stop;
+    Thread thread;
+
+    final Group group=new Group();
+     // Move this line to the top of the class
     private PerspectiveCamera camera;
     private AmbientLight ambientLight;
 
@@ -76,41 +104,65 @@ public class JavaFX extends Application {
         {1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1},
         {1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1},},
 };
+
+ 
+@Override
+public void start(Stage stage) throws Exception {
+    // Creating a scene object colored in black
+    this.camera = new PerspectiveCamera();
+    this.ambientLight = new AmbientLight(Color.WHITE);
+
+    // Load the FXML file
+    Parent loader = FXMLLoader.load(getClass().getResource("mygui.fxml"));
+    VBox pane = (VBox) loader;
+
+    // Set up the scene
+    Scene scene = new Scene(pane, 800, 1000);
+    scene.setFill(Color.WHITE);
+    stage.setTitle("Truck Visualizer");
+    stage.setScene(scene);
+    stage.setResizable(false);
+    stage.show();
+
+    // Access the panes using their IDs
+    Pane leftpane = (Pane) scene.lookup("#leftpane");
+   
+    Pane rightPane=(Pane)scene.lookup("#rightpane");
+   
+    // Continue with the rest of your code
+    SubScene subScene = new SubScene(group, 800, 500, true, SceneAntialiasing.BALANCED);
+    subScene.setCamera(this.camera);
+    leftpane.getChildren().add(subScene);
+    this.enableMouseInteraction(scene, subScene, group);
+    subScene.setPickOnBounds(true);
+    leftpane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        @Override
+        public void handle(MouseEvent arg0) {
+            subScene.requestFocus();
+        }
+    });
+    pane.getChildren().addAll(leftpane,rightPane);
+    this.group.getChildren().add(this.ambientLight);
+
+    this.group.translateXProperty().set(WIDTH / 5);
+    this.group.translateYProperty().set(HEIGHT / 2);
+
+    this.drawParcel(this.exampleArray);
+    this.createContainerOutlines();
+}
+
     @Override
-    public void start(Stage stage) throws Exception {
-
-        this.group = new Group();
-
-        // Creating a scene object colored in black
-        this.camera = new PerspectiveCamera();
-        this.ambientLight = new AmbientLight(Color.WHITE);
-        this.group.getChildren().add(this.ambientLight);
-
-        Scene scene = new Scene(this.group, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
-        scene.setFill(Color.WHITE);
-        scene.setCamera(this.camera);
-
-        // Set truck's position to the center of the GUI
-        this.group.translateXProperty().set(WIDTH / 5);
-        this.group.translateYProperty().set(HEIGHT / 2);
-
-        
-        this.drawParcel(this.exampleArray);
-        this.createContainerOutlines();
-        //drawParcel(Pentominoes.tPent);
-
-        // Setting title to the Stage
-        stage.setTitle("Truck Visualizer");
-        // Adding scene to the stage
-        stage.setScene(scene);
-        // Displaying the contents of the stage
-        stage.show();
-        // Enable mouse interaction for rotating the box
-        this.enableMouseInteraction(scene);
+    public void stop(){
+        stop=true;
+    }
+    public static void setScore(int solutionScore) {
+        Label score = (Label) scene.lookup("#score");
+        score.setText(solutionScore + "");
     }
 
-    private void enableMouseInteraction(Scene scene) {
-        scene.setOnMousePressed(event -> {
+    private void enableMouseInteraction(Scene scene,SubScene subScene,final Node group ) {
+        subScene.setOnMousePressed(event -> {
             this.lastX = event.getSceneX();
             this.lastY = event.getSceneY();
         });
@@ -130,9 +182,158 @@ public class JavaFX extends Application {
 
             this.lastX = event.getSceneX();
             this.lastY = event.getSceneY();
-        });
-    }
 
+        });
+        Button subButton=(Button) scene.lookup("#sub");
+Button stopButton=(Button) scene.lookup("#stop");
+CheckBox unlimitedObj = (CheckBox) scene.lookup("#unlimited");
+
+        @SuppressWarnings("unchecked")
+        ComboBox<String> typeObj = (ComboBox<String>) scene.lookup("#type");
+
+        @SuppressWarnings("unchecked")
+        ComboBox<String> algoObj = (ComboBox<String>) scene.lookup("#algo");
+        TextField qAObj = (TextField) scene.lookup("#qa");
+        TextField qBObj = (TextField) scene.lookup("#qb");
+        TextField qCObj = (TextField) scene.lookup("#qc");
+        TextField vAObj = (TextField) scene.lookup("#va");
+        TextField vBObj = (TextField) scene.lookup("#vb");
+        TextField vCObj = (TextField) scene.lookup("#vc");
+        textFields = new TextField[] { qAObj, qBObj, qCObj, vAObj, vBObj, vCObj };
+
+        EventHandler<ActionEvent> submitHandler = new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (parseInput()) {
+                    type = typeObj.getValue();
+                    algorithm = algoObj.getValue();
+                    value1 = vAObj.getText();
+                    value2 = vBObj.getText();
+                    value3 = vCObj.getText();
+
+                    values = new int[] { Integer.parseInt(value1), Integer.parseInt(value2), Integer.parseInt(value3) };
+
+                    unlimited = unlimitedObj.isSelected();
+                    if(!unlimited) {
+                    quantity1 = qAObj.getText();
+                    quantity2 = qBObj.getText();
+                    quantity3 = qCObj.getText();
+                    quantities = new int[] { Integer.parseInt(quantity1),
+                    Integer.parseInt(quantity2), Integer.parseInt(quantity3) };
+                    }
+                    
+                    stopButton.setDisable(false);
+                    subButton.setDisable(true);
+                    runAlgorithm();
+                }
+            }
+        };
+        EventHandler<ActionEvent> stopHandler = new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stop = true;
+                stopButton.setDisable(true);
+                subButton.setDisable(false);
+            }
+        };
+        EventHandler<ActionEvent> unlimitedHandler = new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                unlimited = unlimitedObj.isSelected();
+                
+                if (unlimited) {
+                    qAObj.setDisable(true);
+                    qBObj.setDisable(true);
+                    qCObj.setDisable(true);
+                } else {
+                    qAObj.setDisable(false);
+                    qBObj.setDisable(false);
+                    qCObj.setDisable(false);
+                }
+            }
+        };
+        
+        algoObj.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            @SuppressWarnings("rawtypes")
+            public void changed(ObservableValue ov, String t, String t1) {
+                if(t1.equals("Dancing Links")) {
+                    unlimitedObj.setSelected(true);
+                    unlimitedObj.setDisable(true);
+                    qAObj.setDisable(true);
+                    qBObj.setDisable(true);
+                    qCObj.setDisable(true);
+                    unlimited = true;
+                } else {
+                    unlimitedObj.setDisable(false);
+                }
+            }    
+         });
+         typeObj.valueProperty().addListener(new ChangeListener<String>() {
+            String[] textPromptParcel= new String[] { "Quantity A", "Quantity B", "Quantity B", "Value A", "Value B", "Value C" };
+            String[] textPromptPent = new String[] { "Quantity L", "Quantity P", "Quantity T", "Value L", "Value P", "Value T" };
+             @Override
+             @SuppressWarnings("rawtypes")
+             public void changed(ObservableValue ov, String t, String t1) {
+                 if(t1.equals("Pentominoes")) {
+                     for(int i = 0; i < textFields.length; i++) {
+                         textFields[i].setPromptText(textPromptPent[i]);
+                     }
+                 } else {
+                     for(int i = 0; i < textFields.length; i++) {
+                         textFields[i].setPromptText(textPromptParcel[i]);
+                     }
+                 }
+             }    
+          });
+    }
+    private void runAlgorithm() {
+        //switch (algorithm) {
+           // case "Genetic Algorithm":
+                //GA.setVisualizer(this);
+             //   thread = new Thread(new GA());
+              //  break;
+           // case "Dancing Links":
+               // DancingLinks.setVisualizer(this);
+               // thread = new Thread(new DancingLinksRunnable());
+               // break;
+           // case "Greedy Algorithm":
+              //  GreedyAlgorithm.setVisualizer(this);
+                //thread = new Thread(new GreedyAlgorithm());
+              //  break;
+       // }
+        stop = false;
+        thread.start();
+    }
+    public static boolean getStop() {
+        return stop;
+    }
+    public boolean parseInput() {
+        int index = 0;
+        if(unlimited) index = 3;
+
+        for (int i = index; i < textFields.length; i++) {
+            if (textFields[i].getText().equals(""))
+                textFields[i].setText("0");
+
+            if (!textFields[i].getText().matches("^[0-9]+$"))
+                return false;
+        }
+        int sum = 0;
+
+        if(unlimited) return true;
+
+        for(int i = 0; i < 3; i++) {
+            sum += Integer.parseInt(textFields[i].getText());
+        }
+
+        if(sum == 0) textFields[0].setText("1");
+
+        return true;
+    }
     private PhongMaterial getColor(int value) {
         final PhongMaterial material = new PhongMaterial();
 
@@ -227,4 +428,5 @@ public class JavaFX extends Application {
     public static void main(String args[]) {
         launch(args);
     }
+   
 }

@@ -13,11 +13,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <FlowPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Pane id="leftpane" prefHeight="501.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to top,#001F3F,#708090 );">
+            <Pane id="leftpane" prefHeight="1000.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to top,#001F3F,#708090 );">
                <children>
                   <Label layoutX="700.0" layoutY="479.0" text="Current Value: " textFill="WHITE">
                      <font>
@@ -30,9 +30,8 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Pane prefHeight="481.0" prefWidth="800.0" style="-fx-background-color: #708090;">
-               <Pane id="headerPane" prefHeight="70.0" prefWidth="800" style="-fx-background-color: linear-gradient(to top,  #708090,#001F3F)">
-               </Pane>
+            <Pane id="rightpane" prefHeight="1000.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to top,  #708090,#001F3F)">
+
                <children>
                   <Label layoutX="290" layoutY="21.0" prefHeight="22.0" prefWidth="298.0" text="3D KNAPSACK" textFill="#f2f2f2">
                      <font>
@@ -79,7 +78,7 @@
                      </cursor>
                      <items>
                         <FXCollections fx:factory="observableArrayList">
-                           <String fx:value="Genetic Algorithm" />
+                           <String fx:value="Dynamic Programming" />
                            <String fx:value="Greedy Algorithm" />
                            <String fx:value="Dancing Links" />
                         </FXCollections>

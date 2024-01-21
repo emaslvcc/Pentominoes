@@ -106,8 +106,8 @@ public class JavaFX1 extends Application {
             0, 1,               // end coordinates
             true,               // proportional
             CycleMethod.NO_CYCLE, // cycle method
-            new Stop(0, Color.LIGHTBLUE), // start color
-            new Stop(1, Color.BLUE) // end color
+            new Stop(0, Color.rgb(0, 31, 63)), // start color
+            new Stop(1,Color.rgb(112, 128, 144)) // end color
     );
 
         //this.result.translateXProperty().set(WIDTH / 5);
@@ -117,7 +117,7 @@ public class JavaFX1 extends Application {
         ChoiceBox<Integer> layers = new ChoiceBox<>();
         layers.getItems().addAll(1,2,3,4,5,6,7,8);
         layers.setValue(8);
-        layers.setStyle( " -fx-background-color: linear-gradient(to bottom, white, #4682B4);" +
+        layers.setStyle( " -fx-background-color: linear-gradient(to bottom, white, #708090 );" +
         "-fx-border-color: white;" +          
         "-fx-border-width: 2px;" +            
         "-fx-border-radius: 0;" +          

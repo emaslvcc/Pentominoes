@@ -1,22 +1,31 @@
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Point3D;
+import javafx.geometry.Pos;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Cylinder;
+
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
-
 
 
 public class JavaFX1 extends Application {
@@ -92,7 +101,14 @@ public class JavaFX1 extends Application {
         int[][][] arr3 = this.QuestionC();
         int[][][] arr4 = this.QuestionD();
 
-
+ LinearGradient gradient = new LinearGradient(
+            0, 0,               // start coordinates
+            0, 1,               // end coordinates
+            true,               // proportional
+            CycleMethod.NO_CYCLE, // cycle method
+            new Stop(0, Color.LIGHTBLUE), // start color
+            new Stop(1, Color.BLUE) // end color
+    );
 
         //this.result.translateXProperty().set(WIDTH / 5);
         this.result.translateYProperty().set(HEIGHT / 5);
@@ -101,27 +117,89 @@ public class JavaFX1 extends Application {
         ChoiceBox<Integer> layers = new ChoiceBox<>();
         layers.getItems().addAll(1,2,3,4,5,6,7,8);
         layers.setValue(8);
+        layers.setStyle( " -fx-background-color: linear-gradient(to bottom, white, #4682B4);" +
+        "-fx-border-color: white;" +          
+        "-fx-border-width: 2px;" +            
+        "-fx-border-radius: 0;" +          
+        "-fx-padding: 5px;"  +
+        " -fx-font-family: 'Times New Roman';" 
+    
+        
+        );
 
 
-        Button button1= new Button("Question A");
+
+Button button1 = new Button("Question A");
+button1.setStyle(
+    "-fx-background-color: linear-gradient(to bottom, #87CEEB, #000080);" +
+        "-fx-border-color: white;" +          
+        "-fx-border-width: 2px;" +            
+        "-fx-border-radius: 0;" +          
+        "-fx-text-fill: white;" +
+        "-fx-padding: 10px;"       +
+        " -fx-font-family: 'Times New Roman'"  
+             
+);
+
+Button button2 = new Button("Question B");
+button2.setStyle(
+    "-fx-background-color: linear-gradient(to bottom, #87CEEB, #000080);" +
+        "-fx-border-color: white;" +
+        "-fx-border-width: 2px;" +
+        "-fx-border-radius: 0;" +
+        "-fx-text-fill: white;"+
+        "-fx-padding: 10px;"+
+        " -fx-font-family: 'Times New Roman'"
+);
+
+
+
+Button button3 = new Button("Question C");
+button3.setStyle(
+    "-fx-background-color: linear-gradient(to bottom, #87CEEB, #000080);" +
+        "-fx-border-color: white;" +
+        "-fx-border-width: 2px;" +
+        "-fx-border-radius: 0;" +
+        "-fx-text-fill: white;" +
+        "-fx-padding: 10px;"+
+        " -fx-font-family: 'Times New Roman'"
+);
+
+
+Button button4 = new Button("Question D");
+button4.setStyle(
+    "-fx-background-color: linear-gradient(to bottom, #87CEEB, #000080);" +
+        "-fx-border-color: white;" +
+        "-fx-border-width: 2px;" +
+        "-fx-border-radius: 0;" +
+        "-fx-text-fill: white;" +
+        "-fx-padding: 10px;"+
+       " -fx-font-family: 'Times New Roman'"
+);
+
+
+      
         button1.setOnAction(e -> this.drawParcel(arr1, this.result, layers.getValue())); 
 
-        Button button2= new Button("Question B");
+     
         button2.setOnAction(e -> this.drawParcel(arr2, this.result, layers.getValue()));
 
-        Button button3= new Button("Question C");
         button3.setOnAction(e -> this.drawParcel(arr3, this.result, layers.getValue()));
 
-        Button button4= new Button("Question D");
         button4.setOnAction(e -> this.drawParcel(arr4, this.result, layers.getValue()));
+        HBox layout1 = new HBox(20);   
 
-        
-        
+        Label titleLabel = new Label("3D KNAPSACK");
+        titleLabel.setStyle("fx-font-weight: bold;-fx-font-size: 40;-fx-font-family: 'Times New Roman'; -fx-text-fill: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 0);");
+        titleLabel.setAlignment(Pos.CENTER);
+        layout1.setAlignment(Pos.CENTER);
 
-        HBox layout1 = new HBox(20);     
         layout1.getChildren().addAll(button1, button2, button3, button4, layers);
-
+        layout1.getChildren().add(titleLabel);
         BorderPane pane = new BorderPane();
+        pane.setTop(layout1 );
+        pane.setCenter(this.result);
+        pane.setTop(layout1);
         pane.setCenter(this.result);
         pane.setTop(layout1);
 
@@ -129,9 +207,10 @@ public class JavaFX1 extends Application {
         this.ambientLight = new AmbientLight(Color.WHITE);
 
         this.result.getChildren().add(this.ambientLight);
+        pane.setBackground(new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY)));
 
         Scene scene= new Scene(pane, WIDTH, HEIGHT);
-        scene.setFill(Color.WHITE);
+        
         scene.setCamera(this.camera);
         stage.setScene(scene);
         stage.show();
@@ -170,6 +249,7 @@ public class JavaFX1 extends Application {
         switch(value) {
             case 1:
                 material.setDiffuseColor(Color.RED);
+                
                 break;
             case 2:
                 material.setDiffuseColor(Color.BLUE);

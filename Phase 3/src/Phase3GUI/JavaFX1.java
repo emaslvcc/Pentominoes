@@ -1,6 +1,5 @@
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.AmbientLight;
@@ -12,22 +11,16 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Cylinder;
-
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
@@ -106,7 +99,7 @@ public class JavaFX1 extends Application {
         int[][][] arr3 = this.QuestionC();
         int[][][] arr4 = this.QuestionD();
         
- Image backgroundImage = new Image(getClass().getClassLoader().getResourceAsStream("backgroundSky.jpg"));
+ Image backgroundImage = new Image(this.getClass().getClassLoader().getResourceAsStream("resources\\backgroundSky.jpg"));
   BackgroundImage background = new BackgroundImage(backgroundImage,
             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
             BackgroundPosition.DEFAULT,
@@ -182,14 +175,14 @@ button4.setStyle(
 
 
       
-        button1.setOnAction(e -> this.drawParcel(arr1, this.result, layers.getValue())); 
+        button1.setOnAction(e -> this.drawParcel(arr1, this.result, layers.getValue(),false)); 
 
      
-        button2.setOnAction(e -> this.drawParcel(arr2, this.result, layers.getValue()));
+        button2.setOnAction(e -> this.drawParcel(arr2, this.result, layers.getValue(),true));
 
-        button3.setOnAction(e -> this.drawParcel(arr3, this.result, layers.getValue()));
+        button3.setOnAction(e -> this.drawParcel(arr3, this.result, layers.getValue(), false));
 
-        button4.setOnAction(e -> this.drawParcel(arr4, this.result, layers.getValue()));
+        button4.setOnAction(e -> this.drawParcel(arr4, this.result, layers.getValue(),false));
         HBox layout1 = new HBox(20);   
 
         Label titleLabel = new Label("3D KNAPSACK");
@@ -207,19 +200,20 @@ button4.setStyle(
         pane.setTop(layout1);
 
         this.camera = new PerspectiveCamera();
-        this.ambientLight = new AmbientLight(Color.WHITE);
+        this.ambientLight = new AmbientLight();
 
-        this.result.getChildren().add(this.ambientLight);
+        pane.getChildren().add(this.ambientLight);
         pane.setBackground(new Background(background));
 
         Scene scene= new Scene(pane, WIDTH, HEIGHT);
+    
         
         scene.setCamera(this.camera);
         stage.setScene(scene);
         stage.show();
         this.enableMouseInteraction(scene, this.result);
-        this.createContainerOutlines();
-        stage.setResizable(false);
+        this.createContainerOutlines(false);
+        stage.setResizable(true);
     }
 
     private void enableMouseInteraction(Scene scene, Group group) {
@@ -266,16 +260,27 @@ button4.setStyle(
         return material;
     }
 
-    private void drawParcel(int[][][] array, Group group, int layers) {
+    private void drawParcel(int[][][] array, Group group, int layers, boolean B) {
 
         group.getChildren().clear();
 
-        for (int i = 0; i < layers; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                for (int k = 0; k < array[i][j].length; k++) {
-                    if (array[i][j][k] == 0) {
+        int arrayL = array[0][0].length;
+        int array1L = layers;
+
+        if(B){
+            arrayL = layers;
+            array1L = array.length;
+        }
+        
+
+        for (int i = 0; i < array1L; i++) {
+            for (int j = 0; j < 33 ; j++) {
+                for (int k = 0; k < arrayL; k++) {
+                    if (
+                        array[i][j][k] == 0) {
                         continue;
                     }
+                    
 
                     PhongMaterial color = this.getColor(array[i][j][k]);
                     Box box = new Box(30, 30, 30);
@@ -283,17 +288,27 @@ button4.setStyle(
                     box.setTranslateX((k * this.BLOCK_SIZE) + (k * this.OFFSET));
                     box.setTranslateY((j * this.BLOCK_SIZE) + (j * this.OFFSET));
                     box.setTranslateZ((i * this.BLOCK_SIZE) + (i * this.OFFSET));
+                    box.setMaterial(color);
+                    
                     group.getChildren().add(box);
                 }
             }
         }
-        this.createContainerOutlines();
+        this.createContainerOutlines(B);
+        group.getChildren().add(new AmbientLight());
     }
 
-    public void createContainerOutlines() {
+    public void createContainerOutlines(boolean B) {
+
         int boxWidth = 75 * 2;
         int boxHeight = 495 * 2;
         int boxDepth = 120 * 2;
+
+        if(B){
+            boxWidth = 120*2;
+            boxDepth = 75*2;
+        }
+
         int offset = -(this.BLOCK_SIZE/2);
         Point3D p1 = new Point3D(offset, offset, offset);
         Point3D p2 = new Point3D(boxWidth + offset, offset, offset);

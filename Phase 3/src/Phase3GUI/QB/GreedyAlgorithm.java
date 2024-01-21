@@ -6,9 +6,9 @@ public class GreedyAlgorithm implements Runnable{
     Parcel parcelB = new Parcel('B');
     Parcel parcelC = new Parcel('C');
 
-    public final int WIDTH = 8;
+    public final int WIDTH = 5;
     public final int LENGTH = 33;
-    public final int HEIGHT = 5;
+    public final int HEIGHT = 8;
     public int[][][] truck = new int[this.WIDTH][this.LENGTH][this.HEIGHT];
     public int score = 0;
 

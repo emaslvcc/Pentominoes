@@ -5,7 +5,10 @@ import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -16,7 +19,7 @@ import javafx.stage.Stage;
 
 
 
-public class JavaFX extends Application {
+public class JavaFX1 extends Application {
 
     private static final int WIDTH = 1400;
     private static final int HEIGHT = 800;
@@ -30,6 +33,7 @@ public class JavaFX extends Application {
 
     private final int BLOCK_SIZE = 30;
     private final int OFFSET = 0;
+    private Group result = new Group();
     //private final int width = 75; // Move these declarations above their usage
     //private final int height = 120;
     //private final int depth = 415;
@@ -81,44 +85,62 @@ public class JavaFX extends Application {
 };
     @Override
     public void start(Stage stage) throws Exception {
-// Parent root= FXMLLoader.load(getClass().getResource("/ui/mygui.fxml"));
-     // Scene scene = new Scene(root);
+        stage.setTitle("Phase 3 Visualization");
 
-        this.group = new Group();
+        int[][][] arr1 = this.QuestionA();
+        int[][][] arr2 = this.QuestionB();
+        int[][][] arr3 = this.QuestionC();
+        int[][][] arr4 = this.QuestionD();
 
-        // Creating a scene object colored in black
+
+
+        //this.result.translateXProperty().set(WIDTH / 5);
+        this.result.translateYProperty().set(HEIGHT / 5);
+
+        //Scene 1
+        ChoiceBox<Integer> layers = new ChoiceBox<>();
+        layers.getItems().addAll(1,2,3,4,5,6,7,8);
+        layers.setValue(8);
+
+
+        Button button1= new Button("Question A");
+        button1.setOnAction(e -> this.drawParcel(arr1, this.result, layers.getValue())); 
+
+        Button button2= new Button("Question B");
+        button2.setOnAction(e -> this.drawParcel(arr2, this.result, layers.getValue()));
+
+        Button button3= new Button("Question C");
+        button3.setOnAction(e -> this.drawParcel(arr3, this.result, layers.getValue()));
+
+        Button button4= new Button("Question D");
+        button4.setOnAction(e -> this.drawParcel(arr4, this.result, layers.getValue()));
+
+        
+        
+
+        HBox layout1 = new HBox(20);     
+        layout1.getChildren().addAll(button1, button2, button3, button4, layers);
+
+        BorderPane pane = new BorderPane();
+        pane.setCenter(this.result);
+        pane.setTop(layout1);
+
         this.camera = new PerspectiveCamera();
         this.ambientLight = new AmbientLight(Color.WHITE);
-        this.group.getChildren().add(this.ambientLight);
 
-        Scene scene = new Scene(this.group, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
+        this.result.getChildren().add(this.ambientLight);
+
+        Scene scene= new Scene(pane, WIDTH, HEIGHT);
         scene.setFill(Color.WHITE);
         scene.setCamera(this.camera);
-
-        // Set truck's position to the center of the GUI
-        this.group.translateXProperty().set(WIDTH / 5);
-        this.group.translateYProperty().set(HEIGHT / 2);
-
-        GreedyAlgorithm greedy = new GreedyAlgorithm();
-        greedy.fillTruck();
-        greedy.printMatrix();
-        this.exampleArray = greedy.truck;
-        this.drawParcel(this.exampleArray);
-        this.createContainerOutlines();
-        //drawParcel(Pentominoes.tPent);
-
-        // Setting title to the Stage
-        stage.setTitle("Truck Visualizer");
-        // Adding scene to the stage
         stage.setScene(scene);
-        // Displaying the contents of the stage
         stage.show();
+        this.enableMouseInteraction(scene, this.result);
+        this.createContainerOutlines();
         stage.setResizable(false);
-        // Enable mouse interaction for rotating the box
-        this.enableMouseInteraction(scene);
     }
 
-    private void enableMouseInteraction(Scene scene) {
+    private void enableMouseInteraction(Scene scene, Group group) {
         scene.setOnMousePressed(event -> {
             this.lastX = event.getSceneX();
             this.lastY = event.getSceneY();
@@ -135,7 +157,7 @@ public class JavaFX extends Application {
             Rotate rotateY = new Rotate(deltaXAngle, Rotate.Y_AXIS);
 
             // Apply rotation transformations to the group (truck, parcels, and outlines)
-            this.group.getTransforms().addAll(rotateX, rotateY);
+            group.getTransforms().addAll(rotateX, rotateY);
 
             this.lastX = event.getSceneX();
             this.lastY = event.getSceneY();
@@ -161,11 +183,11 @@ public class JavaFX extends Application {
         return material;
     }
 
-    private void drawParcel(int[][][] array) {
+    private void drawParcel(int[][][] array, Group group, int layers) {
 
-        this.group.getChildren().clear();
+        group.getChildren().clear();
 
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < layers; i++) {
             for (int j = 0; j < array[i].length; j++) {
                 for (int k = 0; k < array[i][j].length; k++) {
                     if (array[i][j][k] == 0) {
@@ -178,16 +200,17 @@ public class JavaFX extends Application {
                     box.setTranslateX((k * this.BLOCK_SIZE) + (k * this.OFFSET));
                     box.setTranslateY((j * this.BLOCK_SIZE) + (j * this.OFFSET));
                     box.setTranslateZ((i * this.BLOCK_SIZE) + (i * this.OFFSET));
-                    this.group.getChildren().add(box);
+                    group.getChildren().add(box);
                 }
             }
         }
+        this.createContainerOutlines();
     }
 
     public void createContainerOutlines() {
-        int boxWidth = 120 * 2;
+        int boxWidth = 75 * 2;
         int boxHeight = 495 * 2;
-        int boxDepth = 75 * 2;
+        int boxDepth = 120 * 2;
         int offset = -(this.BLOCK_SIZE/2);
         Point3D p1 = new Point3D(offset, offset, offset);
         Point3D p2 = new Point3D(boxWidth + offset, offset, offset);
@@ -230,7 +253,61 @@ public class JavaFX extends Application {
         Cylinder line = new Cylinder(width, height);
 
         line.getTransforms().addAll(moveToOriginCenter, rotate);
-        this.group.getChildren().add(line);
+        this.result.getChildren().add(line);
+    }
+
+    public int[][][] QuestionA(){
+        System.out.println("Question A Not fillable");
+        return new int[8][33][5];
+    }
+    public int[][][] QuestionB(){
+        GreedyAlgorithm greedy = new GreedyAlgorithm();
+        greedy.fillTruck();
+        greedy.printScore();
+
+        return greedy.truck;
+    }
+    public int[][][] QuestionC(){
+        BruteForceAlgorithm b = new BruteForceAlgorithm();
+        b.search();
+
+        int[][] arr = b.ans;
+        int[][][] answer = new int[8][33][5];
+        int parcel1 = 0;
+        int parcel2 = 0;
+        int parcel3 = 0;
+
+        for(int z=0; z<answer.length; z++){
+            for(int i=0; i<arr.length; i++){
+                for(int j=0; j<arr[0].length; j++){
+                    if(arr[i][j]==8){
+                        answer[z][i][j] = 1;
+                        parcel1++;
+                    }
+                    if(arr[i][j]==3){
+                        answer[z][i][j] = 2;
+                        parcel2++;
+                    }
+                    if(arr[i][j]==9){
+                        answer[z][i][j] = 3;
+                        parcel3++;
+                    }
+                    
+                }
+            }
+        }
+
+        System.out.println("Question C pentominoes used : " +  parcel1/5 + "," + parcel2/5 + " and " + parcel3/5);
+
+        return answer;
+    }
+    public int[][][] QuestionD(){
+        GreedyPentominoes greedy = new GreedyPentominoes();
+        greedy.fillTruck();
+        greedy.printScore();
+        
+
+        return greedy.truck;
     }
 
     public static void main(String args[]) {

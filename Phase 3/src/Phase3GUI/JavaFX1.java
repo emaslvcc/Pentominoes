@@ -10,8 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
@@ -100,15 +105,13 @@ public class JavaFX1 extends Application {
         int[][][] arr2 = this.QuestionB();
         int[][][] arr3 = this.QuestionC();
         int[][][] arr4 = this.QuestionD();
-
- LinearGradient gradient = new LinearGradient(
-            0, 0,               // start coordinates
-            0, 1,               // end coordinates
-            true,               // proportional
-            CycleMethod.NO_CYCLE, // cycle method
-            new Stop(0, Color.rgb(0, 31, 63)), // start color
-            new Stop(1,Color.rgb(112, 128, 144)) // end color
-    );
+        
+ Image backgroundImage = new Image(getClass().getClassLoader().getResourceAsStream("backgroundSky.jpg"));
+  BackgroundImage background = new BackgroundImage(backgroundImage,
+            BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+            BackgroundPosition.DEFAULT,
+            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true));
+ 
 
         //this.result.translateXProperty().set(WIDTH / 5);
         this.result.translateYProperty().set(HEIGHT / 5);
@@ -207,7 +210,7 @@ button4.setStyle(
         this.ambientLight = new AmbientLight(Color.WHITE);
 
         this.result.getChildren().add(this.ambientLight);
-        pane.setBackground(new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setBackground(new Background(background));
 
         Scene scene= new Scene(pane, WIDTH, HEIGHT);
         

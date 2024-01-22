@@ -1,5 +1,6 @@
-
-
+/**
+ * This class implements a Greedy Algorithm to place cubic parcels in a 3D space (truck).
+ */
 public class GreedyAlgorithm implements Runnable{
 
     Parcel parcelA = new Parcel('A');
@@ -12,7 +13,9 @@ public class GreedyAlgorithm implements Runnable{
     public int[][][] truck = new int[this.WIDTH][this.LENGTH][this.HEIGHT];
     public int score = 0;
 
-
+    /**
+     * Starts the Greedy Algorithm and calls the necessary methods to fill the truck.
+     */
     public void fillTruck() {
         Parcel[] parcels = {this.parcelC, this.parcelB, this.parcelA};
 
@@ -31,6 +34,12 @@ public class GreedyAlgorithm implements Runnable{
         }
     }
 
+    /**
+     * Tries to place a parcel at an available position.
+     * 
+     * @param parcel Parcel type to be consider.
+     * @return True if the parcel can be placed, false if not.
+     */
     private boolean tryPlaceParcel(Parcel parcel) {
         int[][][] array = parcel.getParcelArray();
         for (int x = 0; x <= this.truck.length - array.length; x++) {
@@ -46,6 +55,15 @@ public class GreedyAlgorithm implements Runnable{
         return false;
     }
 
+    /**
+     * Evaluates overlapping pieces, to check if the parcel can be added to that position.
+     * 
+     * @param parcel Parcel to be considered.
+     * @param x X coordinate.
+     * @param y Y coordinate.
+     * @param z Z coordinate.
+     * @return True if the parcel can be placed, false if not.
+     */
     private boolean canAdd(Parcel parcel, int x, int y, int z) {
         int[][][] array = parcel.getParcelArray();
         for (int i = x; i < x + array.length; i++) {
@@ -60,6 +78,15 @@ public class GreedyAlgorithm implements Runnable{
         return true;
     }
 
+    /**
+     * Adds a parcel to the truck's 3D array.
+     * 
+     * @param parcel Parcel to be considered.
+     * @param x X coordinate.
+     * @param y Y coordinate.
+     * @param z Z coordinate.
+     * @return parcel's value
+     */
     private void addParcel(Parcel parcel, int x, int y, int z) {
         int[][][] array = parcel.getParcelArray();
         for (int i = x; i < x + array.length; i++) {
@@ -72,20 +99,9 @@ public class GreedyAlgorithm implements Runnable{
         this.score += parcel.getValue();
     }
 
-
-    private boolean isTruckFilled() {
-        for (int i = 0; i < this.WIDTH; i++) {
-            for (int j = 0; j < this.LENGTH; j++) {
-                for (int k = 0; k < this.HEIGHT; k++) {
-                    if (this.truck[i][j][k] == 0) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
+    /**
+     * Prints the truck's matrix.
+     */
     public void printMatrix() {
         System.out.println("Final Truck Matrix:");
         for (int i = 0; i < this.truck.length; i++) {
@@ -96,16 +112,21 @@ public class GreedyAlgorithm implements Runnable{
                 System.out.println();
             }
             System.out.println();
-        }
-        
+        } 
     }
-    public void printScore(){
+
+    /**
+     * Prints the final score.
+     */
+    public void printScore() {
         System.out.println("Question B Total score: " + this.score);
     }
 
+    /**
+     * Executes the run operation, which involves filling the truck and printing the resulting matrix.
+     */
     public void run() {
         this.fillTruck();
-         // Add this line if you have a method to update visualization.
         this.printMatrix();
     }
 }

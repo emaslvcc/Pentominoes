@@ -1,5 +1,6 @@
-
-
+/**
+ * This class represents the cubic parcels database.
+ */
 public class Parcel {
     private int x;
     private int y;
@@ -10,11 +11,10 @@ public class Parcel {
     public int num;
 
     /**
-     * A constructor that creates a parcel object
-     * @param c a character correspondent to a parcel (A, B or C)
+     * A constructor that creates a parcel object.
+     * @param c a character correspondent to a parcel (A, B or C).
      **/
     public Parcel(char c){
-
         if (c == 'A') {
             this.x = 2;
             this.y = 2;
@@ -49,37 +49,65 @@ public class Parcel {
     }
 
     /**
-     * Getter method that returns a parcel's weight
-     * @return parcel's weight
+     * Getter method that returns a parcel's weight.
+     * @return Parcel's weight.
      */
     public int getWeight(){
         return this.weight;
     }
 
     /**
-     * Getter method that returns a parcel's value
-     * @return parcel's value
+     * Getter method that returns a parcel's value.
+     * @return Parcel's value.
      */
     public int getValue(){
         return this.val;
     }
 
+    /**
+     * Getter method that returns a parcel's number.
+     * @return Parcel's number.
+     */
     public int getNum(){
         return this.num;
     }
 
-    public int getRotation () { return this.rotation; }
+    /**
+     * Getter method that returns a parcel's rotation.
+     * @return Parcel's rotation.
+     */
+    public int getRotation () { 
+        return this.rotation; 
+    }
+
+    /**
+     * Getter method that returns a parcel's X.
+     * @return Parcel's X.
+     */
     public int getX(){
         return this.x;
     }
+
+    /**
+     * Getter method that returns a parcel's Y.
+     * @return Parcel's Y.
+     */
     public int getY(){
         return this.y;
     }
+
+    /**
+     * Getter method that returns a parcel's Z.
+     * @return Parcel's Z.
+     */
     public int getZ(){
         return this.z;
     }
     
-
+    /**
+     * Getter method that returns a parcel's array.
+     * @return Parcel's array.
+     */
     public int[][][] getParcelArray() {
         switch(this.rotation){
             case 0:
@@ -97,30 +125,41 @@ public class Parcel {
             default:
                 return new int[0][0][0];
         }
-
     }
 
-    public boolean rotate(){
-        if(this.rotation<5){
+    /**
+     * Method to check if parcel can be rotated.
+     * @return If the rotation is valid (true) or not (false).
+     */
+    public boolean rotate() {
+        if (this.rotation < 5) {
             this.rotation++;
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
-    public boolean rotate(int newRotation){
-        if(newRotation <= 5){
+
+    /**
+     * Method to rotate parcels.
+     * @param newRotation Rotation to be implemented.
+     * @return True if rotation was successful, false if not.
+     */
+    public boolean rotate(int newRotation) {
+        if (newRotation <= 5) {
             this.rotation = newRotation;
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
-    public void resetRotation(){
+
+    /**
+     * Resets the parcel's rotation.
+     */
+    public void resetRotation() {
         this.rotation = 0;
     }
-
-    
 }

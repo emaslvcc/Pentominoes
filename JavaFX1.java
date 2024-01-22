@@ -7,10 +7,15 @@ import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Cylinder;
 import javafx.scene.transform.Rotate;
@@ -60,6 +65,32 @@ public class JavaFX1 extends Application {
 
         Scene scene = new Scene(this.result, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
         
+ Label label = new Label("3D KNAPSACK");
+        label.setStyle("-fx-font-size: 50;-fx-font-family:'Century Gothic' ;-fx-font-weight: bold;  -fx-text-fill: white;");
+       
+        label.layoutXProperty().bind(scene.widthProperty().subtract(label.widthProperty()).divide(2));
+        label.layoutYProperty().bind(scene.heightProperty().divide(20));
+ DropShadow dropShadow = new DropShadow();
+        dropShadow.setColor(Color.PALETURQUOISE);
+        dropShadow.setRadius(5);
+        dropShadow.setOffsetX(3);
+        dropShadow.setOffsetY(3);
+        label.setEffect(dropShadow);
+
+        scene.setRoot(new Group(label, result));
+         Stop[] stops = new Stop[] {
+            new Stop(0, Color.rgb(30, 30, 60)),   
+            new Stop(1, Color.rgb(150, 150, 180))};
+
+        LinearGradient linearGradient = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE, stops);
+        scene.setFill(linearGradient);
+        stage.setScene(scene);
+        scene.setCamera(this.camera);
+        
+        stage.show();
+        this.enableMouseInteraction(scene, this.result);
+        this.createContainerOutlines(false);
+        stage.setResizable(false);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
             /**
@@ -107,14 +138,7 @@ public class JavaFX1 extends Application {
                 } 
             }  
         });
-        scene.setFill(Color.BLACK);
-        stage.setScene(scene);
-        scene.setCamera(this.camera);
-        
-        stage.show();
-        this.enableMouseInteraction(scene, this.result);
-        this.createContainerOutlines(false);
-        stage.setResizable(false);
+       
     }
 
     /**

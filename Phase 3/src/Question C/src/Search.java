@@ -14,7 +14,7 @@ public class Search
     public static final char[] possibleinput = {'T','I','Z','Y','W','L','P','X','F','U','N','V'};
 	public static boolean[] usedLetters = new boolean[possibleinput.length];
 	public static char[] input = {};
-	public static UI ui;
+	//public static UI ui;
     //Static UI class to display the board
     
 	/**
@@ -42,7 +42,7 @@ public class Search
 	 * Starts a basic search algorithm
 	 */
     public static void search() {
-		ui = new UI(horizontalGridSize, verticalGridSize, 50);
+		//ui = new UI(horizontalGridSize, verticalGridSize, 50);
 
         // Initialize an empty board
         int[][] field = new int[horizontalGridSize][verticalGridSize];
@@ -162,7 +162,7 @@ public class Search
 
 		// Checks if the grid is full: if x and y are equal to -1, there are no empty spaces
 		if (x == -1 && y == -1) {
-			ui.setState(field);
+			//ui.setState(field);
 			System.out.println("Done!");
 			return true;
 		}

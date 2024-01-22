@@ -9,7 +9,7 @@ public class BruteForceAlgorithm{
     public static final int horizontalGridSize =33;
     public static final int verticalGridSize =5;
     public static char[] input = { 'T','T','T','T','T','T','T','T','T', 'T','T','T','T','T','T','T','T','T','T','T','T','T','T', 'T','T','T','T','T','L','L','L','L','L','L','L','L','L','L','L', 'L','L','L','L','L','L','L','L','P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P','P','P','P','P'};
-    public static UI ui = new UI(horizontalGridSize, verticalGridSize, 50);
+    //public static UI ui = new UI(horizontalGridSize, verticalGridSize, 50);
     public static boolean[] used = new boolean[input.length];
     private static Set<String> encounteredStates = new HashSet<>();
     private static int iteration = 0;
@@ -144,7 +144,7 @@ public class BruteForceAlgorithm{
                                     String state = boardToString(newField);
                                     if (!encounteredStates.contains(state)) {
                                         encounteredStates.add(state);
-                                        ui.setState(newField);
+                                        //ui.setState(newField);
                                         delay();
                                         if (solve(newField, pentIndex + 1, depth + 1)) { // increment depth
                                             return true;

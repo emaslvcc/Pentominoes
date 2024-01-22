@@ -118,7 +118,7 @@ public class JavaFX extends Application {
         }
 
         //this.drawParcel(answer, 8);
-        this.drawParcel(answer, 7);
+        this.drawParcel(answer, 8);
         //this.drawParcel(answer, 6);
         
 

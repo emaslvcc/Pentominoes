@@ -40,7 +40,7 @@ This class launches the _JavaFX1.java_ application.
 This class includes the methods to support the search of a solution for Question A.
 
 **_Parcel.java_ :**
-This class creates the parcel object.
+This class builds the parcel object.
 
 ### Question B ###
 **_GreedyAlgorithm.java_ :**

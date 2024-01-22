@@ -1,5 +1,5 @@
 ## 3D Knapsack
-This code presents a computer application with a user-friendly interface and a 3D visualizer to solve a 3D knapsack problem using iehtr parcels of type A, B and C, or pentominoes of type L, P and T, each with different sizes and values.
+This code presents a computer application with a user-friendly interface and a 3D visualizer to solve a 3D knapsack problem using parcels of type A, B and C, and pentominoes of type L, P and T, each with different sizes and values.
 
 ## Table of Contents
 1. Installation
@@ -22,8 +22,8 @@ cd path/to/your/directory
 git clone https://gitlab.maastrichtuniversity.nl/bcs_group05_2023/project-1-1.git
 ```
 **Run the application**
-1. Navigate to the _Phase 3/src/Phase3GUI_ folder
-2. Run _App.java_
+1. Navigate to the _Phase 3/src/Phase3GUI_ folder.
+2. Run the _App.java_ file.
 
 ## Description
 
